@@ -1,6 +1,5 @@
 package com.example.crystalyip.csc301;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -64,12 +63,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_popular_menus:
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         //new PopMenusFragment()).commit();
-                Intent galleryIntent = new Intent(MainActivity.this, SpaceGalleryActivity.class);
-                startActivity(galleryIntent);
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new FoodNearMeFragment()).commit();
                 break;
             case R.id.nav_active:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FoodNearMeFragment()).commit();
+                        new ActiveFragment()).commit();
                 break;
         }
 
