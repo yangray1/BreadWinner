@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_food_nearby"
+        android:icon="@drawable/near_me_filled"
+        android:title="@string/title_food_nearby" />
+
+    <item
+        android:id="@+id/navigation_find"
+        android:icon="@drawable/icon_map"
+        android:title="@string/title_find" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/profile_fill"
+        android:title="@string/title_profile" />
+
+</menu>

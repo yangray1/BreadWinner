@@ -1,0 +1,226 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/heading_label11"
+        android:layout_width="184dp"
+        android:layout_height="77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="58dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="10:40 EST"
+        android:textColor="#555555"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="93dp"
+        android:layout_marginTop="2dp"
+        android:background="#FF0000FF" />
+
+    <!-- the circular icon on the left -->
+
+    <TextView
+        android:id="@+id/heading_label9"
+        android:layout_width="184dp"
+        android:layout_height="77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="156dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="10:43 EST"
+        android:textColor="#555555"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view3"
+        android:layout_width="29dp"
+        android:layout_height="28dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="451dp"
+        android:background="@drawable/circle_bg" />
+
+    <TextView
+        android:id="@+id/heading_label4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="58dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="ORDER PLACED"
+        android:textColor="#555555"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/heading_label16"
+        android:layout_width="184dp"
+        android:layout_height="77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="87dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Your request has been sent."
+        android:textColor="#555555"
+        android:textSize="12sp" />
+
+    <View
+        android:layout_width="29dp"
+        android:layout_height="28dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="79dp"
+        android:layout_marginLeft="79dp"
+        android:layout_marginTop="55dp"
+        android:background="@drawable/circle_bg" />
+
+    <TextView
+        android:id="@+id/heading_label5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="128dp"
+        android:layout_marginTop="156dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="ORDER ACCEPTED"
+        android:textColor="#555555"
+        android:textSize="16sp" />
+
+    <TextView
+        android:id="@+id/heading_label6"
+        android:layout_width="184dp"
+        android:layout_height="77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="128dp"
+        android:layout_marginTop="189dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Your order hass been accepted and your credit card has been charged."
+        android:textColor="#555555"
+        android:textSize="12sp" />
+
+    <TextView
+        android:id="@+id/heading_label7"
+        android:layout_width="184dp"
+        android:layout_height="77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="128dp"
+        android:layout_marginTop="249dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="TIME OF PICKUP: 11:00 EST"
+        android:textColor="#555555"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/heading_label8"
+        android:layout_width="184dp"
+        android:layout_height="77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="128dp"
+        android:layout_marginTop="269dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="LOCATION: 256 McCaul St."
+        android:textColor="#555555"
+        android:textSize="13sp" />
+
+    <TextView
+        android:id="@+id/heading_label12"
+        android:layout_width="184dp"
+        android:layout_height="77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="313dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="11:00 EST"
+        android:textColor="#555555"
+        android:textSize="12sp" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="29dp"
+        android:layout_height="28dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="78dp"
+        android:layout_marginLeft="78dp"
+        android:layout_marginTop="153dp"
+        android:background="@drawable/circle_bg" />
+
+    <TextView
+        android:id="@+id/heading_label10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="311dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="READY FOR PICKUP"
+        android:textColor="#555555"
+        android:textSize="16sp" />
+
+
+    <View
+        android:id="@+id/view2"
+        android:layout_width="29dp"
+        android:layout_height="28dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="77dp"
+        android:layout_marginLeft="77dp"
+        android:layout_marginTop="310dp"
+        android:background="@drawable/circle_bg" />
+
+    <TextView
+        android:id="@+id/heading_label13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/heading_label10"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="143dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="ORDER PICKED UP"
+        android:textColor="#555555"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/heading_label14"
+        android:layout_width="184dp"
+        android:layout_height="77dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="9dp"
+        android:layout_marginTop="454dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="11:01 EST"
+        android:textColor="#555555"
+        android:textSize="12sp" />
+
+
+
+
+</RelativeLayout>

@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Breadwinner</string>
+    <string name="app_label">wicked_wiener</string>
+    <string name="search_hint">Current Location</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="title_food_nearby">Food Nearby</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_find">Find Meals</string>
+</resources>

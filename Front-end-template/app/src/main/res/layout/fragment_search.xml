@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light">
+
+
+
+
+    <TextView
+        android:id="@+id/heading_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="39dp"
+        android:layout_marginTop="34dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="LOCATION"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:fontFamily="@font/nunito_semibold" />
+
+    <EditText
+        android:id="@+id/search_field"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heading_label"
+        android:layout_alignLeft="@+id/heading_label"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/search_layout"
+        android:drawableLeft="@drawable/icon_map"
+        android:ems="10"
+        android:fontFamily="@font/nunito_semibold"
+        android:hint="  Use current location"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="#999999"
+        android:textSize="13sp" />
+
+
+    <TextView
+        android:id="@+id/heading_label2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="43dp"
+        android:layout_marginTop="146dp"
+
+        android:fontFamily="@font/nunito_bold"
+        android:text="CUISINE"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:fontFamily="@font/nunito_semibold" />
+
+    <EditText
+        android:id="@+id/search_field2"
+        android:layout_width="313dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/heading_label2"
+        android:layout_alignLeft="@+id/heading_label2"
+        android:layout_marginLeft="-3dp"
+        android:layout_marginTop="0dp"
+
+        android:background="@drawable/search_layout"
+        android:drawableLeft="@drawable/icon_food"
+        android:ems="10"
+        android:fontFamily="@font/nunito_semibold"
+        android:hint="  Search any"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textColor="#999999"
+        android:textSize="13sp" />
+
+
+    <Button
+        android:id="@+id/angry_btn"
+        android:layout_width="219dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="134dp"
+        android:background="@drawable/buttonshape"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="FIND FOOD"
+        android:textAllCaps="false"
+        android:textColor="#ffffff"
+        android:textSize="20sp" />
+
+
+    <View
+        android:id="@+id/myRectangleView"
+        android:layout_width="match_parent"
+        android:layout_height="223dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginLeft="0dp"
+        android:layout_marginBottom="0dp"
+        android:background="@drawable/rectangle" />
+
+    <TextView
+        android:id="@+id/heading_label3"
+        android:layout_width="239dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="87dp"
+        android:layout_marginTop="507dp"
+
+        android:fontFamily="@font/nunito_bold"
+        android:text="Search from hundreds of menus in the area"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        app:fontFamily="@font/nunito_semibold" />
+
+</RelativeLayout>
