@@ -27,7 +27,6 @@ def search(search_query):
             rows_to_return.append(search_names_row)
             search_names_row = search_names.fetchone()
 
-        search_names.close()
 
         search_tags = conn.cursor()
         search_tags.execute("SELECT t1.\"ListingID\", t1.\"CookID\", t1.\"Food Name\", t1.\"Price\","
@@ -41,12 +40,11 @@ def search(search_query):
             rows_to_return.append(search_tags_row)
             search_tags_row = search_names.fetchone()
 
-    print(rows_to_return, " before set")
-    print(rows_to_return[0] == rows_to_return[1])
-    print(type(rows_to_return[0]))
-    print(type(rows_to_return[1]))
-    list(set(rows_to_return))
-    print(rows_to_return, " after set")
+    if search_terms != []:
+        search_names.close()
+        search_tags.close()
+
+    rows_to_return = list(set(rows_to_return)) # remove duplicate rows
 
 
     return simplejson.dumps({'row': rows_to_return})
