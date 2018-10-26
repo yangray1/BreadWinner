@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 
 /**
@@ -23,15 +25,14 @@ public class FoodNearMeFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_food_near_me, container, false);
 
-//        ListView listView = (ListView) view.findViewById(R.id.lstFoodList);
-//
-//        ArrayAdapter<String> listViewadapter = new ArrayAdapter<String>(
-//                getActivity(),
-//                android.R.layout.simple_list_item_1,
-//                names);
-//        listView.setAdapter(listViewadapter);
+        ListView listView = (ListView) view.findViewById(R.id.lstFoodList);
+
+        ArrayAdapter<String> listViewadapter = new ArrayAdapter<String>(
+                getActivity(),
+                R.layout.fragment_pop_menus,
+                names);
+        listView.setAdapter(listViewadapter);
 
         return view;
     }
-
 }

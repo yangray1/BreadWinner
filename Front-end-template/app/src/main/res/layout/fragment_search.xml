@@ -1,35 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light">
-
-
+    android:background="@android:color/background_light"
+    android:id="@+id/relativeLayout">
 
 
     <TextView
         android:id="@+id/heading_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="39dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
         android:layout_marginTop="34dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="LOCATION"
         android:textColor="#555555"
         android:textSize="16sp"
-        app:fontFamily="@font/nunito_semibold" />
+        app:fontFamily="@font/nunito_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/search_field"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/search_field"
-        android:layout_width="313dp"
+        android:layout_width="275dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/heading_label"
-        android:layout_alignLeft="@+id/heading_label"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/search_layout"
         android:drawableLeft="@drawable/icon_map"
         android:ems="10"
@@ -40,33 +50,50 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="#999999"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/myRectangleView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.157" />
 
 
     <TextView
         android:id="@+id/heading_label2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="43dp"
-        android:layout_marginTop="146dp"
 
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="CUISINE"
         android:textColor="#555555"
         android:textSize="16sp"
-        app:fontFamily="@font/nunito_semibold" />
+        app:fontFamily="@font/nunito_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/search_field2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/heading_label"
+        app:layout_constraintVertical_bias="1.0" />
 
     <EditText
         android:id="@+id/search_field2"
-        android:layout_width="313dp"
+        android:layout_width="277dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/heading_label2"
-        android:layout_alignLeft="@+id/heading_label2"
-        android:layout_marginLeft="-3dp"
-        android:layout_marginTop="0dp"
 
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/search_layout"
         android:drawableLeft="@drawable/icon_food"
         android:ems="10"
@@ -77,47 +104,66 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:textColor="#999999"
-        android:textSize="13sp" />
+        android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/myRectangleView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.508"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/search_field"
+        app:layout_constraintVertical_bias="0.213" />
 
 
     <Button
         android:id="@+id/angry_btn"
         android:layout_width="219dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="134dp"
         android:background="@drawable/buttonshape"
         android:fontFamily="@font/nunito_semibold"
         android:text="FIND FOOD"
         android:textAllCaps="false"
         android:textColor="#ffffff"
-        android:textSize="20sp" />
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
     <View
         android:id="@+id/myRectangleView"
         android:layout_width="match_parent"
         android:layout_height="223dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/rectangle" />
+        android:layout_marginTop="8dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/heading_label3"
         android:layout_width="239dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="87dp"
-        android:layout_marginTop="507dp"
 
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="Search from hundreds of menus in the area"
         android:textColor="#ffffff"
         android:textSize="12sp"
-        app:fontFamily="@font/nunito_semibold" />
+        app:fontFamily="@font/nunito_semibold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/angry_btn"
+        app:layout_constraintVertical_bias="0.0" />
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>

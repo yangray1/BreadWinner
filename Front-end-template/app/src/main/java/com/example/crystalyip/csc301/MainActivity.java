@@ -40,8 +40,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     new SearchFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_search);
         }
-
-
     }
 
     @Override
