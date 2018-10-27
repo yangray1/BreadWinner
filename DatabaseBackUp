@@ -1,0 +1,482 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.4
+-- Dumped by pg_dump version 10.5
+
+-- Started on 2018-10-27 14:09:30
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'BIG5';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 1 (class 3079 OID 13920)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 3860 (class 0 OID 0)
+-- Dependencies: 1
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 197 (class 1259 OID 16412)
+-- Name: Client; Type: TABLE; Schema: public; Owner: csc301breadwiener
+--
+
+CREATE TABLE public."Client" (
+    "ClientID" integer NOT NULL,
+    "Client Rating" numeric(4,0)
+);
+
+
+ALTER TABLE public."Client" OWNER TO csc301breadwiener;
+
+--
+-- TOC entry 202 (class 1259 OID 16487)
+-- Name: Client Ratings; Type: TABLE; Schema: public; Owner: csc301breadwiener
+--
+
+CREATE TABLE public."Client Ratings" (
+    "ClientID" integer NOT NULL,
+    "ReviewerID" integer NOT NULL,
+    "Comments" text,
+    "Rating" integer
+);
+
+
+ALTER TABLE public."Client Ratings" OWNER TO csc301breadwiener;
+
+--
+-- TOC entry 198 (class 1259 OID 16422)
+-- Name: Cook; Type: TABLE; Schema: public; Owner: csc301breadwiener
+--
+
+CREATE TABLE public."Cook" (
+    "CookID" integer NOT NULL,
+    "Cook Rating" numeric(4,0)
+);
+
+
+ALTER TABLE public."Cook" OWNER TO csc301breadwiener;
+
+--
+-- TOC entry 203 (class 1259 OID 16505)
+-- Name: Cook Rating; Type: TABLE; Schema: public; Owner: csc301breadwiener
+--
+
+CREATE TABLE public."Cook Rating" (
+    "CookID" integer NOT NULL,
+    "ReviewerID" integer NOT NULL,
+    "Comments" text,
+    "Rating" integer
+);
+
+
+ALTER TABLE public."Cook Rating" OWNER TO csc301breadwiener;
+
+--
+-- TOC entry 199 (class 1259 OID 16443)
+-- Name: Listing; Type: TABLE; Schema: public; Owner: csc301breadwiener
+--
+
+CREATE TABLE public."Listing" (
+    "ListingID" integer NOT NULL,
+    "CookID" integer,
+    "Food Name" text,
+    "Price" numeric,
+    "Location" text,
+    "Image" text
+);
+
+
+ALTER TABLE public."Listing" OWNER TO csc301breadwiener;
+
+--
+-- TOC entry 201 (class 1259 OID 16474)
+-- Name: Listing Tags; Type: TABLE; Schema: public; Owner: csc301breadwiener
+--
+
+CREATE TABLE public."Listing Tags" (
+    "ListingID" integer NOT NULL,
+    "Tag" text NOT NULL
+);
+
+
+ALTER TABLE public."Listing Tags" OWNER TO csc301breadwiener;
+
+--
+-- TOC entry 200 (class 1259 OID 16456)
+-- Name: Order; Type: TABLE; Schema: public; Owner: csc301breadwiener
+--
+
+CREATE TABLE public."Order" (
+    "ClientID" integer NOT NULL,
+    "ListingID" integer NOT NULL,
+    "Status" text,
+    "Time of Order" timestamp(4) without time zone
+);
+
+
+ALTER TABLE public."Order" OWNER TO csc301breadwiener;
+
+--
+-- TOC entry 196 (class 1259 OID 16404)
+-- Name: User; Type: TABLE; Schema: public; Owner: csc301breadwiener
+--
+
+CREATE TABLE public."User" (
+    "UserID" integer NOT NULL,
+    "Password" text NOT NULL,
+    "FName" text,
+    "LName" text
+);
+
+
+ALTER TABLE public."User" OWNER TO csc301breadwiener;
+
+--
+-- TOC entry 3845 (class 0 OID 16412)
+-- Dependencies: 197
+-- Data for Name: Client; Type: TABLE DATA; Schema: public; Owner: csc301breadwiener
+--
+
+COPY public."Client" ("ClientID", "Client Rating") FROM stdin;
+11	7
+12	8
+13	8
+14	8
+15	9
+\.
+
+
+--
+-- TOC entry 3850 (class 0 OID 16487)
+-- Dependencies: 202
+-- Data for Name: Client Ratings; Type: TABLE DATA; Schema: public; Owner: csc301breadwiener
+--
+
+COPY public."Client Ratings" ("ClientID", "ReviewerID", "Comments", "Rating") FROM stdin;
+\.
+
+
+--
+-- TOC entry 3846 (class 0 OID 16422)
+-- Dependencies: 198
+-- Data for Name: Cook; Type: TABLE DATA; Schema: public; Owner: csc301breadwiener
+--
+
+COPY public."Cook" ("CookID", "Cook Rating") FROM stdin;
+1	1
+2	2
+3	3
+4	5
+5	7
+6	8
+7	8
+8	8
+9	2
+10	4
+\.
+
+
+--
+-- TOC entry 3851 (class 0 OID 16505)
+-- Dependencies: 203
+-- Data for Name: Cook Rating; Type: TABLE DATA; Schema: public; Owner: csc301breadwiener
+--
+
+COPY public."Cook Rating" ("CookID", "ReviewerID", "Comments", "Rating") FROM stdin;
+\.
+
+
+--
+-- TOC entry 3847 (class 0 OID 16443)
+-- Dependencies: 199
+-- Data for Name: Listing; Type: TABLE DATA; Schema: public; Owner: csc301breadwiener
+--
+
+COPY public."Listing" ("ListingID", "CookID", "Food Name", "Price", "Location", "Image") FROM stdin;
+1	1	Chicken Nuggets\n	3.00	Toronto\n	Cool\n
+2	3	Sushi\n	3.50	Scarborough	Not Cool
+3	4	Sushi	40.00	Narnia\n	Okay
+4	4	Fried Rice	12.00	Oz	Reddit
+5	2	Chicken Curry	2100.00	Risky Reels	r/UofT
+6	7	Hamburger	5.00	Summoner's Rift	Mickey Mouse
+7	6	Holy Water	1.00	San Andreas	GTA
+8	3	Jesus Juice	0.50	Romania	No
+9	5	Mr Clean's Magic Eraser	35.00	India	I
+10	8	Dota 2	5.96	Valve	hate
+11	9	CSC369	8.32	SS2117	this
+12	6	Raymond	1000000.00	Raymond's House	fuk u raymond
+13	3	Ronald Trump	4.00	Fight House	hi
+14	3	Old Spice	12.00	Terry Crews's room	ey
+15	10	Terry Crews	1.00	Terry Crews's House	A THOUSAND MILES
+16	9	Chicken Salad	3.01	Tilted Towers	some image link
+17	8	Chinese Fried Rice	2.55	Toronto	some image link
+\.
+
+
+--
+-- TOC entry 3849 (class 0 OID 16474)
+-- Dependencies: 201
+-- Data for Name: Listing Tags; Type: TABLE DATA; Schema: public; Owner: csc301breadwiener
+--
+
+COPY public."Listing Tags" ("ListingID", "Tag") FROM stdin;
+4	Chinese
+4	Vegetarian
+5	Indian
+12	Yes
+12	Chinese
+12	Ye
+17	Chinese
+\.
+
+
+--
+-- TOC entry 3848 (class 0 OID 16456)
+-- Dependencies: 200
+-- Data for Name: Order; Type: TABLE DATA; Schema: public; Owner: csc301breadwiener
+--
+
+COPY public."Order" ("ClientID", "ListingID", "Status", "Time of Order") FROM stdin;
+14	6	Order received	2018-10-22 21:05:33
+11	2	fukTasibir	2018-10-22 12:05:16
+13	4	Canceled	2018-10-22 20:05:16
+\.
+
+
+--
+-- TOC entry 3844 (class 0 OID 16404)
+-- Dependencies: 196
+-- Data for Name: User; Type: TABLE DATA; Schema: public; Owner: csc301breadwiener
+--
+
+COPY public."User" ("UserID", "Password", "FName", "LName") FROM stdin;
+1	yestan123	Sean	Geng
+2	asd123	Yeeee	Noooo
+3	bestpassword	First	Notfirst
+4	ahhhhhhh	Ray	Mond
+5	leagueoflegends123	Mike	Ael
+6	nextbestpassword2018	Rib	Sat
+7	1234	Bruce	Wayne
+8	1234	Clarke	Kent
+9	1234	Where's	Waldo
+10	1234	Barry	Alan
+11	3456	Clients\n	Are11to15
+12	3456	xxx	tentacion
+13	3456	maple	story
+14	3456	runningoutof	names
+15	3456	finally	done
+\.
+
+
+--
+-- TOC entry 3710 (class 2606 OID 16494)
+-- Name: Client Ratings Client Ratings_pkey; Type: CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Client Ratings"
+    ADD CONSTRAINT "Client Ratings_pkey" PRIMARY KEY ("ClientID", "ReviewerID");
+
+
+--
+-- TOC entry 3700 (class 2606 OID 16416)
+-- Name: Client Client_pkey; Type: CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Client"
+    ADD CONSTRAINT "Client_pkey" PRIMARY KEY ("ClientID");
+
+
+--
+-- TOC entry 3712 (class 2606 OID 16512)
+-- Name: Cook Rating Cook Rating_pkey; Type: CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Cook Rating"
+    ADD CONSTRAINT "Cook Rating_pkey" PRIMARY KEY ("CookID", "ReviewerID");
+
+
+--
+-- TOC entry 3702 (class 2606 OID 16426)
+-- Name: Cook Cook_pkey; Type: CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Cook"
+    ADD CONSTRAINT "Cook_pkey" PRIMARY KEY ("CookID");
+
+
+--
+-- TOC entry 3708 (class 2606 OID 16481)
+-- Name: Listing Tags Listing Tags_pkey; Type: CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Listing Tags"
+    ADD CONSTRAINT "Listing Tags_pkey" PRIMARY KEY ("ListingID", "Tag");
+
+
+--
+-- TOC entry 3704 (class 2606 OID 16450)
+-- Name: Listing Listing_pkey; Type: CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Listing"
+    ADD CONSTRAINT "Listing_pkey" PRIMARY KEY ("ListingID");
+
+
+--
+-- TOC entry 3706 (class 2606 OID 16463)
+-- Name: Order Order_pkey; Type: CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Order"
+    ADD CONSTRAINT "Order_pkey" PRIMARY KEY ("ClientID", "ListingID");
+
+
+--
+-- TOC entry 3698 (class 2606 OID 16411)
+-- Name: User User_pkey; Type: CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."User"
+    ADD CONSTRAINT "User_pkey" PRIMARY KEY ("UserID");
+
+
+--
+-- TOC entry 3713 (class 2606 OID 16417)
+-- Name: Client ClientID References UserID; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Client"
+    ADD CONSTRAINT "ClientID References UserID" FOREIGN KEY ("ClientID") REFERENCES public."User"("UserID");
+
+
+--
+-- TOC entry 3861 (class 0 OID 0)
+-- Dependencies: 3713
+-- Name: CONSTRAINT "ClientID References UserID" ON "Client"; Type: COMMENT; Schema: public; Owner: csc301breadwiener
+--
+
+COMMENT ON CONSTRAINT "ClientID References UserID" ON public."Client" IS 'ye';
+
+
+--
+-- TOC entry 3716 (class 2606 OID 16464)
+-- Name: Order ClientID references ClientID in Client; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Order"
+    ADD CONSTRAINT "ClientID references ClientID in Client" FOREIGN KEY ("ClientID") REFERENCES public."Client"("ClientID");
+
+
+--
+-- TOC entry 3719 (class 2606 OID 16495)
+-- Name: Client Ratings ClientID references ClientID in Client; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Client Ratings"
+    ADD CONSTRAINT "ClientID references ClientID in Client" FOREIGN KEY ("ClientID") REFERENCES public."Client"("ClientID");
+
+
+--
+-- TOC entry 3714 (class 2606 OID 16427)
+-- Name: Cook CookID References UserID; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Cook"
+    ADD CONSTRAINT "CookID References UserID" FOREIGN KEY ("CookID") REFERENCES public."User"("UserID");
+
+
+--
+-- TOC entry 3715 (class 2606 OID 16451)
+-- Name: Listing CookID references CookID in Cook; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Listing"
+    ADD CONSTRAINT "CookID references CookID in Cook" FOREIGN KEY ("CookID") REFERENCES public."Cook"("CookID");
+
+
+--
+-- TOC entry 3721 (class 2606 OID 16513)
+-- Name: Cook Rating CookID references CookID in Cook; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Cook Rating"
+    ADD CONSTRAINT "CookID references CookID in Cook" FOREIGN KEY ("CookID") REFERENCES public."Cook"("CookID");
+
+
+--
+-- TOC entry 3718 (class 2606 OID 16482)
+-- Name: Listing Tags ListingID References ListingID in Listing; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Listing Tags"
+    ADD CONSTRAINT "ListingID References ListingID in Listing" FOREIGN KEY ("ListingID") REFERENCES public."Listing"("ListingID");
+
+
+--
+-- TOC entry 3717 (class 2606 OID 16469)
+-- Name: Order ListingID references ListingID in Listing; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Order"
+    ADD CONSTRAINT "ListingID references ListingID in Listing" FOREIGN KEY ("ListingID") REFERENCES public."Listing"("ListingID");
+
+
+--
+-- TOC entry 3722 (class 2606 OID 16518)
+-- Name: Cook Rating ReviewerID references ClientID in Client; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Cook Rating"
+    ADD CONSTRAINT "ReviewerID references ClientID in Client" FOREIGN KEY ("ReviewerID") REFERENCES public."Client"("ClientID");
+
+
+--
+-- TOC entry 3720 (class 2606 OID 16500)
+-- Name: Client Ratings ReviewerID references CookID in Cook; Type: FK CONSTRAINT; Schema: public; Owner: csc301breadwiener
+--
+
+ALTER TABLE ONLY public."Client Ratings"
+    ADD CONSTRAINT "ReviewerID references CookID in Cook" FOREIGN KEY ("ReviewerID") REFERENCES public."Cook"("CookID");
+
+
+--
+-- TOC entry 3859 (class 0 OID 0)
+-- Dependencies: 3
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: csc301breadwiener
+--
+
+REVOKE ALL ON SCHEMA public FROM rdsadmin;
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+GRANT ALL ON SCHEMA public TO csc301breadwiener;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2018-10-27 14:09:35
+
+--
+-- PostgreSQL database dump complete
+--
+
