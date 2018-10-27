@@ -36,7 +36,6 @@ def mark_as_complete(clientID, listingID):
         """.format(listing_table_name, listing_col_status, completed, \
                         listing_col_listing_id, str(listingID), listing_col_client_id, str(clientID))
 
-
     cur = conn.cursor()
     try:
         cur.execute(sql)
