@@ -17,9 +17,16 @@ def search(search_query):
     # separate words in search_query with '+' in place of spaces
     search_terms = search_query.split('+')
 
-    matched_rows_by_name = get_rows_from_name(search_terms)
+    # want to remove whitespace and empty elements from the list
+    search_terms_filtered = []
 
-    matched_rows_by_tag = get_rows_from_tag(search_terms)
+    for search_term in search_terms:
+        if not search_term.isspace() and not search_term == '':
+            search_terms_filtered.append(search_term)
+
+    matched_rows_by_name = get_rows_from_name(search_terms_filtered)
+
+    matched_rows_by_tag = get_rows_from_tag(search_terms_filtered)
 
     matched_rows = matched_rows_by_name + matched_rows_by_tag
 
