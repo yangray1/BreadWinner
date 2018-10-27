@@ -28,7 +28,6 @@ app = Flask(__name__)
 conn = psycopg2.connect(host="mydbinstance.cqzm55sjgiup.us-east-1.rds.amazonaws.com", database="csc301breadwiener",
 user="csc301breadwiener", password="team7ithink")
 
-cur = conn.cursor()
 
 
 
@@ -53,6 +52,7 @@ a key "tagList" which is a list of tags:
 
 """
 def addToDB(json_data):
+	cur = conn.cursor()
 	json_dict = json_data
 	list_id = getListId()
 	cook_id = json_dict[listing_cook_id_col]
@@ -73,6 +73,7 @@ def addToDB(json_data):
 Adds a list of tags tag_list for a given listing with listing_id to the database
 """	
 def addTags(tag_list, listing_id):
+	cur = conn.cursor()
 	for x in tag_list:
 		sql = "INSERT INTO {} VALUES {}".format(encase_in_quotes(listing_tag_table_name), str((listing_id, x)))
 		cur.execute(sql)
@@ -81,6 +82,7 @@ def addTags(tag_list, listing_id):
 	
 """ Returns an unused listing_id """
 def getListId():
+	cur = conn.cursor()
 	sql = "SELECT max({}) FROM {}".format(encase_in_quotes(listing_id_col_in_listing_table), encase_in_quotes(listing_table_name))
 	cur.execute(sql)
 	maxID = cur.fetchone()
@@ -91,6 +93,7 @@ def getListId():
 		
 		
 def printTables():
+	cur = conn.cursor()
 	strout = "--------------------------ListingTable---------------------------<br>"
 	sql = "SELECT * FROM {}".format( encase_in_quotes(listing_table_name))
 	cur.execute(sql)
