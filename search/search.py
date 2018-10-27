@@ -34,7 +34,7 @@ def search(search_query):
 
     rows_to_json(unique_matched_rows)  # want to convert each row into a JSON string
 
-    return ''.join(unique_matched_rows)  # convert to string before returning
+    return simplejson.dumps({'data': unique_matched_rows})  # convert to string before returning
 
 
 def get_rows_from_name(search_terms):
