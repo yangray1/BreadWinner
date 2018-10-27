@@ -11,7 +11,7 @@ except Exception as e:
     print("ERROR: Cannot connect to database")
 
 
-@app.route("/markComplete/<int:listing_id>", methods = ['GET'])
+@app.route("/api/markComplete/<int:listing_id>", methods = ['GET'])
 def mark_as_complete(listing_id):
     """ A function that changes the status of the order with listing id listing_id to complete.
         Returns "Done" on a sucessful change of the listing id's order to complete.
