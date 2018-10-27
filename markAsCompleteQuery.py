@@ -16,8 +16,8 @@ def mark_as_complete(listing_id):
     """ A function that changes the status of the order with listing id listing_id to complete.
         Returns "Done" on a sucessful change of the listing id's order to complete.
     
-    @param listing_id: the listing id number to delete.
-    @rtype: str
+        @param listing_id: the listing id number to delete.
+        @rtype: str
 
     """
     cur = conn.cursor()
