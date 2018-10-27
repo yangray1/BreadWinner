@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     new SearchFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_search);
         }
+
+
     }
 
     @Override
@@ -60,9 +62,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.nav_popular_menus:
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        //new PopMenusFragment()).commit();
+                //new PopMenusFragment()).commit();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FoodNearMeFragment()).commit();
+                        new FoodListingNearMe()).commit();
                 break;
             case R.id.nav_active:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -76,4 +78,3 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
 
 }
-
