@@ -13,7 +13,7 @@ conn = psycopg2.connect(host="mydbinstance.cqzm55sjgiup.us-east-1.rds.amazonaws.
 
 
 @app.route('/api/cancel/<int:clientId>/<int:listingId>', methods=['DELETE'])
-def search(clientId, listingId):
+def cancel_order(clientId, listingId):
     """
     Return a string representation of a list of JSON objects. This list contains
     objects that correspond to listings that match names or tags in the search query.
