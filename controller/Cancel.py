@@ -2,6 +2,10 @@ from flask import Flask
 import psycopg2
 import simplejson
 
+
+
+
+
 app = Flask(__name__)
 
 conn = psycopg2.connect(host="mydbinstance.cqzm55sjgiup.us-east-1.rds.amazonaws.com", database="csc301breadwiener",
@@ -9,7 +13,7 @@ conn = psycopg2.connect(host="mydbinstance.cqzm55sjgiup.us-east-1.rds.amazonaws.
 
 
 @app.route('/api/cancel/<int:clientId>/<int:listingId>', methods=['DELETE'])
-def cancel(clientId, listingId):
+def cancel_order(clientId, listingId):
     """
     Return a string representation of a list of JSON objects. This list contains
     objects that correspond to listings that match names or tags in the search query.
@@ -19,10 +23,11 @@ def cancel(clientId, listingId):
 
     if in_progress:
         cancel_order(clientId, listingId)
+        order_to_json(in_progress)  # want to convert each row into a JSON string
 
-    order_to_json(in_progress)  # want to convert each row into a JSON string
-
-    return ''.join(in_progress)  # convert to string before returning
+        return ''.join(simplejson.dumps({'Deleted': {in_progress}}))  # convert to string before returning
+    else:
+        return ''.join(simplejson.dumps({'Deleted': None}))
 
 
 def get_in_progress_order(clientId, listingId):
