@@ -18,14 +18,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        System.out.println("new act");
 
+        // set up the toolbar with the navigation button - i.e. the icon with 3 vertical bars
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar); // set up the toolbar with the navigation button
+        setSupportActionBar(toolbar);
 
-        drawer = findViewById(R.id.drawer_layout); // drawer layout contains the menu items
+        // drawer layout contains the menu items including search, popular near you, active orders
+        drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        // sets the drawer menu items
         navigationView.setNavigationItemSelectedListener(this);
+
+        /*****************************************************************************************
+         * TODO: YOU NEED TO ADD CODE WHEN BACKEND IMPLEMENTED THAT COUNTS NUMBER OF ACTIVE ORDERS.
+         * DEPENDING ON NUMBER OF ACTIVE ORDERS, NAVIGATION MENU MAY SHOW MORE THAN ONE ACTIVE
+         * ORDER.
+         *****************************************************************************************/
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -44,6 +52,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
     }
 
+    /**
+     * This function modifies the "back press" to close the navigation drawer menu when the drawer
+     * is open. Otherwise, if the drawer is already closed, use the default "back press"
+     */
     @Override
     public void onBackPressed() {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
@@ -53,6 +65,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         }
     }
 
+    /**
+     * Invoked when setNavigationItemSelectedListener is called above. Routes each drawer menu
+     * item to its respective fragments.
+     * @param menuItem - the drawer menu
+     * @return
+     */
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
         switch(menuItem.getItemId()) {
