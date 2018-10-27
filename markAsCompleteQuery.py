@@ -8,7 +8,7 @@ try:
     conn = psycopg2.connect(host="mydbinstance.cqzm55sjgiup.us-east-1.rds.amazonaws.com", 
             database="csc301breadwiener",  user = "csc301breadwiener", password="team7ithink") 
 except Exception as e:
-    print("ERROR: Cannot connect to database")
+    raise Exception(e)
 
 
 @app.route("/api/markComplete/<int:listing_id>", methods = ['GET'])
@@ -25,13 +25,13 @@ def mark_as_complete(listing_id):
         cur.execute(
         """
             UPDATE public.\"Order\" 
-            SET \"Status\" = \'fukTasibir\'
+            SET \"Status\" = \'Completed\'
             WHERE \"ListingID\" = 2
         """, (str(listing_id)))
 
         conn.commit()
     except Exception as e:
-        print("ERROR: Could not query") 
+        raise Exception(e)
 
     return "Done"
 
