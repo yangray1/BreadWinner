@@ -1,11 +1,10 @@
-from flask import Flask, jsonify
+from flask import Flask
 app = Flask(__name__) # instantiate flask, pass in current module
 import psycopg2
 
 
 
 #------These are macros for column names------- 
-
 listing_table_name = "\"Order\"" 
 listing_col_status = "\"Status\""
 listing_col_listing_id = "\"ListingID\""
@@ -30,12 +29,12 @@ def mark_as_complete(clientID, listingID):
     """
 
     sql = \
-    """
-        UPDATE public.{}
-        SET {} = {}
-        WHERE {} = {} AND {} = {}
-    """.format(listing_table_name, listing_col_status, completed, \
-                    listing_col_listing_id, str(listingID), listing_col_client_id, str(clientID))
+        """
+            UPDATE public.{}
+            SET {} = {}
+            WHERE {} = {} AND {} = {}
+        """.format(listing_table_name, listing_col_status, completed, \
+                        listing_col_listing_id, str(listingID), listing_col_client_id, str(clientID))
 
 
     cur = conn.cursor()
@@ -45,6 +44,9 @@ def mark_as_complete(clientID, listingID):
     except Exception as e:
         raise Exception(e)
 
+    # Check to see if a row in the database has been updated.
+    if cur.rowcount == 0:
+        raise Exception("The status of listing id's order was not changed. ClientID or ListingID may be out of range.")
     return "Success"
 
 if __name__ == "__main__":
