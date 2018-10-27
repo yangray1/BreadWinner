@@ -23,10 +23,11 @@ def search(clientId, listingId):
 
     if in_progress:
         cancel_order(clientId, listingId)
+        order_to_json(in_progress)  # want to convert each row into a JSON string
 
-    order_to_json(in_progress)  # want to convert each row into a JSON string
-
-    return ''.join(simplejson.dumps({in_progress}))  # convert to string before returning
+        return ''.join(simplejson.dumps({in_progress}))  # convert to string before returning
+    else:
+        return "404: listing not found"
 
 
 def get_in_progress_order(clientId, listingId):
