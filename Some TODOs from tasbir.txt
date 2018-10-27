@@ -1,0 +1,18 @@
+-Should change DB names to fit standard
+-Should decouple the queries from the DB names
+-Should write tests
+-Should be more specific on how JSON works for adding
+-Should handle error checking for my API
+
+
+Adding a listing Json format :
+
+{
+	cookid_col: int
+	image: text
+	food_name: text
+	price_col: decimal
+	location_col: text
+	"tags": [text]
+}
+
