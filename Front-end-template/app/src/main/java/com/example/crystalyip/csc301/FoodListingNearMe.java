@@ -9,14 +9,28 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.TextView;
 
-public class FoodListingNearMe extends Fragment {
+public class FoodListingNearMe extends Fragment implements View.OnClickListener{
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.menu_item, container, false);
-
+        ImageView directions = (ImageView) view.findViewById(R.id.food_image);
+        directions.setOnClickListener(this);
         return view;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.food_image:
+                // launch the map fragment
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new FragmentFoodDetail()).commit();
+                break;
+        }
     }
 
 //    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
