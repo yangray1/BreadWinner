@@ -1,55 +1,70 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment">
+    tools:context=".ProfileFragment"
+    android:id="@+id/relativeLayout3">
 
     <!-- TODO: Update blank fragment layout -->
     <View
         android:id="@+id/myRectangleView"
         android:layout_width="match_parent"
-        android:layout_height="228dp"
-        android:layout_marginBottom="0dp"
-        android:background="@drawable/rectangle" />
+        android:layout_height="226dp"
+        android:background="@drawable/rectangle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <View
         android:id="@+id/view3"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="131dp"
-        android:layout_marginLeft="131dp"
-        android:layout_marginTop="19dp"
-        android:background="@drawable/main_profile" />
+        android:layout_marginStart="132dp"
+        android:layout_marginLeft="132dp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/main_profile"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/chef_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/heading_label10"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="128dp"
+        android:layout_marginLeft="112dp"
         android:layout_marginTop="160dp"
         android:fontFamily="@font/nunito_bold"
         android:text="HOWIE ZHANG"
         android:textColor="#ffffff"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/chef_description"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/heading_label10"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="97dp"
-        android:layout_marginTop="160dp"
+        android:layout_height="19dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="188dp"
         android:fontFamily="@font/nunito_bold"
-        android:text="What's cooking good looking"
+        android:text="I like to cook chinese food and desserts"
         android:textColor="#ffffff"
-        android:textSize="14sp" />
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/star"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="250dp"
+        android:layout_marginLeft="240dp"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/star_icon"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
-</RelativeLayout>
+</android.support.constraint.ConstraintLayout>
