@@ -13,10 +13,6 @@
         android:layout_height="77dp"
         android:layout_marginLeft="10dp"
         android:layout_marginTop="58dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="12dp"
-        android:layout_marginTop="22dp"
         android:fontFamily="@font/nunito_bold"
         android:text="10:40 EST"
         android:textColor="#555555"
@@ -41,10 +37,6 @@
         android:layout_height="77dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="156dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="106dp"
         android:fontFamily="@font/nunito_bold"
         android:text="10:43 EST"
         android:textColor="#555555"
@@ -63,13 +55,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="79dp"
-        android:layout_marginLeft="79dp"
-        android:layout_marginTop="338dp"
-        android:background="@drawable/circle_bg" />
 
     <TextView
         android:id="@+id/heading_label4"
@@ -77,10 +62,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="58dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="132dp"
-        android:layout_marginTop="22dp"
         android:fontFamily="@font/nunito_bold"
         android:text="ORDER PLACED"
         android:textColor="#555555"
@@ -94,10 +75,6 @@
         android:layout_height="77dp"
         android:layout_marginLeft="130dp"
         android:layout_marginTop="87dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="132dp"
-        android:layout_marginTop="51dp"
         android:fontFamily="@font/nunito_bold"
         android:text="Your request has been sent."
         android:textColor="#555555"
@@ -115,13 +92,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="81dp"
-        android:layout_marginLeft="81dp"
-        android:layout_marginTop="19dp"
-        android:background="@drawable/circle_bg" />
 
     <TextView
         android:id="@+id/heading_label5"
@@ -129,10 +99,6 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="128dp"
         android:layout_marginTop="156dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="106dp"
         android:fontFamily="@font/nunito_bold"
         android:text="ORDER ACCEPTED"
         android:textColor="#555555"
@@ -149,10 +115,6 @@
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="139dp"
         android:fontFamily="@font/nunito_bold"
         android:text="Your order hass been accepted and your credit card has been charged."
         android:textColor="#555555"
@@ -169,10 +131,6 @@
         android:layout_height="77dp"
         android:layout_marginLeft="128dp"
         android:layout_marginTop="249dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="199dp"
         android:fontFamily="@font/nunito_bold"
         android:text="TIME OF PICKUP: 11:00 EST"
         android:textColor="#555555"
@@ -190,22 +148,15 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="@font/nunito_bold"
-        android:text="LOCATION: 256 McCaul St."
-        android:textColor="#555555"
+        android:text="@string/title_location"
+        android:textColor="@color/colorAccent"
         android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.563"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="216dp"
-        android:fontFamily="@font/nunito_bold"
-        android:text="@string/title_location"
-        android:textColor="@color/colorAccent"
-        android:textSize="13sp" />
+
 
     <TextView
         android:id="@+id/heading_label12"
@@ -213,10 +164,6 @@
         android:layout_height="77dp"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="313dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="272dp"
         android:fontFamily="@font/nunito_bold"
         android:text="11:00 EST"
         android:textColor="#555555"
@@ -235,13 +182,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="80dp"
-        android:layout_marginLeft="80dp"
-        android:layout_marginTop="103dp"
-        android:background="@drawable/circle_bg" />
 
     <TextView
         android:id="@+id/heading_label10"
@@ -252,10 +192,6 @@
         android:layout_marginTop="312dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="132dp"
-        android:layout_marginTop="273dp"
         android:fontFamily="@font/nunito_bold"
         android:text="READY FOR PICKUP"
         android:textColor="#555555"
@@ -278,14 +214,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintLeft_toLeftOf="parent" />
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="79dp"
-        android:layout_marginLeft="79dp"
-        android:layout_marginTop="271dp"
-        android:background="@drawable/circle_bg" />
-  
+
     <TextView
         android:id="@+id/heading_label13"
         android:layout_width="wrap_content"
@@ -295,10 +224,6 @@
         android:layout_marginTop="140dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:layout_alignTop="@+id/heading_label10"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="132dp"
-        android:layout_marginTop="65dp"
         android:fontFamily="@font/nunito_bold"
         android:text="ORDER PICKED UP"
         android:textColor="#555555"
@@ -316,10 +241,6 @@
         android:layout_height="77dp"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="454dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="338dp"
         android:fontFamily="@font/nunito_bold"
         android:text="11:01 EST"
         android:textColor="#555555"
@@ -328,52 +249,6 @@
         app:layout_constraintLeft_toLeftOf="parent" />
 
 
-    <View
-        android:id="@+id/myRectangleView"
-        android:layout_width="match_parent"
-        android:layout_height="92dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="0dp"
-        android:layout_marginTop="419dp"
-        android:background="@drawable/rectangle" />
 
-    <View
-        android:layout_width="43dp"
-        android:layout_height="43dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="24dp"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="434dp"
-        android:background="@drawable/profile_pic" />
-
-
-    <TextView
-        android:id="@+id/food_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/heading_label10"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="91dp"
-        android:layout_marginTop="177dp"
-        android:fontFamily="@font/nunito_bold"
-        android:text="FRIED RICE"
-        android:textColor="#ffffff"
-        android:textSize="18sp" />
-
-    <TextView
-        android:id="@+id/chef_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/heading_label10"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="93dp"
-        android:layout_marginTop="160dp"
-        android:fontFamily="@font/nunito_bold"
-        android:text="YOUR CHEF: HOWIE ZHANG"
-        android:textColor="#ffffff"
-        android:textSize="10sp" />
 
 </android.support.constraint.ConstraintLayout>

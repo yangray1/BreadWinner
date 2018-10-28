@@ -9,15 +9,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.Toast;
-
-import com.example.crystalyip.csc301.Interface.ItemClickListener;
-import com.example.crystalyip.csc301.Model.FoodItem;
-import com.example.crystalyip.csc301.ViewHolder.FoodViewListHolder;
-import com.firebase.ui.database.FirebaseIndexRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.squareup.picasso.Picasso;
 
 public class FoodListingNearMe extends Fragment {
 
