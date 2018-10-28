@@ -24,7 +24,8 @@ def mark_as_complete(clientID, listingID):
     """ A function that changes the status of the order with listing id listing_id to complete.
         Returns "Success" on a sucessful change of the listing id's order to complete.
     
-        @param listing_id: the listing id number to delete.
+        @param clientID: the client id number to change the status.
+        @param listingID: the listing id number to change the status.
         @rtype: str
     """
 
