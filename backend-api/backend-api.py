@@ -288,10 +288,21 @@ def get_rows_from_name(search_terms):
 
     for search_term in search_terms:
         search_names = conn.cursor()
-        search_names.execute("SELECT t1.\"ListingID\", t1.\"CookID\", t1.\"Food Name\", t1.\"Price\","
-                             " t1.\"Location\", t1.\"Image\" FROM public.\"Listing\" as t1"
-                             " FULL OUTER JOIN public.\"Listing Tags\" as t2 ON t1.\"ListingID\" = t2.\"ListingID\" "
-                             "WHERE UPPER(t1.\"Food Name\") LIKE UPPER(\'%{}%\')".format(search_term))
+        search_names.execute("SELECT t1.{}, t1.{}, t1.{}, t1.{},"
+                             " t1.{}, t1.{} FROM public.{} as t1"
+                             " FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{} "
+                             "WHERE UPPER(t1.{}) LIKE UPPER(\'%{}%\')".format(listing_listing_id_col,
+                                                                              listing_cook_id_col,
+                                                                              listing_food_name_col,
+                                                                              listing_price_col,
+                                                                              listing_location_col,
+                                                                              listing_image_col,
+                                                                              listing_table_name,
+                                                                              listing_tags_table_name,
+                                                                              listing_listing_id_col,
+                                                                              listing_tags_listing_id_col,
+                                                                              listing_food_name_col,
+                                                                              search_term))
 
         search_names_row = search_names.fetchone()
 
@@ -312,10 +323,21 @@ def get_rows_from_tag(search_terms):
 
     for search_term in search_terms:
         search_tags = conn.cursor()
-        search_tags.execute("SELECT t1.\"ListingID\", t1.\"CookID\", t1.\"Food Name\", t1.\"Price\","
-                            " t1.\"Location\", t1.\"Image\" FROM public.\"Listing\" as t1"
-                            " FULL OUTER JOIN public.\"Listing Tags\" as t2 ON t1.\"ListingID\" = t2.\"ListingID\" "
-                            "WHERE UPPER(t2.\"Tag\") LIKE UPPER(\'%{}%\')".format(search_term))
+        search_tags.execute("SELECT t1.{}, t1.{}, t1.{}, t1.{},"
+                             " t1.{}, t1.{} FROM public.{} as t1"
+                             " FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{} "
+                             "WHERE UPPER(t2.{}) LIKE UPPER(\'%{}%\')".format(listing_listing_id_col,
+                                                                              listing_cook_id_col,
+                                                                              listing_food_name_col,
+                                                                              listing_price_col,
+                                                                              listing_location_col,
+                                                                              listing_image_col,
+                                                                              listing_table_name,
+                                                                              listing_tags_table_name,
+                                                                              listing_listing_id_col,
+                                                                              listing_tags_listing_id_col,
+                                                                              listing_tags_tag_col,
+                                                                              search_term))
 
         search_tags_row = search_tags.fetchone()
 
