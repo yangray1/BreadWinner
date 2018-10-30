@@ -149,8 +149,8 @@ def printTables():
 #--------------------------------------------------- CANCEL ---------------------------------------------------#
 
 
-@app.route('/api/cancel/<int:clientId>/<int:listingId>', methods=['DELETE'])
-def cancel_order(clientId, listingId):
+@app.route('/api/cancel/<int:clientId>/<int:listingId>', methods=['GET'])
+def cancel(clientId, listingId):
     """
     Return a string representation of a list of JSON objects. This list contains
     objects that correspond to listings that match names or tags in the search query.
@@ -160,11 +160,11 @@ def cancel_order(clientId, listingId):
 
     if in_progress:
         cancel_order(clientId, listingId)
-        order_to_json(in_progress)  # want to convert each row into a JSON string
+        output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
-        return ''.join(json.dumps({'Deleted': {in_progress}}))  # convert to string before returning
+        return ''.join(output)  # convert to string before returning
     else:
-        return ''.join(json.dumps({'Deleted': None}))
+        return 'order not found'
 
 
 def get_in_progress_order(clientId, listingId):
@@ -206,16 +206,16 @@ def order_to_json(rows):
     """
     Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
     """
-    for i in range(len(rows)):
-        rows[i] = json.dumps({'ClientID': rows[i][0],
-                                    'ListingID': rows[i][1],
-                                    'Status': rows[i][2]})
-
+    print(rows)
+    return json.dumps({'ClientID': rows[0][0],
+                       'ListingID': rows[0][1],
+                       'Status': rows[0][2]})
 
 #--------------------------------------------------- MARK AS COMPLETE ---------------------------------------------------#
 
 
-completed ="\'Completed\'"
+completed = "\'Completed\'"
+
 
 @app.route("/api/markComplete/<int:clientID>/<int:listingID>", methods=['GET'])
 def mark_as_complete(clientID, listingID):
