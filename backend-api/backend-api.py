@@ -57,6 +57,7 @@ db_password = "team7ithink"
 conn = psycopg2.connect(host=db_host, database=db_name, user=db_user, password=db_password)
 app = Flask(__name__)
 
+
 #--------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
 @app.route('/api/getAllListings', methods=['GET'])
 def getAllListings():
@@ -125,22 +126,18 @@ def addToDB(json_data):
     addTags(tags, list_id)
 
 
-"""
-Adds a list of tags tag_list for a given listing with listing_id to the database
-"""
-
-
 def addTags(tag_list, listing_id):
+    """
+    Adds a list of tags tag_list for a given listing with listing_id to the database
+    """
     cur = conn.cursor()
     for x in tag_list:
         sql = "INSERT INTO {} VALUES {}".format(listing_tags_table_name, str((listing_id, x)))
         cur.execute(sql)
 
 
-""" Returns an unused listing_id """
-
-
 def getListId():
+    """ Returns an unused listing_id """
     cur = conn.cursor()
     sql = "SELECT max({}) FROM {}".format(listing_listing_id_col,
                                           listing_table_name)
@@ -180,8 +177,9 @@ def printTables():
 @app.route('/api/cancel/<int:clientId>/<int:listingId>', methods=['GET'])
 def cancel(clientId, listingId):
     """
-    Return a string representation of a list of JSON objects. This list contains
-    objects that correspond to listings that match names or tags in the search query.
+    Cancels the order with specified client id and listing id and returns it.
+    returns 'order not found' if the client id and listing id do not exist as a key or if the listing has already
+    been canceled or fulfilled.
     """
 
     in_progress = get_in_progress_order(clientId, listingId)
@@ -190,14 +188,14 @@ def cancel(clientId, listingId):
         cancel_order(clientId, listingId)
         output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
-        return ''.join(output)  # convert to string before returning
+        return output  # convert to string before returning
     else:
         return 'order not found'
 
 
 def get_in_progress_order(clientId, listingId):
     """
-    Return a list of listing tuples whose tags correspond to words in search_terms.
+    Return the in progress order that corresponds with ClientId and ListingID
     """
     matched_rows = []
 
@@ -219,7 +217,7 @@ def get_in_progress_order(clientId, listingId):
 
 def cancel_order(clientId, listingId):
     """
-    given a clientId and listingId cancel the order in progress associated with the 2 ids
+    given a clientId and listingId cancel the order in progress associated with them
     """
     order = conn.cursor()
     order.execute(
@@ -232,12 +230,56 @@ def cancel_order(clientId, listingId):
 
 def order_to_json(rows):
     """
-    Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
+    Takes in a list of tupples for the Orders schema and returns a json formated representation of the data.
     """
-    print(rows)
-    return json.dumps({'ClientID': rows[0][0],
-                       'ListingID': rows[0][1],
-                       'Status': rows[0][2]})
+    string = ""
+    for i in range(len(rows)):
+        string += json.dumps({'ClientID': rows[i][0],
+                              'ListingID': rows[i][1],
+                              'Status': rows[i][2],
+                              'DateTime': rows[i][3].__str__()})
+        if i != len(rows) - 1:
+            string += ","
+
+    return string
+
+
+#--------------------------------------------------- getUserOrders ---------------------------------------------------#
+
+
+@app.route('/api/getUserOrders/<int:clientId>', methods=['GET'])
+def getUserOrders(clientId):
+    """
+    Retruns a list of jsons representing tupples in the Orders table for the given client
+    """
+
+    in_progress = queryOrderUsingClientID(clientId)
+
+    output = order_to_json(in_progress)  # want to convert each row into a JSON string
+
+    return "[" + output + "]"  # convert to string before returning
+
+
+def queryOrderUsingClientID(clientId):
+    """
+    Return a list of Order tuples belonging to the client with the given id.
+    """
+    matched_rows = []
+
+    orders = conn.cursor()
+    orders.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
+                   " as t1 WHERE t1.\"ClientID\" = " + str(clientId))
+
+    order_row = orders.fetchone()
+
+    while order_row is not None:
+        matched_rows.append(order_row)
+        order_row = orders.fetchone()
+
+    orders.close()
+
+    return matched_rows
+
 
 #--------------------------------------------------- MARK AS COMPLETE ---------------------------------------------------#
 
