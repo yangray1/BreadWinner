@@ -57,6 +57,34 @@ db_password = "team7ithink"
 conn = psycopg2.connect(host=db_host, database=db_name, user=db_user, password=db_password)
 app = Flask(__name__)
 
+#--------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
+@app.route('/api/getAllListings', methods=['GET'])
+def getAllListings():
+    all_rows = []
+
+    search_all = conn.cursor()
+    search_all.execute("SELECT {}, {}, {}, {},"
+                         " {}, {} FROM public.{}".format(listing_listing_id_col,
+                                                                          listing_cook_id_col,
+                                                                          listing_food_name_col,
+                                                                          listing_price_col,
+                                                                          listing_location_col,
+                                                                          listing_image_col,
+                                                                          listing_table_name))
+
+    single_row = search_all.fetchone()
+
+    while single_row is not None:
+        all_rows.append(single_row)
+        single_row = search_all.fetchone()
+
+    search_all.close()
+
+    rows_to_json(all_rows)  # want to convert each row into a JSON string
+
+    return json.dumps({'data': all_rows})  # convert to string before returning
+
+
 #--------------------------------------------------- ADD LISTING ---------------------------------------------------#
 
 @app.route('/api/add', methods=['GET', 'POST'])
