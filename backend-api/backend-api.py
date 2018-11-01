@@ -125,6 +125,15 @@ def addToDB(json_data):
     loc = json_dict[removeQuotes(listing_location_col)]
     image = json_dict[removeQuotes(listing_image_col)]
     tags = json_dict["tags"]
+    print("======")
+    print(list_id)
+    print(cook_id)
+    print(food_name)
+    print(price)
+    print(loc)
+    print(image)
+
+    print("======")
     inserted = (list_id, cook_id, food_name, price, loc, image)
     sql = "INSERT INTO {} VALUES {}".format(listing_table_name, str(inserted))
     cur.execute(sql)
