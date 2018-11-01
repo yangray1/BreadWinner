@@ -57,6 +57,11 @@ db_password = "team7ithink"
 conn = psycopg2.connect(host=db_host, database=db_name, user=db_user, password=db_password)
 app = Flask(__name__)
 
+##################################################
+def removeQuotes(stringy):
+    """ Removes the first and last characters (double quotes) from a string, and then return it """
+    return stringy[1:-1]
+
 
 #--------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
 @app.route('/api/getAllListings', methods=['GET'])
@@ -112,12 +117,13 @@ a key "tagList" which is a list of tags:
 def addToDB(json_data):
     cur = conn.cursor()
     json_dict = json_data
+    print(json_dict)
     list_id = getListId()
-    cook_id = json_dict[listing_cook_id_col]
-    food_name = json_dict[listing_food_name_col]
-    price = json_dict[listing_price_col]
-    loc = json_dict[listing_location_col]
-    image = json_dict[listing_image_col]
+    cook_id = json_dict[removeQuotes(listing_cook_id_col)]
+    food_name = json_dict[removeQuotes(listing_food_name_col)]
+    price = json_dict[removeQuotes(listing_price_col)]
+    loc = json_dict[removeQuotes(listing_location_col)]
+    image = json_dict[removeQuotes(listing_image_col)]
     tags = json_dict["tags"]
     inserted = (list_id, cook_id, food_name, price, loc, image)
     sql = "INSERT INTO {} VALUES {}".format(listing_table_name, str(inserted))
@@ -434,4 +440,5 @@ def rows_to_json(rows):
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    app.run()
+    # host="0.0.0.0", port=80
