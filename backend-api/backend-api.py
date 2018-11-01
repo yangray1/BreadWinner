@@ -129,9 +129,7 @@ def addToDB(json_data):
     inserted = (list_id, cook_id, food_name, price, loc, image)
     #inserted = '(' + list_id + ',' + cook_id + ',' + food_name + ',' + price + ',' + loc + ',' + image + ')'
 
-    inserted_removeu = inserted.encode("ascii", "replace")
-
-    sql = "INSERT INTO {} VALUES {}".format(listing_table_name, inserted_removeu)
+    sql = "INSERT INTO {} VALUES {}".format(listing_table_name, str(inserted).encode("ascii", "replace"))
     cur.execute(sql)
 
     addTags(tags, list_id)
