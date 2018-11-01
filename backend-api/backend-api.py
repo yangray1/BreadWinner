@@ -127,7 +127,7 @@ def addToDB(json_data):
     tags = json_dict["tags"]
 
     sql = "INSERT INTO %s VALUES (%s, %s, %s, %s, %s, %s)"
-	cur.execute(sql, (listing_table_name, list_id, cook_id, food_name, price, loc, image))
+    cur.execute(sql, (listing_table_name, list_id, cook_id, food_name, price, loc, image))
 
     addTags(tags, list_id)
 
