@@ -1,6 +1,7 @@
 package com.example.crystalyip.csc301;
 
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -16,40 +17,116 @@ import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TextView;
 
+import com.example.crystalyip.csc301.Model.Listing;
+import com.example.crystalyip.csc301.ViewHolder.GetRequestTask;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
+
 public class FoodListingNearMe extends Fragment implements View.OnClickListener{
 
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        // reference: https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
-        View view = inflater.inflate(R.layout.fragment_food_near_me, container, false);
+    public static String allListingsURL = "http://18.234.123.109/api/search/raymond";
 
-        String[] listviewTitle = new String[]{
-                "food",
-                "more food",
-                "even more food",
-                "even even more food"
-        };
+    public static String getHTML(String urlToRead) throws Exception {
+        // reference: https://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
+        StringBuilder result = new StringBuilder();
+        URL url = new URL(urlToRead);
+        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+        conn.setRequestMethod("GET");
+        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+        String line;
+        while ((line = rd.readLine()) != null) {
+            result.append(line);
+        }
+        rd.close();
 
-        int[] listviewImage = new int[]{
-                R.drawable.rice, R.drawable.rice, R.drawable.rice, R.drawable.rice
-        };
+//        System.out.println("returning");
+//        System.out.println(result.toString());
+        return result.toString();
+    }
 
+    public static String formatAPIString(String apiString){
+        String remove_new_line = apiString.replace("\\n", "");
+        String remove_extra_backslashes = remove_new_line.replace("\\", "");
+        return remove_extra_backslashes;
+    }
 
+    private static ArrayList<Listing> getAllListings(String allListingsFormatted) {
+        ArrayList<Listing> allListings = new ArrayList<Listing>();
 
-        List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
+        try {
+            JSONObject listingsJSON = new JSONObject(allListingsFormatted);
+            JSONArray listings = listingsJSON.getJSONArray("data");
 
-        for (int i = 0 ; i < 4 ; i++){
-            HashMap<String, String> hm = new HashMap<String, String>();
-            hm.put("listview_title", listviewTitle[i]);
-            hm.put("listview_image", Integer.toString(listviewImage[i]));
-            aList.add(hm);
+            for (int i = 0 ; i < listings.length() ; i++){
+                JSONObject listing = listings.getJSONObject(i);
+
+                Listing listingToAdd = new Listing(
+                        listing.getString("Food Name"),
+                        listing.getInt("ListingID"),
+                        listing.getString("Image"),
+                        listing.getInt("CookID"),
+                        listing.getDouble("Price"),
+                        listing.getString("Location"),
+                        R.drawable.rice);
+
+                allListings.add(listingToAdd);
+            }
+        }
+        catch (Exception e){ // return what we have so far, even if it's just an empty list
+            return allListings;
         }
 
-        String[] from = {"listview_title" , "listview_image"};
+        return allListings;
+    }
+
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+        // Inflate the layout for this fragment
+        // reference: https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        View view = inflater.inflate(R.layout.fragment_food_near_me, container, false);
+
+//        String allListings = "";
+
+//        new GetRequestTask().execute(allListingsURL);
+
+        String allListings = "";
+
+        try {
+            allListings = getHTML(allListingsURL);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+
+        String allListingsFormatted = formatAPIString(allListings);
+
+        ArrayList<Listing> populatedListings = getAllListings(allListingsFormatted);
+
+        ArrayList<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
+
+        for (int i = 0 ; i < populatedListings.size() ; i++){
+            HashMap<String, String> titleImagePair = new HashMap<String, String>();
+            titleImagePair.put("Food Name", populatedListings.get(i).foodName); // TODO: use getters
+            titleImagePair.put("Food Image Drawable", Integer.toString(populatedListings.get(i).imageID)); // TODO: use getters
+            aList.add(titleImagePair);
+            System.out.println(populatedListings.get(i).foodName);
+        }
+
+        String[] from = {"Food Name" , "Food Image Drawable"};
         int[] to = {R.id.food_name, R.id.food_image};
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(),
@@ -71,6 +148,7 @@ public class FoodListingNearMe extends Fragment implements View.OnClickListener{
 
         return view;
     }
+
 
     @Override
     public void onClick(View v) {
