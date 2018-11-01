@@ -20,10 +20,21 @@ import android.widget.TextView;
 import com.example.crystalyip.csc301.Model.Listing;
 import com.example.crystalyip.csc301.ViewHolder.GetRequestTask;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.StatusLine;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -36,30 +47,42 @@ import java.util.List;
 
 public class FoodListingNearMe extends Fragment implements View.OnClickListener{
 
-    public static String allListingsURL = "http://18.234.123.109/api/search/raymond";
+    public static String allListingsURL = "http://18.234.123.109/api/getAllListings";
 
     public static String getHTML(String urlToRead) throws Exception {
         // reference: https://stackoverflow.com/questions/1485708/how-do-i-do-a-http-get-in-java
-        StringBuilder result = new StringBuilder();
-        URL url = new URL(urlToRead);
-        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-        conn.setRequestMethod("GET");
-        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-        String line;
-        while ((line = rd.readLine()) != null) {
-            result.append(line);
-        }
-        rd.close();
+//        StringBuilder result = new StringBuilder();
+//        URL url = new URL(urlToRead);
+//        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+//        conn.setRequestMethod("GET");
+//        BufferedReader rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+//        String line;
+//        while ((line = rd.readLine()) != null) {
+//            result.append(line);
+//        }
+//        rd.close();
+//
+//        return result.toString();
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget= new HttpGet(urlToRead);
 
-//        System.out.println("returning");
-//        System.out.println(result.toString());
-        return result.toString();
+        HttpResponse response = httpclient.execute(httpget);
+
+        if(response.getStatusLine().getStatusCode()==200){
+            String server_response = EntityUtils.toString(response.getEntity());
+            return server_response;
+        } else {
+            System.out.println("damn");
+        }
+        return "";
+
     }
 
     public static String formatAPIString(String apiString){
-        String remove_new_line = apiString.replace("\\n", "");
-        String remove_extra_backslashes = remove_new_line.replace("\\", "");
-        return remove_extra_backslashes;
+        String remove_begin_slash = apiString.replace("\"{", "{");
+        String remove_end_slash = remove_begin_slash.replace("}\"", "}");
+        String remove_extra_slashes = remove_end_slash.replace("\\", "");
+        return remove_extra_slashes;
     }
 
     private static ArrayList<Listing> getAllListings(String allListingsFormatted) {
@@ -113,6 +136,8 @@ public class FoodListingNearMe extends Fragment implements View.OnClickListener{
         }
 
         String allListingsFormatted = formatAPIString(allListings);
+
+        System.out.println(allListingsFormatted);
 
         ArrayList<Listing> populatedListings = getAllListings(allListingsFormatted);
 
