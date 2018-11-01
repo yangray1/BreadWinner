@@ -117,7 +117,7 @@ a key "tagList" which is a list of tags:
 def addToDB(json_data):
     cur = conn.cursor()
     json_dict = json_data
-    print(json_dict)
+
     list_id = getListId()
     cook_id = json_dict[removeQuotes(listing_cook_id_col)]
     food_name = json_dict[removeQuotes(listing_food_name_col)]
@@ -125,15 +125,7 @@ def addToDB(json_data):
     loc = json_dict[removeQuotes(listing_location_col)]
     image = json_dict[removeQuotes(listing_image_col)]
     tags = json_dict["tags"]
-    print("======")
-    print(list_id)
-    print(cook_id)
-    print(food_name)
-    print(price)
-    print(loc)
-    print(image)
 
-    print("======")
     inserted = (list_id, cook_id, food_name, price, loc, image)
     sql = "INSERT INTO {} VALUES {}".format(listing_table_name, str(inserted))
     cur.execute(sql)
