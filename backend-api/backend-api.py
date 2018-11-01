@@ -138,8 +138,8 @@ def addTags(tag_list, listing_id):
     """
     cur = conn.cursor()
     for x in tag_list:
-        sql = "INSERT INTO {} VALUES {}".format(listing_tags_table_name, str((listing_id, x)))
-        cur.execute(sql)
+        sql = "INSERT INTO %s VALUES (%s %s)"
+        cur.execute(sql, (listing_tags_table_name, listing_id, x))
 
 
 def getListId():
