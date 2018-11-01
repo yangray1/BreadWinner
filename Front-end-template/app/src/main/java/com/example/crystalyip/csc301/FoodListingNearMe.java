@@ -1,5 +1,6 @@
 package com.example.crystalyip.csc301;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,19 @@ import org.json.JSONObject;
 
 public class FoodListingNearMe extends Fragment implements View.OnClickListener{
 
-    public static String allListingsURL = "http://18.234.123.109/api/getAllListings";
+    public static String searchURL;/* = "http://18.234.123.109/api/getAllListings";*/
+
+    public FoodListingNearMe() {
+        searchURL = "http://18.234.123.109/api/getAllListings";
+    }
+
+    @SuppressLint("ValidFragment")
+    public FoodListingNearMe(String query) {
+        String formattedQuery = query.replace("\\s","+");
+        searchURL = "http://18.234.123.109/api/search/" + formattedQuery;
+    }
+
+
 
     /**
      * Sends a GET request to the url at urlToRead, and return the string representing the response.
@@ -115,7 +128,7 @@ public class FoodListingNearMe extends Fragment implements View.OnClickListener{
         String allListings = "";
 
         try {
-            allListings = getHTML(allListingsURL);
+            allListings = getHTML(searchURL);
         }
         catch (Exception e){
             e.printStackTrace();
