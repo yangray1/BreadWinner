@@ -1,5 +1,6 @@
 package com.example.crystalyip.csc301.Model;
-
+/**
+ * A Food Listing */
 public class Listing {
     private String foodName;
     private int listingID;
