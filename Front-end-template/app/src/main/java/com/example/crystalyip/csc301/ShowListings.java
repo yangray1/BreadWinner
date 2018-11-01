@@ -29,10 +29,14 @@ public class ShowListings extends Fragment implements View.OnClickListener{
 
     public static String searchURL;/* = "http://18.234.123.109/api/getAllListings";*/
 
+    /**
+     * This "constructor" sets the searchURL to display every listing. */
     public ShowListings() {
         searchURL = "http://18.234.123.109/api/getAllListings";
     }
 
+    /**
+     * This "constructor" sets the searchURL to search for listings matching the query. */
     @SuppressLint("ValidFragment")
     public ShowListings(String query) {
         String formattedQuery = query.replace("\\s","+");

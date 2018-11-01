@@ -22,7 +22,7 @@ public class SearchFragment extends Fragment {
             public void onClick(View v){
                 String searchQuery = getSearchQuery(view); // find what was typed in the edittext field
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FoodListingNearMe(searchQuery)).commit(); // fragment switch
+                        new ShowListings(searchQuery)).commit(); // fragment switch
             }
         });
 
