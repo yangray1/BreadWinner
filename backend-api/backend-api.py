@@ -181,21 +181,21 @@ def printTables():
 
 @app.route('/api/cancel/<int:clientId>/<int:listingId>', methods=['GET'])
 def cancel(clientId, listingId):
-   """
-   Cancels the order with specified client id and listing id and returns it.
-   returns 'order not found' if the client id and listing id do not exist as a key or if the listing has already
-   been canceled or fulfilled.
-   """
+    """
+    Cancels the order with specified client id and listing id and returns it.
+    returns 'order not found' if the client id and listing id do not exist as a key or if the listing has already
+    been canceled or fulfilled.
+    """
 
-   in_progress = get_in_progress_order(clientId, listingId)
+    in_progress = get_in_progress_order(clientId, listingId)
+        
+    if in_progress:
+        cancel_order(clientId, listingId)
+        output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
-   if in_progress:
-       cancel_order(clientId, listingId)
-       output = order_to_json(in_progress)  # want to convert each row into a JSON string
-
-       return output  # convert to string before returning
-   else:
-       return 'order not found'
+        return output  # convert to string before returning
+    else:
+        return 'order not found'
 
 
 def get_in_progress_order(clientId, listingId):
@@ -261,7 +261,7 @@ def getOrderStatus(clientId, listingId):
     in_progress = queryOrderUsingClientID(clientId, listingId)
 
 
-   output = order_to_json(in_progress)  # want to convert each row into a JSON string
+    output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
 
     return output  # convert to string before returning
@@ -277,15 +277,15 @@ def queryOrderUsingClientID(clientId, listingId):
     orders.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
                    " as t1 WHERE t1.\"ClientID\" = " + str(clientId)+ " AND \"ListingID\" = " + str(listingId))
 
-   order_row = orders.fetchone()
+    order_row = orders.fetchone()
 
-   while order_row is not None:
+    while order_row is not None:
        matched_rows.append(order_row)
        order_row = orders.fetchone()
 
-   orders.close()
+    orders.close()
 
-   return matched_rows
+    return matched_rows
 
 
 #--------------------------------------------------- MARK AS COMPLETE ---------------------------------------------------#
@@ -504,14 +504,52 @@ def update_num_orders():
    cur = conn.cursor()
    # update the number of orders here - i.e. get quantity from listing table and ++
 
+# -------------------------------------------------- CHECK HISTORY ----------------------------------------------------#
 
+@app.route("/api/checkHistory/<int:clientID>", methods = ['GET'])
+def checkHistory(clientID):
+    """ 
+        Return a string representation of a list of JSON objects. This list contains
+        objects that correspond to the order history of client id ClientID.
+
+        @param clientID: the client id number.
+        @rtype: str
+    """
+
+    cur = conn.cursor()
+    query = \
+        """
+            SELECT t2.{}, t2.{}, t2.{}, t2.{}
+            FROM public.{} as t1 FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{}
+            WHERE t1.{} LIKE {} AND t1.{} = {}
+        """.format(listing_food_name_col, listing_cook_id_col, listing_price_col, listing_location_col, 
+                    order_table_name, listing_table_name, order_listing_id_col, listing_listing_id_col,
+                    order_status_col, completed, order_client_id_col, str(clientID))
+ 
+    try:
+        cur.execute(query)
+    except Exception as e:
+        raise Exception(e)
+    
+    status = cur.fetchall()
+    convert_to_json(status)
+    return json.dumps({'data': status})
+
+def convert_to_json(rows):
+    """
+        Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
+    """
+   
+    for i in range(len(rows)): 
+        rows[i] = json.dumps({'Food Name': rows[i][0],
+                                    'CookID': rows[i][1],
+                                    'Price': rows[i][2],
+                                    'Location': rows[i][3]})
 # --------------------------------------------------- CLOSE LISTING ---------------------------------------------------#
-   """
-   TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE
-   CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
-   """
-
-
+    """
+    TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE
+    CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
+    """
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
