@@ -2,17 +2,20 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout3"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ProfileFragment"
-    android:id="@+id/relativeLayout3">
+    tools:context=".ProfileFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <View
         android:id="@+id/myRectangleView"
-        android:layout_width="match_parent"
+        android:layout_width="447dp"
         android:layout_height="226dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/rectangle"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,51 +23,62 @@
         android:id="@+id/view3"
         android:layout_width="128dp"
         android:layout_height="128dp"
-        android:layout_marginStart="132dp"
-        android:layout_marginLeft="132dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/main_profile"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/myRectangleView"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07999998" />
 
     <TextView
         android:id="@+id/chef_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="112dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="HOWIE ZHANG"
         android:textColor="#ffffff"
         android:textSize="18sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/myRectangleView"
+        app:layout_constraintEnd_toEndOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintVertical_bias="0.060000002" />
 
     <TextView
         android:id="@+id/chef_description"
         android:layout_width="wrap_content"
         android:layout_height="19dp"
-        android:layout_marginLeft="72dp"
-        android:layout_marginTop="188dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="I like to cook chinese food and desserts"
         android:textColor="#ffffff"
         android:textSize="13sp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/myRectangleView"
+        app:layout_constraintEnd_toEndOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintTop_toBottomOf="@+id/chef_name" />
 
     <View
         android:id="@+id/star"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="250dp"
-        android:layout_marginLeft="240dp"
-        android:layout_marginTop="160dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:background="@drawable/star_icon"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/chef_name"
+        app:layout_constraintStart_toEndOf="@+id/chef_name"
+        app:layout_constraintTop_toTopOf="@+id/chef_name" />
 
 
 </android.support.constraint.ConstraintLayout>

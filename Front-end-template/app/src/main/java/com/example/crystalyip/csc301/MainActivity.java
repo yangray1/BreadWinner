@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 //getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 //new PopMenusFragment()).commit();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FoodListingNearMe()).commit();
+                        new ShowListings()).commit();
                 break;
             case R.id.nav_active:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

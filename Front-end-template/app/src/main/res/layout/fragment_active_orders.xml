@@ -1,187 +1,227 @@
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
+    android:id="@+id/relativeLayout2"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/relativeLayout2">
+    android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/heading_label11"
-        android:layout_width="184dp"
-        android:layout_height="77dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="58dp"
+        android:layout_width="62dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:fontFamily="@font/nunito_bold"
         android:text="10:40 EST"
         android:textColor="#555555"
         android:textSize="12sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view4" />
 
     <View
+        android:id="@+id/view5"
         android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:layout_marginLeft="93dp"
-        android:layout_marginTop="2dp"
         android:background="#FF0000FF"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/view"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="@+id/view"
+        tools:layout_editor_absoluteY="16dp" />
 
     <!-- the circular icon on the left -->
 
     <TextView
         android:id="@+id/heading_label9"
-        android:layout_width="184dp"
-        android:layout_height="77dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="156dp"
+        android:layout_width="62dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:fontFamily="@font/nunito_bold"
         android:text="10:43 EST"
         android:textColor="#555555"
         android:textSize="12sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view" />
 
     <View
         android:id="@+id/view3"
-        android:layout_width="29dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="451dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/circle_bg"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view5"
+        app:layout_constraintStart_toStartOf="@+id/view5"
+        app:layout_constraintTop_toTopOf="@+id/view5"
+        app:layout_constraintVertical_bias="0.82" />
 
     <TextView
         android:id="@+id/heading_label4"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="58dp"
-        android:fontFamily="@font/nunito_bold"
-        android:text="ORDER PLACED"
-        android:textColor="#555555"
-        android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/heading_label16"
-        android:layout_width="184dp"
-        android:layout_height="77dp"
-        android:layout_marginLeft="130dp"
-        android:layout_marginTop="87dp"
-        android:fontFamily="@font/nunito_bold"
-        android:text="Your request has been sent."
-        android:textColor="#555555"
-        android:textSize="12sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <View
-        android:layout_width="29dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="79dp"
-        android:layout_marginLeft="79dp"
-        android:layout_marginTop="55dp"
-        android:background="@drawable/circle_bg"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/heading_label5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="128dp"
-        android:layout_marginTop="156dp"
-        android:fontFamily="@font/nunito_bold"
-        android:text="ORDER ACCEPTED"
-        android:textColor="#555555"
-        android:textSize="16sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-    <TextView
-        android:id="@+id/heading_label6"
-        android:layout_width="183dp"
-        android:layout_height="77dp"
+        android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="@font/nunito_bold"
+        android:text="ORDER PLACED"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/view4"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.98" />
+
+    <TextView
+        android:id="@+id/heading_label16"
+        android:layout_width="184dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="Your request has been sent."
+        android:textColor="#555555"
+        android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/heading_label5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/view4"
+        app:layout_constraintTop_toBottomOf="@+id/heading_label4" />
+
+    <View
+        android:id="@+id/view4"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/circle_bg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/view5"
+        app:layout_constraintStart_toStartOf="@+id/view5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.07999998" />
+
+    <TextView
+        android:id="@+id/heading_label5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="ORDER ACCEPTED"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/view"
+        app:layout_constraintTop_toTopOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/heading_label6"
+        android:layout_width="183dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="@font/nunito_bold"
         android:text="Your order hass been accepted and your credit card has been charged."
         android:textColor="#555555"
         android:textSize="12sp"
+        app:layout_constraintBottom_toTopOf="@+id/heading_label10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.566"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heading_label5" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/heading_label5"
+        app:layout_constraintVertical_bias="0.075" />
 
     <TextView
         android:id="@+id/heading_label7"
-        android:layout_width="184dp"
-        android:layout_height="77dp"
-        android:layout_marginLeft="128dp"
-        android:layout_marginTop="249dp"
+        android:layout_width="243dp"
+        android:layout_height="21dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="TIME OF PICKUP: 11:00 EST"
         android:textColor="#555555"
         android:textSize="13sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/heading_label6" />
 
     <TextView
         android:id="@+id/location"
-        android:layout_width="184dp"
-        android:layout_height="77dp"
+        android:layout_width="243dp"
+        android:layout_height="25dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="272dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="@string/title_location"
         android:textColor="@color/colorAccent"
         android:textSize="13sp"
+        app:layout_constraintBottom_toTopOf="@+id/heading_label10"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.563"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/view2"
+        app:layout_constraintTop_toBottomOf="@+id/heading_label7"
+        app:layout_constraintVertical_bias="0.009" />
 
 
     <TextView
         android:id="@+id/heading_label12"
-        android:layout_width="184dp"
-        android:layout_height="77dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginTop="313dp"
+        android:layout_width="62dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:fontFamily="@font/nunito_bold"
         android:text="11:00 EST"
         android:textColor="#555555"
         android:textSize="12sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view2"
+        app:layout_constraintVertical_bias="0.52" />
 
     <View
         android:id="@+id/view"
-        android:layout_width="29dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="78dp"
-        android:layout_marginLeft="78dp"
-        android:layout_marginTop="153dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/circle_bg"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view5"
+        app:layout_constraintVertical_bias="0.244" />
 
     <TextView
         android:id="@+id/heading_label10"
@@ -189,31 +229,30 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="312dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="READY FOR PICKUP"
         android:textColor="#555555"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.097"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/view2"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@+id/view2" />
 
 
     <View
         android:id="@+id/view2"
-        android:layout_width="29dp"
-        android:layout_height="28dp"
-        android:layout_marginStart="77dp"
-        android:layout_marginLeft="77dp"
-        android:layout_marginTop="310dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginBottom="8dp"
         android:background="@drawable/circle_bg"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
+        app:layout_constraintBottom_toBottomOf="@+id/view5"
+        app:layout_constraintEnd_toEndOf="@+id/view5"
+        app:layout_constraintStart_toStartOf="@+id/view5"
+        app:layout_constraintTop_toTopOf="@+id/view5"
+        app:layout_constraintVertical_bias="0.73" />
 
     <TextView
         android:id="@+id/heading_label13"
@@ -221,34 +260,32 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="140dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="@font/nunito_bold"
         android:text="ORDER PICKED UP"
         android:textColor="#555555"
         android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.125"
-        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/view3"
-        app:layout_constraintTop_toTopOf="@+id/heading_label10" />
+        app:layout_constraintTop_toTopOf="@+id/view3" />
 
 
     <TextView
         android:id="@+id/heading_label14"
-        android:layout_width="184dp"
-        android:layout_height="77dp"
-        android:layout_marginLeft="9dp"
-        android:layout_marginTop="454dp"
+        android:layout_width="62dp"
+        android:layout_height="18dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
         android:fontFamily="@font/nunito_bold"
         android:text="11:01 EST"
         android:textColor="#555555"
         android:textSize="12sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent" />
-
-
+        app:layout_constraintBottom_toBottomOf="@+id/view3"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/view3" />
 
 
 </android.support.constraint.ConstraintLayout>
