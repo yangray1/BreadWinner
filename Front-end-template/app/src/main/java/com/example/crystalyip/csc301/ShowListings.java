@@ -138,14 +138,14 @@ public class ShowListings extends Fragment implements View.OnClickListener{
 
         String allListingsFormatted = formatAPIString(allListings);
 
-        List<Listing> populatedListings = getAllListings(allListingsFormatted);
+        final List<Listing> populatedListings = getAllListings(allListingsFormatted);
 
-        List<HashMap<String, String>> aList = new ArrayList<HashMap<String, String>>();
+        List<HashMap<String, Object>> aList = new ArrayList<>();
 
         for (int i = 0 ; i < populatedListings.size() ; i++){
-            HashMap<String, String> titleImagePair = new HashMap<String, String>();
+            HashMap<String, Object> titleImagePair = new HashMap<>();
+            titleImagePair.put("Food Image Drawable", populatedListings.get(i).getImageID());
             titleImagePair.put("Food Name", populatedListings.get(i).getFoodName());
-            titleImagePair.put("Food Image Drawable", Integer.toString(populatedListings.get(i).getImageID()));
             aList.add(titleImagePair);
         }
 
@@ -157,12 +157,22 @@ public class ShowListings extends Fragment implements View.OnClickListener{
                 R.layout.menu_item,
                 from, to);
 
-        ListView listingsList = view.findViewById(R.id.lstFoodList);
+        final ListView listingsList = view.findViewById(R.id.lstFoodList);
         listingsList.setClickable(true);
         listingsList.setAdapter(simpleAdapter);
         listingsList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Bundle bundle = new Bundle();
+                HashMap<String, Object> obj = (HashMap<String, Object>) listingsList.getAdapter().getItem(position);
+
+                bundle.putInt("imageURL", (Integer) obj.get("Food Image Drawable"));
+                bundle.putString("imageName", (String) obj.get("Food Name"));
+                FragmentFoodDetail foodDetail = new FragmentFoodDetail();
+                foodDetail.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        foodDetail).commit();
                 // id and position refer to the index of the clicked thing
                 System.out.println("Clicked the item at position " + position + ". ID is " + id);
             }
