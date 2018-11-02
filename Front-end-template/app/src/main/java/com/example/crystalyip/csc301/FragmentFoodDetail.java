@@ -19,16 +19,12 @@ public class FragmentFoodDetail extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
-        Bundle bundle = this.getArguments();
-        System.out.println("henlo0");
+        Bundle bundle = this.getArguments(); // get arguments to set image and text detail
         if (bundle != null) {
-            System.out.println("henlo");
-            System.out.println("foodname: "+bundle.getString("imageName"));
             int imageID = bundle.getInt("imageURL");
             ImageView imageView=(ImageView) rootView.findViewById(R.id.image_food);
             imageView.setImageResource(imageID);
             TextView tv = (TextView) rootView.findViewById(R.id.food_name);
-            System.out.println("foodname2: "+bundle.getString("imageName"));
             tv.setText(bundle.getString("imageName"));
         }
 
