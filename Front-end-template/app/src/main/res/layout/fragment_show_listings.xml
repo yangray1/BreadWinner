@@ -5,7 +5,7 @@
     android:id="@+id/searchFood"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".FoodListingNearMe">
+    tools:context=".ShowListings">
 
     <!-- TODO: Update blank fragment layout -->
 
@@ -23,10 +23,11 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- 401dp width 551dp height-->
     <ListView
         android:id="@+id/lstFoodList"
         android:layout_width="401dp"
-        android:layout_height="551dp"
+        android:layout_height="500dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
@@ -35,10 +36,10 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.529"
+        app:layout_constraintHorizontal_bias="0.484"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/searchBar"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <!--<ListView-->
 
