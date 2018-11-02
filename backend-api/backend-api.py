@@ -249,31 +249,33 @@ def order_to_json(rows):
    return string
 
 
-#--------------------------------------------------- getUserOrders ---------------------------------------------------#
+#--------------------------------------------------- getOrderStatus ---------------------------------------------------#
 
 
-@app.route('/api/getUserOrders/<int:clientId>', methods=['GET'])
-def getUserOrders(clientId):
-   """
-   Retruns a list of jsons representing tupples in the Orders table for the given client
-   """
+@app.route('/api/getOrderStatus/<int:clientId>/<int:listingId>', methods=['GET'])
+def getOrderStatus(clientId, listingId):
+    """
+    Retruns a list of jsons representing tupples in the Orders table for the given client
+    """
 
-   in_progress = queryOrderUsingClientID(clientId)
+    in_progress = queryOrderUsingClientID(clientId, listingId)
+
 
    output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
-   return "[" + output + "]"  # convert to string before returning
+
+    return output  # convert to string before returning
 
 
-def queryOrderUsingClientID(clientId):
-   """
-   Return a list of Order tuples belonging to the client with the given id.
-   """
-   matched_rows = []
+def queryOrderUsingClientID(clientId, listingId):
+    """
+    Return a list of Order tuples belonging to the client with the given id.
+    """
+    matched_rows = []
 
-   orders = conn.cursor()
-   orders.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
-                  " as t1 WHERE t1.\"ClientID\" = " + str(clientId))
+    orders = conn.cursor()
+    orders.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
+                   " as t1 WHERE t1.\"ClientID\" = " + str(clientId)+ " AND \"ListingID\" = " + str(listingId))
 
    order_row = orders.fetchone()
 
