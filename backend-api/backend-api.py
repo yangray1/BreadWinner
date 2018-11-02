@@ -321,6 +321,30 @@ def mark_as_complete(clientID, listingID):
        raise Exception("The status of listing id's order was not changed. ClientID or ListingID may be out of range.")
    return "Success"
 
+#--------------------------------------- MARK AS IN PROGRESS --------------------------------------#
+
+@app.route('/api/updateOrderStatusToInProgress/<int:clientID>/<int:listingID>', methods = ['GET'])
+def updateOrderStatusToInProgress(clientID, listingID):
+    
+    inProgress = "\'In Progress\'"
+    
+    query = \
+            """
+            UPDATE public.{}
+            SET {} = {}
+            WHERE {} = {} AND {} = {} 
+            """.format(order_table_name, order_status_col, inProgress, order_listing_id_col, str(listingID), \
+            order_client_id_col, str(clientID))
+
+    cur = conn.cursor()
+    
+    try:
+        cur.execute(query)
+        conn.commit()
+    except Exception as e:
+        raise Exception(e)
+
+    return "SUCCESS"
 
 #--------------------------------------------------- SEARCH ---------------------------------------------------#
 
