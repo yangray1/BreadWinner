@@ -9,8 +9,6 @@
 
 #### Roles & responsibilities
 
-Describe the different roles on the team and the responsibilities associated with each role.
-
 Front End development with Android Studio/Java: Tasbir, Sean
 	-Tasbir will create functions to abstract calls to our backend API into 1 file.
 	-Sean will set up the EC2 server on AWS and start the backend server at an endpoint on AWS, and integrate the existing search API call into the frontend of the app
@@ -28,21 +26,11 @@ At the end of this sprint (November 1), we will come together to review and acce
 
 #### Artifacts
 
-List/describe the artifacts you will produce in order to organize your team.       
-
- * Artifacts can be To-do lists, Task boards, schedule(s), etc.
- * We want to understand:
-   * How do you keep track of what needs to get done?
-   * How do you prioritize tasks?
-   * How do tasks get assigned to team members?
-
 We are outlining tasks with a Trello scrum board, as well as in this planning document.
 
 #### Git / GitHub workflow
 
-
-
-We will each create a branch of the master repo and commit changes to our respective branches. Branches will allow each person to view and test their peers’ work before merging new features to the master. We can use pull-requests that have been reviewed by 5 other teammates to integrate changes into master.
+We will each create a branch of the master repo and commit changes to our respective branches. We will then make a pull request when a feature is done. This will allow each person to view and test their peers’ work before merging new features to the master. Once every member agrees that the feature works, it can then be merged into the master branch.
 
 ## Product
 
@@ -58,7 +46,7 @@ Change order status to “in progress” - michael
 Get Order Status - Jerry
 	Return the status of a given order.
 Get Order History - Raymond
-Return all orders made by a user, their dates, and statuses.
+	Return all orders made by a user, their dates, and statuses.
 
 Front end:
 Start integrating existing API functions to the front end to form an MVP -Sean
