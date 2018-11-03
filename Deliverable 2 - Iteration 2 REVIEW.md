@@ -2,29 +2,24 @@
 
 ## Iteration 2 Sprint 2 - Review & Retrospect
 
- \* When: Nov 1st 7:30pm
-
- \* Where: Online
+ * When: Nov 1st 7:30pm
+ * Where: Online
 
 ## Process - Reflection
 
 #### Decisions that turned out well
 
 By the end of this iteration, we successfully implemented the APIs we planned on making at the start of this iteration. 
-
 The APIs include an API to: 
-
-- the ability for the cook to update the status of the meal
-- order a dish
-- track the dish a user ordered
-- check a user’s order history. 
-
+the ability for the cook to update the status of the meal
+order a dish
+track the dish a user ordered
+check a user’s order history. 
 This is very important as it is the basis to modifying and querying the database for our app.
 
 We also successfully finished the front end UI for our app. This is also an important decision to do because this is the basis of how users are going to interact with our app. 
 
 With these we were able to at least put out a MVP of our project
-
 
 #### Decisions that did not turn out as well as we hoped
 
@@ -32,7 +27,12 @@ One major difficulty that we had was running our backend with EC2. Since the EC2
 
 Due to busy scheduling during this iteration, the front and backend was done with not as much communication as we expected, thus we were not able to get as many things done as we wanted during the middle of the sprint, but as assignments and midterms cleared, we caught up and accomplished almost all of the tasks we wanted to do, such as finishing the APIs for the backend. 
 
+
+
+
+
 #### Planned changes
+
 
 We originally planned on making a UML diagram, but we came to a conclusion that since we were tight on time, it would be best if we fixed the bugs in the backend APIs and frontend for this deliverable instead.
 
@@ -47,13 +47,9 @@ We will list out more tasks for each sprint, as during this one some of the peop
 
 Another task we completed was creating a functional front end UI for the app. The frontend from this iteration makes use of the search API function, as well as a new get all listings function to make listings dynamic as opposed to hard coded. These are the UIs that we have created in this iteration:
 
-![img](https://lh5.googleusercontent.com/Cyphew25vT_4p3WcKymfLfO4ZNKR_XolzHLK02EmS2gIPM_HmY_JwG5YrfKAeztRRMUOm0xTAaq-xuq9uh_ZcoJxM4pcphZKxxiQmtaHdVXA_aUTIjjS5s0fPwMWEVdURfvkiWpu)![img](https://lh3.googleusercontent.com/tKtivpBFBn_Hf2xR9x4X2YEvkUcABIuojGNNQ5tkz6AdEUVe_WS6WpptIS8reOmJbcqRapOxWkLiaZcFIgM5XsyMy6pVHM0RP8oZQspRH281Zg02MzSkGo2xDIQK-IcjoVw80heb)![img](https://lh5.googleusercontent.com/OkG6jb7tIT6vDd4a4n05TELJt8bCmsu_hD7VYu7zcGMwW_BMMxVOgtfybttdzkC6C97e7tPfKgbHSzbvciXi3mdLZRGUkHehwzoLWdZj3U1QIGOHB9Y3ab5dgNayduVT2sIH_Y4U)
-
-![img](https://lh5.googleusercontent.com/x_fOABYLzleHvwlt8-Rs9eOngXhHIV7iYwq3MjMYOXl0MgK-sp-Uaw_84C2XNpkVnokOA0-X-iNJm06_G4DxiKFDW7d9ibzYqk1SQIziKrOe1LfTSjHa1a0KKDzl5Lg82DtxKsck)
 
 
 #### Goals and/or tasks that were planned but not met/completed:
-
 One task that we planned to do but were not completed was creating the UML diagram to organize what types of requests the client will make to the server and how data will be transmitted between client and server. As mentioned above, this goal was not completed because we were short on time and deemed that fixing the backend and front end was more worthy for deliverable 2 than doing the UML.
 
 Another task is to refactor table and column names into an .ini file. Some of the queries that our backend makes to the DB are still hard coded in as we just wanted presentable functionalities for the video. Going forward, we would like to move these out into a .ini file so we have more flexibility with how we can edit out tables.
