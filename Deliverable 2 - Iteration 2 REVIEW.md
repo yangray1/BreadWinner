@@ -56,11 +56,8 @@ We will also list out more tasks for each sprint, as during this one, some group
 
 This is very important as it is the basis to editing the database for our app.
 
-Another task we completed was creating a functional front end UI for the app. The frontend from this iteration makes use of the search API function, as well as a new get all listings function to make listings dynamic as opposed to hard coded. These are the UIs that we have created in this iteration:
+Another task we completed was creating a functional front end UI for the app. The frontend from this iteration makes use of the search API function, as well as a new get all listings function to make listings dynamic as opposed to hard coded. Images of the UIs that we have created in this iteration in in the git repo, named "frontend Images1" and "frontend Images2".
 
-![Scree Shot 2018-11-02 at 11.24.49 PM](/Users/raymond/Desktop/Screen Shot 2018-11-02 at 11.24.49 PM.png)
-
-![Screen Shot 2018-11-02 at 11.25.39 PM](/Users/raymond/Desktop/Screen Shot 2018-11-02 at 11.25.39 PM.png)
 
 #### Goals and/or tasks that were planned but not met/completed:
 
