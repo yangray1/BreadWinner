@@ -188,15 +188,10 @@ def cancel(clientId, listingId):
     returns 'order not found' if the client id and listing id do not exist as a key or if the listing has already
     been canceled or fulfilled.
     """
-<<<<<<< HEAD
+
 
     in_progress = get_in_progress_order(clientId, listingId)
 
-=======
-
-    in_progress = get_in_progress_order(clientId, listingId)
-        
->>>>>>> 1234edf9e537a5e553278fc29a9fd4e5ce05f434
     if in_progress:
         cancel_order(clientId, listingId)
         output = order_to_json(in_progress)  # want to convert each row into a JSON string
@@ -268,13 +263,8 @@ def getOrderStatus(clientId, listingId):
 
     in_progress = queryOrderUsingClientID(clientId, listingId)
 
-<<<<<<< HEAD
-    output = order_to_json(in_progress)  # want to convert each row into a JSON string
-=======
-
     output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
->>>>>>> 1234edf9e537a5e553278fc29a9fd4e5ce05f434
 
     return output  # convert to string before returning
 
@@ -292,13 +282,8 @@ def queryOrderUsingClientID(clientId, listingId):
     order_row = orders.fetchone()
 
     while order_row is not None:
-<<<<<<< HEAD
-        matched_rows.append(order_row)
-        order_row = orders.fetchone()
-=======
        matched_rows.append(order_row)
        order_row = orders.fetchone()
->>>>>>> 1234edf9e537a5e553278fc29a9fd4e5ce05f434
 
     orders.close()
 
@@ -533,7 +518,6 @@ def getAllOrders(clientID):
 
     single_row = search_all.fetchone()
 
-<<<<<<< HEAD
     while single_row is not None:
         all_orders.append(single_row)
         single_row = search_all.fetchone()
@@ -602,7 +586,7 @@ def convert_to_json(rows):
     TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE
     CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
     """
-=======
+
 # -------------------------------------------------- CHECK HISTORY ----------------------------------------------------#
 
 @app.route("/api/checkHistory/<int:clientID>", methods = ['GET'])
@@ -614,7 +598,7 @@ def checkHistory(clientID):
         @param clientID: the client id number.
         @rtype: str
     """
->>>>>>> 1234edf9e537a5e553278fc29a9fd4e5ce05f434
+
 
     cur = conn.cursor()
     query = \
