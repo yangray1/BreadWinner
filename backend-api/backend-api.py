@@ -587,54 +587,6 @@ def convert_to_json(rows):
     CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
     """
 
-# -------------------------------------------------- CHECK HISTORY ----------------------------------------------------#
-
-@app.route("/api/checkHistory/<int:clientID>", methods = ['GET'])
-def checkHistory(clientID):
-    """ 
-        Return a string representation of a list of JSON objects. This list contains
-        objects that correspond to the order history of client id ClientID.
-
-        @param clientID: the client id number.
-        @rtype: str
-    """
-
-
-    cur = conn.cursor()
-    query = \
-        """
-            SELECT t2.{}, t2.{}, t2.{}, t2.{}
-            FROM public.{} as t1 FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{}
-            WHERE t1.{} LIKE {} AND t1.{} = {}
-        """.format(listing_food_name_col, listing_cook_id_col, listing_price_col, listing_location_col, 
-                    order_table_name, listing_table_name, order_listing_id_col, listing_listing_id_col,
-                    order_status_col, completed, order_client_id_col, str(clientID))
- 
-    try:
-        cur.execute(query)
-    except Exception as e:
-        raise Exception(e)
-    
-    status = cur.fetchall()
-    convert_to_json(status)
-    return json.dumps({'data': status})
-
-def convert_to_json(rows):
-    """
-        Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
-    """
-   
-    for i in range(len(rows)): 
-        rows[i] = json.dumps({'Food Name': rows[i][0],
-                                    'CookID': rows[i][1],
-                                    'Price': rows[i][2],
-                                    'Location': rows[i][3]})
-# --------------------------------------------------- CLOSE LISTING ---------------------------------------------------#
-    """
-    TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE
-    CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
-    """
-
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # host="0.0.0.0", port=80
