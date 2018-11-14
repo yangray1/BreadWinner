@@ -188,9 +188,15 @@ def cancel(clientId, listingId):
     returns 'order not found' if the client id and listing id do not exist as a key or if the listing has already
     been canceled or fulfilled.
     """
+<<<<<<< HEAD
 
     in_progress = get_in_progress_order(clientId, listingId)
 
+=======
+
+    in_progress = get_in_progress_order(clientId, listingId)
+        
+>>>>>>> 1234edf9e537a5e553278fc29a9fd4e5ce05f434
     if in_progress:
         cancel_order(clientId, listingId)
         output = order_to_json(in_progress)  # want to convert each row into a JSON string
@@ -262,7 +268,13 @@ def getOrderStatus(clientId, listingId):
 
     in_progress = queryOrderUsingClientID(clientId, listingId)
 
+<<<<<<< HEAD
     output = order_to_json(in_progress)  # want to convert each row into a JSON string
+=======
+
+    output = order_to_json(in_progress)  # want to convert each row into a JSON string
+
+>>>>>>> 1234edf9e537a5e553278fc29a9fd4e5ce05f434
 
     return output  # convert to string before returning
 
@@ -280,8 +292,13 @@ def queryOrderUsingClientID(clientId, listingId):
     order_row = orders.fetchone()
 
     while order_row is not None:
+<<<<<<< HEAD
         matched_rows.append(order_row)
         order_row = orders.fetchone()
+=======
+       matched_rows.append(order_row)
+       order_row = orders.fetchone()
+>>>>>>> 1234edf9e537a5e553278fc29a9fd4e5ce05f434
 
     orders.close()
 
@@ -516,6 +533,7 @@ def getAllOrders(clientID):
 
     single_row = search_all.fetchone()
 
+<<<<<<< HEAD
     while single_row is not None:
         all_orders.append(single_row)
         single_row = search_all.fetchone()
@@ -584,7 +602,54 @@ def convert_to_json(rows):
     TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE
     CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
     """
+=======
+# -------------------------------------------------- CHECK HISTORY ----------------------------------------------------#
 
+@app.route("/api/checkHistory/<int:clientID>", methods = ['GET'])
+def checkHistory(clientID):
+    """ 
+        Return a string representation of a list of JSON objects. This list contains
+        objects that correspond to the order history of client id ClientID.
+
+        @param clientID: the client id number.
+        @rtype: str
+    """
+>>>>>>> 1234edf9e537a5e553278fc29a9fd4e5ce05f434
+
+    cur = conn.cursor()
+    query = \
+        """
+            SELECT t2.{}, t2.{}, t2.{}, t2.{}
+            FROM public.{} as t1 FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{}
+            WHERE t1.{} LIKE {} AND t1.{} = {}
+        """.format(listing_food_name_col, listing_cook_id_col, listing_price_col, listing_location_col, 
+                    order_table_name, listing_table_name, order_listing_id_col, listing_listing_id_col,
+                    order_status_col, completed, order_client_id_col, str(clientID))
+ 
+    try:
+        cur.execute(query)
+    except Exception as e:
+        raise Exception(e)
+    
+    status = cur.fetchall()
+    convert_to_json(status)
+    return json.dumps({'data': status})
+
+def convert_to_json(rows):
+    """
+        Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
+    """
+   
+    for i in range(len(rows)): 
+        rows[i] = json.dumps({'Food Name': rows[i][0],
+                                    'CookID': rows[i][1],
+                                    'Price': rows[i][2],
+                                    'Location': rows[i][3]})
+# --------------------------------------------------- CLOSE LISTING ---------------------------------------------------#
+    """
+    TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE
+    CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
+    """
 
 if __name__ == '__main__':
     app.run(host="localhost", port=7003)
