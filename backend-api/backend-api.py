@@ -529,13 +529,13 @@ def getAllOrders(clientID):
     return json.dumps({'data': all_orders})  # convert to string before returning
 
 
-def get_food_name(listing_Id):
+def get_food_data(listing_Id):
     cur = conn.cursor()
-    sql = "SELECT {} FROM {} WHERE {} = {}".format(listing_food_name_col, listing_table_name, listing_listing_id_col,
+    sql = "SELECT {}, {} FROM {} WHERE {} = {}".format(listing_food_name_col, listing_location_col, listing_table_name, listing_listing_id_col,
                                                     listing_Id)
 
     cur.execute(sql)
-    return cur.fetchone()[0]
+    return cur.fetchone()
 
 
 def orders_to_json(rows):
@@ -543,10 +543,12 @@ def orders_to_json(rows):
     Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
     """
     for i in range(len(rows)):
+        extra_data=get_food_data(rows[i][1])
         rows[i] = json.dumps({'ClientID': rows[i][0],
                               'ListingID': rows[i][1],
                               'Status': rows[i][2],
-                              'Food Name': get_food_name(rows[i][1])})
+                              'Food Name': extra_data[0],
+                             'Location': extra_data[1]})
 
 # -------------------------------------------------- CHECK HISTORY ----------------------------------------------------#
 
