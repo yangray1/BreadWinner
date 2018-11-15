@@ -535,7 +535,7 @@ def get_food_name(listing_Id):
                                                     listing_Id)
 
     cur.execute(sql)
-    return cur.fetchone()
+    return cur.fetchone()[0]
 
 
 def orders_to_json(rows):
