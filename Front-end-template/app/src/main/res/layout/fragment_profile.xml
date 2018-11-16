@@ -20,7 +20,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <View
-        android:id="@+id/view3"
+        android:id="@+id/order_completed_icon2"
         android:layout_width="128dp"
         android:layout_height="128dp"
         android:layout_marginStart="8dp"
@@ -49,9 +49,9 @@
         android:textColor="#ffffff"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="@+id/myRectangleView"
-        app:layout_constraintEnd_toEndOf="@+id/view3"
-        app:layout_constraintStart_toStartOf="@+id/view3"
-        app:layout_constraintTop_toBottomOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="@+id/order_completed_icon2"
+        app:layout_constraintStart_toStartOf="@+id/order_completed_icon2"
+        app:layout_constraintTop_toBottomOf="@+id/order_completed_icon2"
         app:layout_constraintVertical_bias="0.060000002" />
 
     <TextView
@@ -65,8 +65,8 @@
         android:textColor="#ffffff"
         android:textSize="13sp"
         app:layout_constraintBottom_toBottomOf="@+id/myRectangleView"
-        app:layout_constraintEnd_toEndOf="@+id/view3"
-        app:layout_constraintStart_toStartOf="@+id/view3"
+        app:layout_constraintEnd_toEndOf="@+id/order_completed_icon2"
+        app:layout_constraintStart_toStartOf="@+id/order_completed_icon2"
         app:layout_constraintTop_toBottomOf="@+id/chef_name" />
 
     <View

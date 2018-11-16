@@ -1,9 +1,14 @@
 package com.example.crystalyip.csc301;
 
 import android.annotation.SuppressLint;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.RelativeSizeSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,21 +30,23 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-public class ShowListings extends Fragment implements View.OnClickListener{
+public class ShowListings extends Fragment implements View.OnClickListener {
 
     public static String searchURL;/* = "http://18.234.123.109/api/getAllListings";*/
 
     /**
-     * This "constructor" sets the searchURL to display every listing. */
+     * This "constructor" sets the searchURL to display every listing.
+     */
     public ShowListings() {
         searchURL = "http://18.234.123.109/api/getAllListings";
     }
 
     /**
-     * This "constructor" sets the searchURL to search for listings matching the query. */
+     * This "constructor" sets the searchURL to search for listings matching the query.
+     */
     @SuppressLint("ValidFragment")
     public ShowListings(String query) {
-        String formattedQuery = query.replace("\\s","+");
+        String formattedQuery = query.replace("\\s", "+");
         searchURL = "http://18.234.123.109/api/search/" + formattedQuery;
     }
 
@@ -48,15 +55,15 @@ public class ShowListings extends Fragment implements View.OnClickListener{
      *
      * @param urlToRead url to GET from
      * @return String response of GET request
-     * */
+     */
     public static String getHTML(String urlToRead) throws Exception {
         // reference: https://stackoverflow.com/questions/34691175/how-to-send-httprequest-and-get-json-response-in-android/34691486
         HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget= new HttpGet(urlToRead);
+        HttpGet httpget = new HttpGet(urlToRead);
 
         HttpResponse response = httpclient.execute(httpget);
 
-        if(response.getStatusLine().getStatusCode()==200){
+        if (response.getStatusLine().getStatusCode() == 200) {
             String server_response = EntityUtils.toString(response.getEntity());
             return server_response;
         } else {
@@ -71,8 +78,8 @@ public class ShowListings extends Fragment implements View.OnClickListener{
      *
      * @param apiString (JSON formatted) string to format
      * @return correctly formatted string (that can be parsed with a JSON parser)
-     * */
-    public static String formatAPIString(String apiString){
+     */
+    public static String formatAPIString(String apiString) {
         String remove_new_line = apiString.replace("\\n", "\\");
         String remove_begin_slash = remove_new_line.replace("\"{", "{");
         String remove_end_slash = remove_begin_slash.replace("}\"", "}");
@@ -85,7 +92,7 @@ public class ShowListings extends Fragment implements View.OnClickListener{
      *
      * @param allListingsFormatted JSON parsable string representing listing data
      * @return List of Listings from parsing the input string
-     * */
+     */
     private static List<Listing> getAllListings(String allListingsFormatted) {
         List<Listing> allListings = new ArrayList<Listing>();
 
@@ -93,7 +100,7 @@ public class ShowListings extends Fragment implements View.OnClickListener{
             JSONObject listingsJSON = new JSONObject(allListingsFormatted);
             JSONArray listings = listingsJSON.getJSONArray("data");
 
-            for (int i = 0 ; i < listings.length() ; i++){
+            for (int i = 0; i < listings.length(); i++) {
                 JSONObject listing = listings.getJSONObject(i);
 
                 Listing listingToAdd = new Listing(
@@ -107,8 +114,7 @@ public class ShowListings extends Fragment implements View.OnClickListener{
 
                 allListings.add(listingToAdd);
             }
-        }
-        catch (Exception e){ // return what we have so far, even if it's just an empty list
+        } catch (Exception e) { // return what we have so far, even if it's just an empty list
             return allListings;
         }
 
@@ -117,8 +123,8 @@ public class ShowListings extends Fragment implements View.OnClickListener{
 
     /**
      * Create the "Near me" view
-     * */
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+     */
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // reference: https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -131,8 +137,7 @@ public class ShowListings extends Fragment implements View.OnClickListener{
 
         try {
             allListings = getHTML(searchURL);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -142,15 +147,19 @@ public class ShowListings extends Fragment implements View.OnClickListener{
 
         List<HashMap<String, Object>> aList = new ArrayList<>();
 
-        for (int i = 0 ; i < populatedListings.size() ; i++){
+        for (int i = 0; i < populatedListings.size(); i++) {
             HashMap<String, Object> titleImagePair = new HashMap<>();
-            titleImagePair.put("Food Image Drawable", populatedListings.get(i).getImageID());
-            titleImagePair.put("Food Name", populatedListings.get(i).getFoodName());
+            titleImagePair.put("Image Drawable", populatedListings.get(i).getImageID());
+            String foodDetail = populatedListings.get(i).getFoodName().toUpperCase() + "\n  " + populatedListings.get(i).getLocation();
+            SpannableString spannable = new SpannableString("  $" + populatedListings.get(i).getPrice() + " " + foodDetail);
+            spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, foodDetail.indexOf("\n"), 0);
+            titleImagePair.put("Description", spannable);
+            titleImagePair.put("stringDescription", foodDetail);
             aList.add(titleImagePair);
         }
 
-        String[] from = {"Food Name" , "Food Image Drawable"};
-        int[] to = {R.id.food_name, R.id.food_image};
+        String[] from = {"Description", "Image Drawable"};
+        int[] to = {R.id.food_description, R.id.food_image};
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(),
                 aList,
@@ -167,12 +176,16 @@ public class ShowListings extends Fragment implements View.OnClickListener{
                 Bundle bundle = new Bundle();
                 HashMap<String, Object> obj = (HashMap<String, Object>) listingsList.getAdapter().getItem(position);
 
-                bundle.putInt("imageURL", (Integer) obj.get("Food Image Drawable"));
-                bundle.putString("imageName", (String) obj.get("Food Name"));
+                bundle.putInt("imageURL", (Integer) obj.get("Image Drawable"));
+                bundle.putString("Description", (String) obj.get("stringDescription"));
                 FragmentFoodDetail foodDetail = new FragmentFoodDetail();
                 foodDetail.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        foodDetail).commit();
+                FragmentTransaction ft = getFragmentManager().beginTransaction();
+
+                ft.replace(R.id.fragment_container,
+                        foodDetail);
+                ft.addToBackStack(null);
+                ft.commit();
                 // id and position refer to the index of the clicked thing
                 System.out.println("Clicked the item at position " + position + ". ID is " + id);
             }
@@ -184,48 +197,8 @@ public class ShowListings extends Fragment implements View.OnClickListener{
 
     @Override
     public void onClick(View v) {
-        System.out.println("iasdasnmkdasdmlasdjklasdjkl");
-        switch (v.getId()) {
-            case R.id.food_image:
-                System.out.println("asdasdasd");
-                // launch the map fragment
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new FragmentFoodDetail()).commit();
-                break;
-        }
+
     }
 
 
-
-    /////////////////////////////////////////////////////////////////////////////////
-
-//    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-//        // Load food listings
-//        recycler_menu = (RecyclerView)findViewByID(R.id.recycler_menu);
-//        recycler_menu.setHasFixedSize(true);
-//        layoutManager = new LinearLayoutManager(this);
-//        recycler_menu.setLayoutManager(layoutManager);
-//
-//        loadListing();
-//    }
-
-    // Fooditem is supposed to reference database (CONNECT WITH DB HERE)
-//    private void loadListing() {
-//        FirebaseRecyclerAdapter<FoodItem, FoodViewListHolder> adapter = new FirebaseIndexRecyclerAdapter<FoodItem, FoodViewListHolder>(FoodItem.class, R.layout.menu_item, FoodViewListHolder.class, foodItem) {
-//            @Override
-//            protected void populateViewHolder(FoodViewListHolder viewHolder, FoodItem model, int position) {
-//                viewHolder.txtFoodName.setText(model.getName());
-//                Picasso.with(getBaseContext()).load(model.getImage()).into(viewHolder.imageView);
-//                final FoodItem clickItem = model;
-//                viewHolder.setItemClickListener(new ItemClickListener() {
-//                    @Override
-//                    public void onClick(com.google.firebase.database.core.view.View view, int position, boolean isLongClick) {
-//                        Toast.makeText(FoodListingNearMe.this, ""+clickItem.getName(), Toast.LENGTH_SHORT).show();
-//                    }
-//                });
-//            }
-//        };
-//
-//        recycler_menu.setAdapter(adapter);
-//    }
 }
