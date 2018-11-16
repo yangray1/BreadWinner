@@ -514,7 +514,8 @@ def getAllOrders(clientID):
     all_orders = []
 
     search_all = conn.cursor()
-    search_all.execute("SELECT * FROM {} WHERE ({} = {}) AND ({} != '{}')".format(order_table_name, order_client_id_col, str(clientID), order_status_col, "Completed"))
+
+    search_all.execute("SELECT * FROM {} WHERE {} = {} AND {} != {}".format(order_table_name, order_client_id_col, str(clientID), order_status_col, "Completed"))
 
     single_row = search_all.fetchone()
 
@@ -601,5 +602,5 @@ def convert_to_json(rows):
     """
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="localhost", port=7006)
     # host="0.0.0.0", port=80

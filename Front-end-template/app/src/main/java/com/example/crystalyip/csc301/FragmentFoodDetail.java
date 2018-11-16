@@ -21,10 +21,12 @@ public class FragmentFoodDetail extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
         Bundle bundle = this.getArguments();
+
         if (bundle != null) {
             int imageID = bundle.getInt("imageURL");
             ImageView imageView=(ImageView) rootView.findViewById(R.id.image_food);
             imageView.setImageResource(imageID);
+
             TextView tv = (TextView) rootView.findViewById(R.id.food_description);
             String foodDescription = bundle.getString("Description");
             SpannableString descriptions = new SpannableString(foodDescription);
