@@ -15,7 +15,7 @@
 
         <TextView
             android:id="@+id/order_description"
-            android:background="@android:color/white"
+            android:background="@drawable/panels"
             android:textColor="@color/colorAccent"
             android:fontFamily="@font/nunito_semibold"
             android:textSize="18sp"

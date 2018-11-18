@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/swipe_layout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light">
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -26,7 +27,7 @@
         android:id="@+id/view5"
         android:layout_width="1dp"
         android:layout_height="fill_parent"
-        android:background="#FF0000FF"
+        android:background="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="@+id/order_accepted_icon"
         app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="@+id/order_accepted_icon"
