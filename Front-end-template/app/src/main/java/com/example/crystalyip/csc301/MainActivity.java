@@ -44,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // need this if statement
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new CookListingTracker()).commit();
+                    new SearchFragment()).commit();
             navigationView.setCheckedItem(R.id.nav_search);
         }
 
