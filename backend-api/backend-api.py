@@ -509,8 +509,30 @@ def update_num_orders():
    CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
    """
 
+# --------------------------------------------------- LOGIN ---------------------------------------------------#
+@app.route('/api/login/<string:userID>/<string:password>', methods = ['GET'])
+def login(userID, password):
+    
+    query = \
+            """
+            SELECT *
+            FROM public.{}
+            WHERE {} = {} AND {} = '{}'
+            """.format(user_table_name, user_user_id_col, str(userID), user_password_col, str(password))
 
+    cur = conn.cursor()
 
+    try:
+        cur.execute(query)
+        result = cur.fetchall()
+        if len(result) != 1:
+            return "Error, user ID and password failed."
+        else:
+            return userID
+    except Exception as e:
+        raise Exception(e)
+
+        
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # host="0.0.0.0", port=80
