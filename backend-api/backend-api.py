@@ -512,6 +512,8 @@ def update_num_orders():
 # --------------------------------------------------- LOGIN ---------------------------------------------------#
 @app.route('/api/login/<string:userID>/<string:password>', methods = ['GET'])
 def login(userID, password):
+
+    """ Returns userID if <userID, password> is a valid combination. """
     
     query = \
             """
@@ -532,7 +534,29 @@ def login(userID, password):
     except Exception as e:
         raise Exception(e)
 
-        
+
+# --------------------------------------------------- ADD COOK REVIEW ---------------------------------------------------#
+
+@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods = ['GET'])
+def addReview(cookID, reviewerID, comments, rating):
+
+    """ Adds a review to the cook rating table """
+    
+    query = \
+            """
+            INSERT INTO public.{}
+            VALUES ({}, {}, {}, {});
+            """.format(cook_ratings_table_name, int(cookID), int(reviewerID), str(comments), int(rating))
+
+    cur = conn.cursor()
+
+    try:
+        cur.execute(query)
+        conn.commit()
+    except Exception as e:
+        raise Exception(e)
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # host="0.0.0.0", port=80
