@@ -1,6 +1,6 @@
 package com.example.crystalyip.csc301.DAOs;
 
-import com.example.crystalyip.csc301.HTTPIneteractions.HTTPRequests;
+import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Order;
 import com.example.crystalyip.csc301.Model.StaticStorage;
 
