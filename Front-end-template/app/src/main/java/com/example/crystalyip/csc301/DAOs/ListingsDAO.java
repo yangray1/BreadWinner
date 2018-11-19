@@ -1,6 +1,6 @@
 package com.example.crystalyip.csc301.DAOs;
 
-import com.example.crystalyip.csc301.HTTPIneteractions.APICalls;
+import com.example.crystalyip.csc301.HTTPIneteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Listing;
 import com.example.crystalyip.csc301.Model.Order;
 import com.example.crystalyip.csc301.R;
@@ -24,7 +24,7 @@ public class ListingsDAO {
         String stringFormatListings = "";
 
         try {
-            stringFormatListings = APICalls.getHTML(apiURL);
+            stringFormatListings = APICalls.getHTTP(apiURL);
             String allListingsFormatted = APICalls.formatAPIString(stringFormatListings);
             JSONObject listingsJSON = new JSONObject(allListingsFormatted);
             JSONArray listings = listingsJSON.getJSONArray("data");
