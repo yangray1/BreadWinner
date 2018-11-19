@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--food name-->
+    <EditText
+        android:id="@+id/get_food_name"
+        android:textSize="13sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="72dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/search_layout"
+        android:ems="10"
+        android:hint="Enter food name here"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_listing_header" />
+
+    <TextView
+        android:id="@+id/food_name_header"
+        android:drawableLeft="@drawable/icon_food"
+        android:layout_width="101dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="FOOD NAME"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:fontFamily="@font/nunito_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/get_food_name"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--price-->
+    <EditText
+        android:id="@+id/get_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:ems="10"
+        android:hint="Enter price here"
+        android:inputType="textPersonName"
+        android:background="@drawable/search_layout"
+        android:textSize="13sp"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_food_name" />
+
+    <TextView
+        android:id="@+id/price_header"
+        android:drawableLeft="@drawable/icon_price"
+        android:layout_width="101dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="PRICE"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:fontFamily="@font/nunito_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/get_price"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!--location-->
+
+    <TextView
+        android:id="@+id/location_header"
+        android:drawableLeft="@drawable/icon_map"
+        android:layout_width="101dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginBottom="12dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="LOCATION"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:fontFamily="@font/nunito_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/get_location"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/get_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/search_layout"
+        android:ems="10"
+        android:hint="Enter location here"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_price" />
+
+    <!--add listing heading at the top-->
+    <TextView
+        android:id="@+id/add_listing_header"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/nunito_bold"
+        android:text="ADD LISTING"
+        android:textColor="#6200EE"
+        android:textSize="24sp"
+        app:fontFamily="@font/nunito_semibold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--button that gets pressed to submit the listing-->
+    <Button
+        android:id="@+id/add_listing_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:fontFamily="@font/nunito_semibold"
+        android:text="ADD THIS LISTING"
+        android:textColor="#000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_location" />
+
+</android.support.constraint.ConstraintLayout>

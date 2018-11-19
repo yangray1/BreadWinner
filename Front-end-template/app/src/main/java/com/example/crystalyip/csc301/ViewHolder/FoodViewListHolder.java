@@ -19,7 +19,7 @@ public class FoodViewListHolder extends RecyclerView.ViewHolder implements View.
     public FoodViewListHolder(@NonNull View itemView) {
         super(itemView);
 
-        txtFoodName = (TextView)itemView.findViewById(R.id.food_name);
+        txtFoodName = (TextView)itemView.findViewById(R.id.food_description);
         imageView = (ImageView)itemView.findViewById(R.id.food_image);
 
         itemView.setOnClickListener(this);
