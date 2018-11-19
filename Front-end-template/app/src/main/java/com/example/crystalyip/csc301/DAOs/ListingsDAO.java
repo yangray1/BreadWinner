@@ -24,8 +24,8 @@ public class ListingsDAO {
         String stringFormatListings = "";
 
         try {
-            stringFormatListings = APICalls.getHTTP(apiURL);
-            String allListingsFormatted = APICalls.formatAPIString(stringFormatListings);
+            stringFormatListings = HTTPRequests.getHTTP(apiURL);
+            String allListingsFormatted = HTTPRequests.formatJSONStringFromResponse(stringFormatListings);
             JSONObject listingsJSON = new JSONObject(allListingsFormatted);
             JSONArray listings = listingsJSON.getJSONArray("data");
 
