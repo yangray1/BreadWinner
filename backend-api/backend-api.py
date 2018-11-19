@@ -583,13 +583,57 @@ def checkHistory(clientID):
     return json.dumps({'data': status})
 
 
+# --------------------------------------------------- LOGIN ---------------------------------------------------#
+@app.route('/api/login/<string:userID>/<string:password>', methods = ['GET'])
+def login(userID, password):
 
+    """ Returns userID if <userID, password> is a valid combination. """
+    
+    query = \
+            """
+            SELECT *
+            FROM public.{}
+            WHERE {} = {} AND {} = '{}'
+            """.format(user_table_name, user_user_id_col, str(userID), user_password_col, str(password))
+
+    cur = conn.cursor()
+
+    try:
+        cur.execute(query)
+        result = cur.fetchall()
+        if len(result) != 1:
+            return "Error, user ID and password failed."
+        else:
+            return userID
+    except Exception as e:
+        raise Exception(e)
+
+
+# --------------------------------------------------- ADD COOK REVIEW ---------------------------------------------------#
+
+@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods = ['GET'])
+def addReview(cookID, reviewerID, comments, rating):
+
+    """ Adds a review to the cook rating table """
+    
+    query = \
+            """
+            INSERT INTO public.{}
+            VALUES ({}, {}, {}, {});
+            """.format(cook_ratings_table_name, int(cookID), int(reviewerID), str(comments), int(rating))
+
+    cur = conn.cursor()
+
+    try:
+        cur.execute(query)
+        conn.commit()
+    except Exception as e:
+        raise Exception(e)
 
 def convert_to_json(rows):
     """
         Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
     """
-
     for i in range(len(rows)):
         rows[i] = json.dumps({'Food Name': rows[i][0],
                               'CookID': rows[i][1],
