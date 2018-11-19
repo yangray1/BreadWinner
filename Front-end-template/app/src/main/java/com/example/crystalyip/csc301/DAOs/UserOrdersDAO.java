@@ -1,6 +1,6 @@
 package com.example.crystalyip.csc301.DAOs;
 
-import com.example.crystalyip.csc301.HTTPIneteractions.APICalls;
+import com.example.crystalyip.csc301.HTTPIneteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Order;
 import com.example.crystalyip.csc301.Model.StaticStorage;
 
@@ -19,8 +19,8 @@ public class UserOrdersDAO {
         String orders = "";
         StaticStorage.clearStorage();
         try {
-            orders = APICalls.getHTML(this.apiURL);
-            String allOrdersFormatted=APICalls.formatAPIString(orders);
+            orders = HTTPRequests.getHTTP(this.apiURL);
+            String allOrdersFormatted=HTTPRequests.formatJSONStringFromResponse(orders);
             JSONObject ordersJSON = new JSONObject(allOrdersFormatted);
             JSONArray ordersArray = ordersJSON.getJSONArray("data");
 
