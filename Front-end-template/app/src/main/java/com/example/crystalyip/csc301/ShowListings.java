@@ -15,7 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
-import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
+
+import com.example.crystalyip.csc301.DAOs.ListingsDAO;
 import com.example.crystalyip.csc301.Model.Listing;
 
 import java.util.ArrayList;
@@ -45,39 +46,7 @@ public class ShowListings extends Fragment implements View.OnClickListener {
         searchURL = "http://18.234.123.109/api/search/" + formattedQuery;
     }
 
-    /**
-     * Return an List of Listing objects fetched from parsing allListingsFormatted as a JSON object
-     *
-     * @param allListingsFormatted JSON parsable string representing listing data
-     * @return List of Listings from parsing the input string
-     */
-    private static List<Listing> getAllListings(String allListingsFormatted) {
-        List<Listing> allListings = new ArrayList<Listing>();
 
-        try {
-            JSONObject listingsJSON = new JSONObject(allListingsFormatted);
-            JSONArray listings = listingsJSON.getJSONArray("data");
-
-            for (int i = 0; i < listings.length(); i++) {
-                JSONObject listing = listings.getJSONObject(i);
-
-                Listing listingToAdd = new Listing(
-                        listing.getString("Food Name"),
-                        listing.getInt("ListingID"),
-                        listing.getString("Image"),
-                        listing.getInt("CookID"),
-                        listing.getDouble("Price"),
-                        listing.getString("Location"),
-                        R.drawable.rice);
-
-                allListings.add(listingToAdd);
-            }
-        } catch (Exception e) { // return what we have so far, even if it's just an empty list
-            return allListings;
-        }
-
-        return allListings;
-    }
 
     /**
      * Create the "Near me" view
@@ -89,26 +58,16 @@ public class ShowListings extends Fragment implements View.OnClickListener {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show_listings, container, false);
+        ListingsDAO listingsDAO = new ListingsDAO(searchURL);
+        final List<Listing> populatedListings = listingsDAO.getAllListings();
 
-
-        String allListings = "";
-
-        try {
-            allListings = HTTPRequests.getHTTP(searchURL);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        String allListingsFormatted = HTTPRequests.formatJSONStringFromResponse(allListings);
-
-        final List<Listing> populatedListings = getAllListings(allListingsFormatted);
 
         List<HashMap<String, Object>> aList = new ArrayList<>();
 
         for (int i = 0; i < populatedListings.size(); i++) {
             HashMap<String, Object> titleImagePair = new HashMap<>();
             titleImagePair.put("Image Drawable", populatedListings.get(i).getImageID());
-            String foodDetail = populatedListings.get(i).getFoodName().toUpperCase() + "\n  " + populatedListings.get(i).getLocation();
+            String foodDetail = populatedListings.get(i).getFoodName() + "\n  " + populatedListings.get(i).getLocation();
             SpannableString spannable = new SpannableString("  $" + populatedListings.get(i).getPrice() + " " + foodDetail);
             spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, foodDetail.indexOf("\n"), 0);
             titleImagePair.put("Description", spannable);
