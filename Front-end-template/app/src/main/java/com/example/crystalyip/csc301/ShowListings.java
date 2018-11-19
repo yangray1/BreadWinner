@@ -15,8 +15,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
+
 import com.example.crystalyip.csc301.DAOs.ListingsDAO;
-import com.example.crystalyip.csc301.HTTPIneteractions.APICalls;
 import com.example.crystalyip.csc301.Model.Listing;
 
 import java.util.ArrayList;
@@ -47,6 +47,7 @@ public class ShowListings extends Fragment implements View.OnClickListener {
     }
 
 
+
     /**
      * Create the "Near me" view
      */
@@ -59,6 +60,7 @@ public class ShowListings extends Fragment implements View.OnClickListener {
         View view = inflater.inflate(R.layout.fragment_show_listings, container, false);
         ListingsDAO listingsDAO = new ListingsDAO(searchURL);
         final List<Listing> populatedListings = listingsDAO.getAllListings();
+
 
         List<HashMap<String, Object>> aList = new ArrayList<>();
 

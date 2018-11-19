@@ -37,4 +37,6 @@ public class FragmentFoodDetail extends Fragment {
 
         return rootView;
     }
+
+
 }

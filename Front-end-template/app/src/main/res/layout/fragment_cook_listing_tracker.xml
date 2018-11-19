@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/food_details">
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true">
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
+            android:fitsSystemWindows="true"
+            app:contentScrim="@android:color/black"
+            app:expandedTitleTextAppearance="@android:color/transparent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/location"
+                    android:layout_width="111dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/num_orders"
+                    android:layout_alignStart="@+id/num_orders"
+                    android:layout_below="@+id/price_label"
+                    android:text="Toronto"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/price_per_order"
+                    android:layout_width="85dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/num_orders"
+                    android:layout_alignStart="@+id/num_orders"
+                    android:layout_below="@+id/num_orders_label"
+                    android:text="$5.00"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/location_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/num_orders_label"
+                    android:layout_alignStart="@+id/num_orders_label"
+                    android:layout_below="@+id/price_per_order"
+                    android:layout_gravity="center"
+                    android:text="Location:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/price_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/num_orders_label"
+                    android:layout_alignStart="@+id/num_orders_label"
+                    android:layout_below="@+id/num_orders_label"
+                    android:layout_gravity="center"
+                    android:text="Price Per Order:"
+                    android:textSize="18sp" />
+
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/toolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    app:layout_collapseMode="parallax"
+                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                    <TextView
+                        android:id="@+id/toolbar_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="FRIED RICE"
+                        android:textSize="20sp" />
+
+                </android.support.v7.widget.Toolbar>
+
+                <ProgressBar
+                    android:id="@+id/progressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="190dp"
+                    android:layout_height="189dp"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="54dp"
+                    android:indeterminate="false"
+                    android:max="100"
+                    android:progress="0"
+                    android:progressDrawable="@drawable/custom_progressbar_drawable"
+                    android:secondaryProgress="0" />
+
+                <TextView
+                    android:id="@+id/delivery_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="121dp"
+                    android:text="30 mins"
+                    android:textSize="22sp" />
+
+                <TextView
+                    android:id="@+id/delivery_time2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="152dp"
+                    android:text="until delivery"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/num_orders_label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/progressBar"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginStart="60dp"
+                    android:text="Number of Orders:"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/num_orders"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/progressBar"
+                    android:layout_marginEnd="49dp"
+                    android:layout_marginRight="49dp"
+                    android:text="6"
+                    android:textSize="18sp" />
+
+
+            </RelativeLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:clipToPadding="false"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardUseCompatPadding="false">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/panels"
+                    android:orientation="vertical">
+
+
+                    <Button
+                        android:id="@+id/search_button"
+                        android:layout_width="137dp"
+                        android:layout_height="36dp"
+                        android:layout_centerHorizontal="true"
+                        android:background="@drawable/buttonshape"
+                        android:fontFamily="@font/nunito_semibold"
+                        android:text="CLOSE LISTING"
+                        android:textAllCaps="false"
+                        android:textColor="#ffffff"
+                        android:textSize="13sp" />
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+        </LinearLayout>
+
+    </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
