@@ -76,7 +76,7 @@ public class AddListing extends Fragment implements View.OnClickListener{
                         listing.put("Image", "greatest image 2018");
                         listing.put("tags", tags);
 
-                        postHTTPJson("http://192.168.2.18:5000/api/add", listing); // "http://18.234.123.109/api/add"
+                        postHTTPJson("http://18.234.123.109/api/add", listing); // "http://18.234.123.109/api/add"
 
                         builder.setTitle("Successfully added listing.");
                         builder.show();
