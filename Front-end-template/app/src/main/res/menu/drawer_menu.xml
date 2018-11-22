@@ -30,6 +30,10 @@
                 android:id="@+id/nav_history"
                 android:icon="@drawable/ic_history"
                 android:title="Order History" />
+            <item
+                android:id="@+id/personal_listing"
+                android:icon="@drawable/ic_history"
+                android:title="My Listings" />
         </menu>
     </item>
 </menu>

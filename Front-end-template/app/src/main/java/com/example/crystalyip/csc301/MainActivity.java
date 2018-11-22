@@ -10,8 +10,17 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.FirebaseDatabase;
+import com.onesignal.OneSignal;
+
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private DrawerLayout drawer;
+    private FirebaseAuth mAuth;
+    public static String userId;
+    public static FirebaseDatabase mDatabase;
+    FirebaseUser user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -27,6 +36,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         NavigationView navigationView = findViewById(R.id.nav_view);
         // sets the drawer menu items
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        OneSignal.startInit(this).init();
+
+        if (mDatabase == null) {
+            mDatabase = FirebaseDatabase.getInstance();
+            //mDatabase.setPersistenceEnabled(true);
+            FirebaseDatabase.getInstance().setPersistenceEnabled(true);
+        }
+
+        mAuth = FirebaseAuth.getInstance();
+        userId="12";
+        OneSignal.sendTag("User_ID", "12");
 
         /*****************************************************************************************
          * TODO: YOU NEED TO ADD CODE WHEN BACKEND IMPLEMENTED THAT COUNTS NUMBER OF ACTIVE ORDERS.
@@ -95,6 +117,10 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             case R.id.nav_account:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new ProfileFragment()).commit();
+                break;
+            case R.id.personal_listing:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new CookListingTracker()).commit();
                 break;
         }
 

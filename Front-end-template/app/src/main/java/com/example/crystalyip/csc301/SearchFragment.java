@@ -17,7 +17,7 @@ public class SearchFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        Button searchButton = view.findViewById(R.id.search_button);
+        Button searchButton = view.findViewById(R.id.close_button);
         searchButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 String searchQuery = getSearchQuery(view); // find what was typed in the edittext field
