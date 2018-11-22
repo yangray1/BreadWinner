@@ -16,13 +16,18 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.crystalyip.csc301.HTTPInteractions.OrderPlacer;
+import com.example.crystalyip.csc301.Model.Order;
+import com.example.crystalyip.csc301.Model.StaticStorage;
+
+import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
 public class FragmentFoodDetail extends Fragment {
-
+    OrderPlacer orderPlacer;
 
 
     @Nullable
@@ -30,6 +35,8 @@ public class FragmentFoodDetail extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
         Bundle bundle = this.getArguments();
+        Order orderToPlace;
+
         FloatingActionButton order;
         if (bundle != null) {
             int imageID = bundle.getInt("imageURL");
@@ -38,9 +45,12 @@ public class FragmentFoodDetail extends Fragment {
 
             TextView tv = (TextView) rootView.findViewById(R.id.food_description);
             String foodDescription = bundle.getString("Description");
+            String foodName = bundle.getString("foodName");
+            String foodLocation = bundle.getString("foodLocation");
             SpannableString descriptions = new SpannableString(foodDescription);
             descriptions.setSpan(new RelativeSizeSpan(1.3f), 0, foodDescription.indexOf("\n"), 0);
             tv.setText(descriptions);
+            orderToPlace = new Order("Pending", StaticStorage.getUserId(), 0, foodName, foodLocation);
 
         }
         order=rootView.findViewById(R.id.btnCart);
@@ -120,6 +130,11 @@ public class FragmentFoodDetail extends Fragment {
                 }
             }
         });
+    }
+
+    private void getSuccessResponse(Order orderToPlace) throws IOException {
+        orderPlacer=new OrderPlacer(orderToPlace);
+        orderPlacer.makeOrder();
     }
 
 
