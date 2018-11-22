@@ -67,7 +67,23 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
             @Override
             public void onClick(View v) {
                 sendOrderNotification();
+                sendOrderNotification();
+                int width = LinearLayout.LayoutParams.WRAP_CONTENT;
+                int height = LinearLayout.LayoutParams.WRAP_CONTENT;
+                boolean focusable = true; // lets taps outside the popup also dismiss it
+                PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+                popupWindow.setFocusable(true);
+                TextView message = popupView.findViewById(R.id.order_message);
+                try {
+                    message.setText(getSuccessResponse(orderToPlace));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                // If you need the PopupWindow to dismiss when when touched outside
+                popupWindow.setBackgroundDrawable(new ColorDrawable());
 
+                // Using location, the PopupWindow will be displayed right under anchorView
+                popupWindow.showAtLocation(rootView, Gravity.CENTER, 0, 0);
             }
         });
         return rootView;
