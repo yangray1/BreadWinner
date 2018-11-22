@@ -79,22 +79,34 @@ def getAllListings():
                                                            listing_location_col,
                                                            listing_image_col,
                                                            listing_table_name))
+        single_row = search_all.fetchone()
+
+        while single_row is not None:
+            all_rows.append(single_row)
+            single_row = search_all.fetchone()
+
+        search_all.close()
+
+        rows_to_json(all_rows)  # want to convert each row into a JSON string
+
+        return json.dumps({'data': all_rows})  # convert to string before returning
+
     except:
         rollback = conn.cursor()
         rollback.execute("ROLLBACK")
         rollback.commit()
 
-    single_row = search_all.fetchone()
-
-    while single_row is not None:
-        all_rows.append(single_row)
-        single_row = search_all.fetchone()
-
-    search_all.close()
-
-    rows_to_json(all_rows)  # want to convert each row into a JSON string
-
-    return json.dumps({'data': all_rows})  # convert to string before returning
+    # single_row = search_all.fetchone()
+    #
+    # while single_row is not None:
+    #     all_rows.append(single_row)
+    #     single_row = search_all.fetchone()
+    #
+    # search_all.close()
+    #
+    # rows_to_json(all_rows)  # want to convert each row into a JSON string
+    #
+    # return json.dumps({'data': all_rows})  # convert to string before returning
 
 
 # --------------------------------------------------- ADD LISTING ---------------------------------------------------#
@@ -133,9 +145,15 @@ def addToDB(json_data):
     tags = json_dict["tags"]
     print(tags)
     sql = "INSERT INTO " + listing_table_name + " VALUES (%s, %s, %s, %s, %s, %s)"
-    cur.execute(sql, (list_id, cook_id, food_name, price, loc, image))
+    try:
+        cur.execute(sql, (list_id, cook_id, food_name, price, loc, image))
+        addTags(tags, list_id)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
-    addTags(tags, list_id)
+    # addTags(tags, list_id)
 
 
 def addTags(tag_list, listing_id):
@@ -145,7 +163,12 @@ def addTags(tag_list, listing_id):
     cur = conn.cursor()
     for x in tag_list:
         sql = "INSERT INTO " + listing_tags_table_name + " VALUES (%s , %s)"
-        cur.execute(sql, (listing_id, removeQuotes(x)))
+        try:
+            cur.execute(sql, (listing_id, removeQuotes(x)))
+        except:
+            rollback = conn.cursor()
+            rollback.execute("ROLLBACK")
+            rollback.commit()
 
 
 def getListId():
@@ -153,12 +176,23 @@ def getListId():
     cur = conn.cursor()
     sql = "SELECT max({}) FROM {}".format(listing_listing_id_col,
                                           listing_table_name)
-    cur.execute(sql)
-    maxID = cur.fetchone()
-    if maxID[0] == None:
-        return 1
-    else:
-        return maxID[0] + 1
+    try:
+        cur.execute(sql)
+        maxID = cur.fetchone()
+        if maxID[0] == None:
+            return 1
+        else:
+            return maxID[0] + 1
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+        
+    # maxID = cur.fetchone()
+    # if maxID[0] == None:
+    #     return 1
+    # else:
+    #     return maxID[0] + 1
 
 
 def printTables():
