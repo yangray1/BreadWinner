@@ -515,7 +515,7 @@ def getAllOrders(clientID):
 
     search_all = conn.cursor()
 
-    search_all.execute("SELECT * FROM {} WHERE {} = {} AND {} != {}".format(order_table_name, order_client_id_col, str(clientID), order_status_col, "\"Completed\""))
+    search_all.execute("SELECT * FROM {} WHERE {} = {} AND {} != {}".format(order_table_name, order_client_id_col, str(clientID), order_status_col, "Completed"))
 
     single_row = search_all.fetchone()
 
