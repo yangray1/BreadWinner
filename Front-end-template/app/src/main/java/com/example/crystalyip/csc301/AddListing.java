@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.preference.DialogPreference;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.text.SpannableString;
@@ -76,7 +77,7 @@ public class AddListing extends Fragment implements View.OnClickListener{
                         listing.put("Image", "greatest image 2018");
                         listing.put("tags", tags);
 
-                        postHTTPJson("http://18.234.123.109/api/add", listing); // "http://18.234.123.109/api/add"
+                        postHTTPJson("http://18.234.123.109/api/add", listing);
 
                         builder.setTitle("Successfully added listing.");
                         builder.show();
