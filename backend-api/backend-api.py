@@ -69,15 +69,20 @@ def removeQuotes(stringy):
 def getAllListings():
     all_rows = []
 
-    search_all = conn.cursor()
-    search_all.execute("SELECT {}, {}, {}, {},"
-                       " {}, {} FROM public.{}".format(listing_listing_id_col,
-                                                       listing_cook_id_col,
-                                                       listing_food_name_col,
-                                                       listing_price_col,
-                                                       listing_location_col,
-                                                       listing_image_col,
-                                                       listing_table_name))
+    try:
+        search_all = conn.cursor()
+        search_all.execute("SELECT {}, {}, {}, {},"
+                           " {}, {} FROM public.{}".format(listing_listing_id_col,
+                                                           listing_cook_id_col,
+                                                           listing_food_name_col,
+                                                           listing_price_col,
+                                                           listing_location_col,
+                                                           listing_image_col,
+                                                           listing_table_name))
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
     single_row = search_all.fetchone()
 
