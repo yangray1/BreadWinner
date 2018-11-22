@@ -78,11 +78,11 @@ public class FragmentFoodDetail extends Fragment {
                         con.setDoInput(true);
 
                         con.setRequestProperty("Content-Type", "application/json; charset=UTF-8");
-                        con.setRequestProperty("Authorization", "Basic ZTc5Y2NiM2YtYWFiMy00NzEzLWJkNDQtMTY5YzJhZDlhYWFi");
+                        con.setRequestProperty("Authorization", "Basic NjA1ZTAwZDItMWM2My00YzI3LWI0MTQtY2ZiYzRlNmYyNzEx");
                         con.setRequestMethod("POST");
 
                         String strJsonBody = "{"
-                                + "\"app_id\": \"e29e08c0-3f12-4b0c-aad7-19b70cf9729f\","
+                                + "\"app_id\": \"88c285d8-0c80-4ad7-88c6-4d2f590b2915\","
 
                                 + "\"filters\": [{\"field\": \"tag\", \"key\": \"User_ID\", \"relation\": \"=\", \"value\": \"" + sendNotification + "\"}],"
 
