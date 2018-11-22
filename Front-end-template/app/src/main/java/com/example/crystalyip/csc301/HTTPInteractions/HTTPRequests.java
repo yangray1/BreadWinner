@@ -2,18 +2,43 @@ package com.example.crystalyip.csc301.HTTPInteractions;
 
 import android.content.res.Resources;
 
-import org.apache.http.HttpResponse;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.util.EntityUtils;
+
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 public class HTTPRequests {
+    /**
+     * subroutine for recieving and checking the responses of an http request
+     * @param con
+     * @return
+     */
+    private static String  getHttpResult(HttpURLConnection con) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int HttpResult = con.getResponseCode();
+        if (HttpResult == HttpURLConnection.HTTP_OK) {
+            BufferedReader br = new BufferedReader(
+                    new InputStreamReader(con.getInputStream(), "utf-8"));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                sb.append(line + "\n");
+            }
+            br.close();
+            return sb.toString();
+        } else {
+            return con.getResponseMessage();
+        }
+    }
+
+
+
     /**
      * Sends a GET request to the url at urlToRead, and return the string representing the response.
      *
@@ -21,19 +46,13 @@ public class HTTPRequests {
      * @return String response of GET request
      */
     public static String getHTTP(String urlToRead) throws Exception {
-        // reference: https://stackoverflow.com/questions/34691175/how-to-send-httprequest-and-get-json-response-in-android/34691486
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpGet httpget = new HttpGet(urlToRead);
+        URL url = new URL(urlToRead);
+        HttpURLConnection con =  (HttpURLConnection) url.openConnection();
+        con.setDoInput(true);
+        con.setRequestMethod("GET");
 
-        HttpResponse response = httpclient.execute(httpget);
 
-        if (response.getStatusLine().getStatusCode() == 200) {
-            String server_response = EntityUtils.toString(response.getEntity());
-            return server_response;
-        } else {
-            System.out.println("no response from server");
-        }
-        return "";
+        return getHttpResult(con);
     }
 
     /**
@@ -44,22 +63,25 @@ public class HTTPRequests {
      * @throws IOException
      */
     public static String postHTTPJson(String urlToRead, JSONObject jsonToPost) throws IOException {
-        //reference: https://stackoverflow.com/a/19912858
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(urlToRead);
+        URL url = new URL(urlToRead);
+        HttpURLConnection con =  (HttpURLConnection) url.openConnection();
+        con.setDoOutput(true);
+        con.setDoInput(true);
+        con.setRequestMethod("POST");
+        con.setRequestProperty("Content-Type", "application/json");
+        con.setRequestProperty("Accept", "application/json");
 
-        httpPost.addHeader("content-type", "application/json");
-        StringEntity params = new StringEntity(jsonToPost.toString());
-        httpPost.setEntity(params);
-        HttpResponse response = httpclient.execute(httpPost);
+        OutputStreamWriter wr = new OutputStreamWriter(con.getOutputStream());
+        wr.write(jsonToPost.toString());
+        wr.flush();
 
-        if (response.getStatusLine().getStatusCode() == 200) {
-            String server_response = EntityUtils.toString(response.getEntity());
-            return server_response;
-        } else {
-            throw new Resources.NotFoundException();
-        }
+        //display what returns the POST request
+        return getHttpResult(con);
+
+
     }
+
+
 
     /**
      * Format the string returned from a GET request to our API, ridding it of newline characters
@@ -83,19 +105,14 @@ public class HTTPRequests {
      * @throws IOException
      */
     public static String postHTTP(String urlToRead) throws IOException {
-        //reference: https://stackoverflow.com/a/19912858
-        HttpClient httpclient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost(urlToRead);
+        URL url = new URL(urlToRead);
+        HttpURLConnection con =  (HttpURLConnection) url.openConnection();
+        con.setDoOutput(true);
+        con.setDoInput(true);
+        con.setRequestMethod("POST");
 
-        HttpResponse response = httpclient.execute(httpPost);
 
-        if (response.getStatusLine().getStatusCode() == 200) {
-            String server_response = EntityUtils.toString(response.getEntity());
-            return server_response;
-        } else {
-            System.out.println("no response from server");
-        }
-        return "";
+        return getHttpResult(con);
     }
 
 }

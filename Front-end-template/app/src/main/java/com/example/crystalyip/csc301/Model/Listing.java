@@ -1,7 +1,10 @@
 package com.example.crystalyip.csc301.Model;
+
+import java.io.Serializable;
+
 /**
  * A Food Listing */
-public class Listing {
+public class Listing implements Serializable {
     private String foodName;
     private int listingID;
     private String imageLink;
