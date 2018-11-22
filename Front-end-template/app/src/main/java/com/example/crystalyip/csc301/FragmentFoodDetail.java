@@ -1,19 +1,24 @@
 package com.example.crystalyip.csc301;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.text.SpannableString;
 import android.text.style.RelativeSizeSpan;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.example.crystalyip.csc301.HTTPInteractions.OrderPlacer;
@@ -26,18 +31,21 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
 
-public class FragmentFoodDetail extends Fragment {
-    OrderPlacer orderPlacer;
-
-
+public class FragmentFoodDetail extends Fragment  implements View.OnClickListener{
+    PopupWindow popUp;
+    View popupView;
+    View rootView;
+    Order orderToPlace;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
+        rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
         Bundle bundle = this.getArguments();
-        Order orderToPlace;
 
-        FloatingActionButton order;
+        popUp=new PopupWindow(getActivity());
+        popupView = inflater.inflate(R.layout.popup_message, null);
+
+
         if (bundle != null) {
             int imageID = bundle.getInt("imageURL");
             ImageView imageView=(ImageView) rootView.findViewById(R.id.image_food);
@@ -53,11 +61,13 @@ public class FragmentFoodDetail extends Fragment {
             orderToPlace = new Order("Pending", StaticStorage.getUserId(), 0, foodName, foodLocation);
 
         }
-        order=rootView.findViewById(R.id.btnCart);
+
+        FloatingActionButton order=rootView.findViewById(R.id.btnCart);
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sendOrderNotification();
+
             }
         });
         return rootView;
@@ -132,10 +142,13 @@ public class FragmentFoodDetail extends Fragment {
         });
     }
 
-    private void getSuccessResponse(Order orderToPlace) throws IOException {
-        orderPlacer=new OrderPlacer(orderToPlace);
-        orderPlacer.makeOrder();
+    private String getSuccessResponse(Order orderToPlace) throws IOException {
+        OrderPlacer orderPlacer=new OrderPlacer(orderToPlace);
+        return orderPlacer.makeOrder();
     }
 
 
+    @Override
+    public void onClick(View v) {
+    }
 }
