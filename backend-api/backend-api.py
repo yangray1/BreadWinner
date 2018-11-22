@@ -71,7 +71,7 @@ def getAllListings():
 
     try:
         search_all = conn.cursor()
-        search_all.execute("SELECT xdasdasd{}, {}, {}, {},"
+        search_all.execute("SELECT {}, {}, {}, {},"
                            " {}, {} FROM public.{}".format(listing_listing_id_col,
                                                            listing_cook_id_col,
                                                            listing_food_name_col,
