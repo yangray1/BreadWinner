@@ -58,7 +58,7 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
             SpannableString descriptions = new SpannableString(foodDescription);
             descriptions.setSpan(new RelativeSizeSpan(1.3f), 0, foodDescription.indexOf("\n"), 0);
             tv.setText(descriptions);
-            orderToPlace = new Order("Pending", StaticStorage.getUserId(), 0, foodName, foodLocation);
+            orderToPlace = new Order("Pending", 40, 11, foodName, foodLocation);
 
         }
 

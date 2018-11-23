@@ -33,7 +33,7 @@ import org.json.JSONObject;
 public class AddListing extends Fragment implements View.OnClickListener{
     @Override
     public void onClick(View v) {
-
+ 
     }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
