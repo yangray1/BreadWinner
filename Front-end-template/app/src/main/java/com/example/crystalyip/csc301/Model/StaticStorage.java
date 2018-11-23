@@ -1,5 +1,6 @@
 package com.example.crystalyip.csc301.Model;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
@@ -26,13 +27,11 @@ public class StaticStorage {
         return userId;
     }
 
-    public static void addPersonalOrders(Order order){
-        personalOrders.add(order);
+    public static void refreshAllPersonalOrders(List<Order> orders){
+        personalOrders.clear();
+        personalOrders.addAll(orders);
     }
 
-    public static void clearStorage(){
-        personalOrders.clear();
-    }
 
     public static void mapOrderToStatus(String orderNumber, String status){
         mapOrderToRecentStatus.put(orderNumber, status);

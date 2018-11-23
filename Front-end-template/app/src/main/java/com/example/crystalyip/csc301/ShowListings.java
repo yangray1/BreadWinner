@@ -74,6 +74,7 @@ public class ShowListings extends Fragment implements View.OnClickListener {
             titleImagePair.put("stringDescription", foodDetail);
             titleImagePair.put("foodName", populatedListings.get(i).getFoodName());
             titleImagePair.put("foodLocation", populatedListings.get(i).getLocation());
+            titleImagePair.put("cookID", populatedListings.get(i).getCookID());
             aList.add(titleImagePair);
         }
 
@@ -98,6 +99,7 @@ public class ShowListings extends Fragment implements View.OnClickListener {
                 bundle.putString("foodLocation", (String) obj.get("foodLocation"));
                 bundle.putInt("imageURL", (Integer) obj.get("Image Drawable"));
                 bundle.putString("Description", (String) obj.get("stringDescription"));
+                bundle.putInt("cookID", (Integer) obj.get("cookID"));
                 FragmentFoodDetail foodDetail = new FragmentFoodDetail();
                 foodDetail.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
