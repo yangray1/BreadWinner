@@ -69,27 +69,44 @@ def removeQuotes(stringy):
 def getAllListings():
     all_rows = []
 
-    search_all = conn.cursor()
-    search_all.execute("SELECT {}, {}, {}, {},"
-                       " {}, {} FROM public.{}".format(listing_listing_id_col,
-                                                       listing_cook_id_col,
-                                                       listing_food_name_col,
-                                                       listing_price_col,
-                                                       listing_location_col,
-                                                       listing_image_col,
-                                                       listing_table_name))
-
-    single_row = search_all.fetchone()
-
-    while single_row is not None:
-        all_rows.append(single_row)
+    try:
+        search_all = conn.cursor()
+        search_all.execute("SELECT {}, {}, {}, {},"
+                           " {}, {} FROM public.{}".format(listing_listing_id_col,
+                                                           listing_cook_id_col,
+                                                           listing_food_name_col,
+                                                           listing_price_col,
+                                                           listing_location_col,
+                                                           listing_image_col,
+                                                           listing_table_name))
         single_row = search_all.fetchone()
 
-    search_all.close()
+        while single_row is not None:
+            all_rows.append(single_row)
+            single_row = search_all.fetchone()
 
-    rows_to_json(all_rows)  # want to convert each row into a JSON string
+        search_all.close()
 
-    return json.dumps({'data': all_rows})  # convert to string before returning
+        rows_to_json(all_rows)  # want to convert each row into a JSON string
+
+        return json.dumps({'data': all_rows})  # convert to string before returning
+
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+
+    # single_row = search_all.fetchone()
+    #
+    # while single_row is not None:
+    #     all_rows.append(single_row)
+    #     single_row = search_all.fetchone()
+    #
+    # search_all.close()
+    #
+    # rows_to_json(all_rows)  # want to convert each row into a JSON string
+    #
+    # return json.dumps({'data': all_rows})  # convert to string before returning
 
 
 # --------------------------------------------------- ADD LISTING ---------------------------------------------------#
@@ -127,10 +144,17 @@ def addToDB(json_data):
     image = json_dict[removeQuotes(listing_image_col)]
     tags = json_dict["tags"]
     print(tags)
+    
     sql = "INSERT INTO " + listing_table_name + " VALUES (%s, %s, %s, %s, %s, %s, TRUE)"
-    cur.execute(sql, (list_id, cook_id, food_name, price, loc, image))
+    try:
+        cur.execute(sql, (list_id, cook_id, food_name, price, loc, image))
+        addTags(tags, list_id)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
-    addTags(tags, list_id)
+    # addTags(tags, list_id)
 
 
 def addTags(tag_list, listing_id):
@@ -140,7 +164,12 @@ def addTags(tag_list, listing_id):
     cur = conn.cursor()
     for x in tag_list:
         sql = "INSERT INTO " + listing_tags_table_name + " VALUES (%s , %s)"
-        cur.execute(sql, (listing_id, removeQuotes(x)))
+        try:
+            cur.execute(sql, (listing_id, removeQuotes(x)))
+        except:
+            rollback = conn.cursor()
+            rollback.execute("ROLLBACK")
+            rollback.commit()
 
 
 def getListId():
@@ -148,35 +177,50 @@ def getListId():
     cur = conn.cursor()
     sql = "SELECT max({}) FROM {}".format(listing_listing_id_col,
                                           listing_table_name)
-    cur.execute(sql)
-    maxID = cur.fetchone()
-    if maxID[0] == None:
-        return 1
-    else:
-        return maxID[0] + 1
+    try:
+        cur.execute(sql)
+        maxID = cur.fetchone()
+        if maxID[0] == None:
+            return 1
+        else:
+            return maxID[0] + 1
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+
+    # maxID = cur.fetchone()
+    # if maxID[0] == None:
+    #     return 1
+    # else:
+    #     return maxID[0] + 1
 
 
 def printTables():
-    cur = conn.cursor()
-    strout = "--------------------------ListingTable---------------------------<br>"
-    sql = "SELECT * FROM {}".format(listing_table_name)
-    cur.execute(sql)
-    listings = cur.fetchall()
-    for x in listings:
-        for y in x:
-            strout = strout + str(y) + "|| "
-        strout = strout + "<br>"
-    sql = "SELECT * FROM {}".format(listing_tags_table_name)
-    cur.execute(sql)
-    listings = cur.fetchall()
-    strout += "<br><br><br>--------------------------TagTable-------------------------<br>"
-    for x in listings:
-        for y in x:
-            strout = strout + str(y) + "   "
+    try:
+        cur = conn.cursor()
+        strout = "--------------------------ListingTable---------------------------<br>"
+        sql = "SELECT * FROM {}".format(listing_table_name)
+        cur.execute(sql)
+        listings = cur.fetchall()
+        for x in listings:
+            for y in x:
+                strout = strout + str(y) + "|| "
+            strout = strout + "<br>"
+        sql = "SELECT * FROM {}".format(listing_tags_table_name)
+        cur.execute(sql)
+        listings = cur.fetchall()
+        strout += "<br><br><br>--------------------------TagTable-------------------------<br>"
+        for x in listings:
+            for y in x:
+                strout = strout + str(y) + "   "
 
-        strout = strout + "<br>"
-    return strout
-
+            strout = strout + "<br>"
+        return strout
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 # --------------------------------------------------- CANCEL ---------------------------------------------------#
 
@@ -205,35 +249,45 @@ def get_in_progress_order(clientId, listingId):
     """
     Return the in progress order that corresponds with ClientId and ListingID
     """
-    matched_rows = []
+    try:
+        matched_rows = []
 
-    order = conn.cursor()
-    order.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
-                  " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId) +
-                  " AND t1.\"Status\" = \'In progress\'")
+        order = conn.cursor()
+        order.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
+                      " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId) +
+                      " AND t1.\"Status\" = \'In progress\'")
 
-    order_row = order.fetchone()
-
-    while order_row is not None:
-        matched_rows.append(order_row)
         order_row = order.fetchone()
 
-    order.close()
+        while order_row is not None:
+            matched_rows.append(order_row)
+            order_row = order.fetchone()
 
-    return matched_rows
+        order.close()
+
+        return matched_rows
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 def cancel_order(clientId, listingId):
     """
     given a clientId and listingId cancel the order in progress associated with them
     """
-    order = conn.cursor()
-    order.execute(
-        "UPDATE public.\"Order\" SET \"Status\" = 'Canceled' WHERE \"ClientID\" = " + str(clientId) +
-        " AND \"ListingID\" = " + str(listingId) + " AND \"Status\" = \'In progress\'")
-    conn.commit()
+    try:
+        order = conn.cursor()
+        order.execute(
+            "UPDATE public.\"Order\" SET \"Status\" = 'Canceled' WHERE \"ClientID\" = " + str(clientId) +
+            " AND \"ListingID\" = " + str(listingId) + " AND \"Status\" = \'In progress\'")
+        conn.commit()
 
-    order.close()
+        order.close()
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 def order_to_json(rows):
@@ -273,21 +327,26 @@ def queryOrderUsingClientID(clientId, listingId):
     """
     Return a list of Order tuples belonging to the client with the given id.
     """
-    matched_rows = []
+    try:
+        matched_rows = []
 
-    orders = conn.cursor()
-    orders.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
-                   " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId))
+        orders = conn.cursor()
+        orders.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
+                       " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId))
 
-    order_row = orders.fetchone()
+        order_row = orders.fetchone()
 
-    while order_row is not None:
-       matched_rows.append(order_row)
-       order_row = orders.fetchone()
+        while order_row is not None:
+           matched_rows.append(order_row)
+           order_row = orders.fetchone()
 
-    orders.close()
+        orders.close()
 
-    return matched_rows
+        return matched_rows
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 # --------------------------------------------------- MARK AS COMPLETE ---------------------------------------------------#
@@ -317,13 +376,21 @@ def mark_as_complete(clientID, listingID):
     try:
         cur.execute(sql)
         conn.commit()
-    except Exception as e:
-        raise Exception(e)
+        if cur.rowcount == 0: # do we put this here?
+            raise Exception(
+                "The status of listing id's order was not changed. ClientID or ListingID may be out of range.")
+        return "Success"
+    # except Exception as e: #### THIS WAS HERE PREVIOUSLY
+    #     raise Exception(e)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
     # Check to see if a row in the database has been updated.
-    if cur.rowcount == 0:
-        raise Exception("The status of listing id's order was not changed. ClientID or ListingID may be out of range.")
-    return "Success"
+    # if cur.rowcount == 0:
+    #     raise Exception("The status of listing id's order was not changed. ClientID or ListingID may be out of range.")
+    # return "Success"
 
 
 # --------------------------------------- MARK AS IN PROGRESS --------------------------------------#
@@ -345,10 +412,15 @@ def updateOrderStatusToInProgress(clientID, listingID):
     try:
         cur.execute(query)
         conn.commit()
-    except Exception as e:
-        raise Exception(e)
+        return "SUCCESS"
+    # except Exception as e:
+    #     raise Exception(e)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
-    return "SUCCESS"
+    # return "SUCCESS"
 
 
 # --------------------------------------------------- SEARCH ---------------------------------------------------#
@@ -387,70 +459,80 @@ def get_rows_from_name(search_terms):
     """
     Return a list of listing tuples whose Food Names correspond to words in search_terms.
     """
-    matched_rows = []
+    try:
+        matched_rows = []
 
-    for search_term in search_terms:
-        search_names = conn.cursor()
-        search_names.execute("SELECT t1.{}, t1.{}, t1.{}, t1.{},"
-                             " t1.{}, t1.{} FROM public.{} as t1"
-                             " FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{} "
-                             "WHERE UPPER(t1.{}) LIKE UPPER(\'%{}%\')".format(listing_listing_id_col,
-                                                                              listing_cook_id_col,
-                                                                              listing_food_name_col,
-                                                                              listing_price_col,
-                                                                              listing_location_col,
-                                                                              listing_image_col,
-                                                                              listing_table_name,
-                                                                              listing_tags_table_name,
-                                                                              listing_listing_id_col,
-                                                                              listing_tags_listing_id_col,
-                                                                              listing_food_name_col,
-                                                                              search_term))
+        for search_term in search_terms:
+            search_names = conn.cursor()
+            search_names.execute("SELECT t1.{}, t1.{}, t1.{}, t1.{},"
+                                 " t1.{}, t1.{} FROM public.{} as t1"
+                                 " FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{} "
+                                 "WHERE UPPER(t1.{}) LIKE UPPER(\'%{}%\')".format(listing_listing_id_col,
+                                                                                  listing_cook_id_col,
+                                                                                  listing_food_name_col,
+                                                                                  listing_price_col,
+                                                                                  listing_location_col,
+                                                                                  listing_image_col,
+                                                                                  listing_table_name,
+                                                                                  listing_tags_table_name,
+                                                                                  listing_listing_id_col,
+                                                                                  listing_tags_listing_id_col,
+                                                                                  listing_food_name_col,
+                                                                                  search_term))
 
-        search_names_row = search_names.fetchone()
-
-        while search_names_row is not None:
-            matched_rows.append(search_names_row)
             search_names_row = search_names.fetchone()
 
-        search_names.close()
+            while search_names_row is not None:
+                matched_rows.append(search_names_row)
+                search_names_row = search_names.fetchone()
 
-    return matched_rows
+            search_names.close()
+
+        return matched_rows
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 def get_rows_from_tag(search_terms):
     """
     Return a list of listing tuples whose tags correspond to words in search_terms.
     """
-    matched_rows = []
+    try:
+        matched_rows = []
 
-    for search_term in search_terms:
-        search_tags = conn.cursor()
-        search_tags.execute("SELECT t1.{}, t1.{}, t1.{}, t1.{},"
-                            " t1.{}, t1.{} FROM public.{} as t1"
-                            " FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{} "
-                            "WHERE UPPER(t2.{}) LIKE UPPER(\'%{}%\')".format(listing_listing_id_col,
-                                                                             listing_cook_id_col,
-                                                                             listing_food_name_col,
-                                                                             listing_price_col,
-                                                                             listing_location_col,
-                                                                             listing_image_col,
-                                                                             listing_table_name,
-                                                                             listing_tags_table_name,
-                                                                             listing_listing_id_col,
-                                                                             listing_tags_listing_id_col,
-                                                                             listing_tags_tag_col,
-                                                                             search_term))
+        for search_term in search_terms:
+            search_tags = conn.cursor()
+            search_tags.execute("SELECT t1.{}, t1.{}, t1.{}, t1.{},"
+                                " t1.{}, t1.{} FROM public.{} as t1"
+                                " FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{} "
+                                "WHERE UPPER(t2.{}) LIKE UPPER(\'%{}%\')".format(listing_listing_id_col,
+                                                                                 listing_cook_id_col,
+                                                                                 listing_food_name_col,
+                                                                                 listing_price_col,
+                                                                                 listing_location_col,
+                                                                                 listing_image_col,
+                                                                                 listing_table_name,
+                                                                                 listing_tags_table_name,
+                                                                                 listing_listing_id_col,
+                                                                                 listing_tags_listing_id_col,
+                                                                                 listing_tags_tag_col,
+                                                                                 search_term))
 
-        search_tags_row = search_tags.fetchone()
-
-        while search_tags_row is not None:
-            matched_rows.append(search_tags_row)
             search_tags_row = search_tags.fetchone()
 
-        search_tags.close()
+            while search_tags_row is not None:
+                matched_rows.append(search_tags_row)
+                search_tags_row = search_tags.fetchone()
 
-    return matched_rows
+            search_tags.close()
+
+        return matched_rows
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 def rows_to_json(rows):
@@ -479,23 +561,27 @@ def add_new_order(json_data):
     Return a string representation of a list of JSON objects. This list contains
     objects that correspond to listings that match names or tags in the search query.
     """
+    try:
+        cur = conn.cursor()
+        json_dict = json_data
 
-    cur = conn.cursor()
-    json_dict = json_data
+        list_id = json_dict[removeQuotes(order_listing_id_col)]
+        client_id = json_dict[removeQuotes(order_client_id_col)]
+        time = json_dict[removeQuotes(order_time_of_order_col)]
+        status = "Pending"
 
-    list_id = json_dict[removeQuotes(order_listing_id_col)]
-    client_id = json_dict[removeQuotes(order_client_id_col)]
-    time = json_dict[removeQuotes(order_time_of_order_col)]
-    status = "Pending"
-
-    sql = "INSERT INTO " + order_table_name + " VALUES (%s, %s, %s, %s)"
-    cur.execute(sql, (client_id, list_id, status, time))
-    """
-    TODO: EVERY TIME A USER ORDERS CHEF XX'S DISH, CHEF XX NEEDS TO BE NOTIFIED WITH AN UPDATED # OF DISHES HE/SHE HAS
-    TO PREPARE. CAN DO THIS ONCE LISTING QUANTITY TRACKING IS IMPLEMENTED. IF WE IMPLEMENT BY LISTING FIELD QUANTITY,
-    MUST ALSO REMEMBER TO SET FIELD QUANTITY TO 0 WHEN ADDING NEW LISTING ENTRY TO DB
-    """
-    # update_num_orders()
+        sql = "INSERT INTO " + order_table_name + " VALUES (%s, %s, %s, %s)"
+        cur.execute(sql, (client_id, list_id, status, time))
+        """
+        TODO: EVERY TIME A USER ORDERS CHEF XX'S DISH, CHEF XX NEEDS TO BE NOTIFIED WITH AN UPDATED # OF DISHES HE/SHE HAS
+        TO PREPARE. CAN DO THIS ONCE LISTING QUANTITY TRACKING IS IMPLEMENTED. IF WE IMPLEMENT BY LISTING FIELD QUANTITY,
+        MUST ALSO REMEMBER TO SET FIELD QUANTITY TO 0 WHEN ADDING NEW LISTING ENTRY TO DB
+        """
+        # update_num_orders()
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 def update_num_orders():
@@ -511,32 +597,42 @@ def update_num_orders():
 
 @app.route("/api/getAllOrders/<int:clientID>", methods=['GET'])
 def getAllOrders(clientID):
-    all_orders = []
+    try:
+        all_orders = []
 
-    search_all = conn.cursor()
+        search_all = conn.cursor()
 
-    search_all.execute("SELECT * FROM {} WHERE {} = {} AND {} != {}".format(order_table_name, order_client_id_col, str(clientID), order_status_col, "Completed"))
+        search_all.execute("SELECT * FROM {} WHERE ({} = {}) AND ({} != '{}')".format(order_table_name, order_client_id_col, str(clientID), order_status_col, "Completed"))
 
-    single_row = search_all.fetchone()
-
-    while single_row is not None:
-        all_orders.append(single_row)
         single_row = search_all.fetchone()
 
-    search_all.close()
+        while single_row is not None:
+            all_orders.append(single_row)
+            single_row = search_all.fetchone()
 
-    orders_to_json(all_orders)  # want to convert each row into a JSON string
+        search_all.close()
 
-    return json.dumps({'data': all_orders})  # convert to string before returning
+        orders_to_json(all_orders)  # want to convert each row into a JSON string
+
+        return json.dumps({'data': all_orders})  # convert to string before returning
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 def get_food_data(listing_Id):
-    cur = conn.cursor()
-    sql = "SELECT {}, {} FROM {} WHERE {} = {}".format(listing_food_name_col, listing_location_col, listing_table_name, listing_listing_id_col,
-                                                    listing_Id)
+    try:
+        cur = conn.cursor()
+        sql = "SELECT {}, {} FROM {} WHERE {} = {}".format(listing_food_name_col, listing_location_col, listing_table_name, listing_listing_id_col,
+                                                        listing_Id)
 
-    cur.execute(sql)
-    return cur.fetchone()
+        cur.execute(sql)
+        return cur.fetchone()
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 def orders_to_json(rows):
@@ -575,12 +671,19 @@ def checkHistory(clientID):
 
     try:
         cur.execute(query)
-    except Exception as e:
-        raise Exception(e)
+        status = cur.fetchall()
+        convert_to_json(status)
+        return json.dumps({'data': status})
+    # except Exception as e:
+    #     raise Exception(e)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
-    status = cur.fetchall()
-    convert_to_json(status)
-    return json.dumps({'data': status})
+    # status = cur.fetchall()
+    # convert_to_json(status)
+    # return json.dumps({'data': status})
 
 
 # --------------------------------------------------- LOGIN ---------------------------------------------------#
@@ -605,8 +708,12 @@ def login(userID, password):
             return "Error, user ID and password failed."
         else:
             return userID
-    except Exception as e:
-        raise Exception(e)
+    # except Exception as e:
+    #     raise Exception(e)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 
 # --------------------------------------------------- ADD COOK REVIEW ---------------------------------------------------#
@@ -627,8 +734,12 @@ def addReview(cookID, reviewerID, comments, rating):
     try:
         cur.execute(query)
         conn.commit()
-    except Exception as e:
-        raise Exception(e)
+    # except Exception as e:
+    #     raise Exception(e)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
 
 def convert_to_json(rows):
     """
