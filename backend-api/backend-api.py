@@ -221,6 +221,7 @@ def printTables():
         rollback.execute("ROLLBACK")
         rollback.commit()
 
+
 # --------------------------------------------------- CANCEL ---------------------------------------------------#
 
 
@@ -231,7 +232,6 @@ def cancel(clientId, listingId):
     returns 'order not found' if the client id and listing id do not exist as a key or if the listing has already
     been canceled or fulfilled.
     """
-
 
     in_progress = get_in_progress_order(clientId, listingId)
 
@@ -252,9 +252,10 @@ def get_in_progress_order(clientId, listingId):
         matched_rows = []
 
         order = conn.cursor()
-        order.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
-                      " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId) +
-                      " AND t1.\"Status\" = \'In progress\'")
+        order.execute(
+            "SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
+            " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId) +
+            " AND t1.\"Status\" = \'In progress\'")
 
         order_row = order.fetchone()
 
@@ -318,7 +319,6 @@ def getOrderStatus(clientId, listingId):
 
     output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
-
     return output  # convert to string before returning
 
 
@@ -330,14 +330,15 @@ def queryOrderUsingClientID(clientId, listingId):
         matched_rows = []
 
         orders = conn.cursor()
-        orders.execute("SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
-                       " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId))
+        orders.execute(
+            "SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
+            " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId))
 
         order_row = orders.fetchone()
 
         while order_row is not None:
-           matched_rows.append(order_row)
-           order_row = orders.fetchone()
+            matched_rows.append(order_row)
+            order_row = orders.fetchone()
 
         orders.close()
 
@@ -375,7 +376,7 @@ def mark_as_complete(clientID, listingID):
     try:
         cur.execute(sql)
         conn.commit()
-        if cur.rowcount == 0: # do we put this here?
+        if cur.rowcount == 0:  # do we put this here?
             raise Exception(
                 "The status of listing id's order was not changed. ClientID or ListingID may be out of range.")
         return "Success"
@@ -554,6 +555,20 @@ def add_order_req():
     conn.commit()
     return "Success"
 
+def getQuantity(list_id):
+    """ Returns an unused listing_id """
+    cur = conn.cursor()
+    sql = "SELECT {} FROM {} WHERE {} = {}".format("quantity",
+                                                   order_table_name, order_listing_id_col, list_id)
+    try:
+        cur.execute(sql)
+        curr_quantity = cur.fetchone()[0]
+        print(curr_quantity)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+    return curr_quantity
 
 def add_new_order(json_data):
     """
@@ -567,16 +582,29 @@ def add_new_order(json_data):
         list_id = json_dict[removeQuotes(order_listing_id_col)]
         client_id = json_dict[removeQuotes(order_client_id_col)]
         time = json_dict[removeQuotes(order_time_of_order_col)]
-        status = "Pending"
+        print(list_id)
+        sql = "SELECT * FROM {} WHERE {} = {}".format(order_table_name,
+                                                       order_listing_id_col, list_id)
+        cur.execute(sql)
+        fetched=cur.fetchone()
+        print(fetched)
+        if (fetched is None):
+            status = "Pending"
 
-        sql = "INSERT INTO " + order_table_name + " VALUES (%s, %s, %s, %s)"
-        cur.execute(sql, (client_id, list_id, status, time))
-        """
-        TODO: EVERY TIME A USER ORDERS CHEF XX'S DISH, CHEF XX NEEDS TO BE NOTIFIED WITH AN UPDATED # OF DISHES HE/SHE HAS
-        TO PREPARE. CAN DO THIS ONCE LISTING QUANTITY TRACKING IS IMPLEMENTED. IF WE IMPLEMENT BY LISTING FIELD QUANTITY,
-        MUST ALSO REMEMBER TO SET FIELD QUANTITY TO 0 WHEN ADDING NEW LISTING ENTRY TO DB
-        """
-        # update_num_orders()
+            sql = "INSERT INTO " + order_table_name + " VALUES (%s, %s, %s, %s, %s)"
+            cur.execute(sql, (client_id, list_id, status, time, "1"))
+        else:
+            num = int(getQuantity(list_id))+1
+            if (num > 3):
+                return "You have exceeded max orders"
+            sql = \
+                """
+                    UPDATE public.{}
+                    SET {} = {}
+                    WHERE {} = {} 
+                """.format(order_table_name, "quantity", num.__str__(), order_listing_id_col, str(list_id))
+            cur.execute(sql)
+
     except:
         rollback = conn.cursor()
         rollback.execute("ROLLBACK")
@@ -592,6 +620,7 @@ def update_num_orders():
     cur = conn.cursor()
     # update the number of orders here - i.e. get quantity from listing table and ++
 
+
 # -------------------------------------------------- GET ALL ORDERS ---------------------------------------------------#
 
 @app.route("/api/getAllOrders/<int:clientID>", methods=['GET'])
@@ -601,7 +630,9 @@ def getAllOrders(clientID):
 
         search_all = conn.cursor()
 
-        search_all.execute("SELECT * FROM {} WHERE ({} = {}) AND ({} != '{}')".format(order_table_name, order_client_id_col, str(clientID), order_status_col, "Completed"))
+        search_all.execute(
+            "SELECT * FROM {} WHERE ({} = {}) AND ({} != '{}')".format(order_table_name, order_client_id_col,
+                                                                       str(clientID), order_status_col, "Completed"))
 
         single_row = search_all.fetchone()
 
@@ -623,8 +654,9 @@ def getAllOrders(clientID):
 def get_food_data(listing_Id):
     try:
         cur = conn.cursor()
-        sql = "SELECT {}, {} FROM {} WHERE {} = {}".format(listing_food_name_col, listing_location_col, listing_table_name, listing_listing_id_col,
-                                                        listing_Id)
+        sql = "SELECT {}, {} FROM {} WHERE {} = {}".format(listing_food_name_col, listing_location_col,
+                                                           listing_table_name, listing_listing_id_col,
+                                                           listing_Id)
 
         cur.execute(sql)
         return cur.fetchone()
@@ -639,12 +671,13 @@ def orders_to_json(rows):
     Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
     """
     for i in range(len(rows)):
-        extra_data=get_food_data(rows[i][1])
+        extra_data = get_food_data(rows[i][1])
         rows[i] = json.dumps({'ClientID': rows[i][0],
                               'ListingID': rows[i][1],
                               'Status': rows[i][2],
                               'Food Name': extra_data[0],
-                             'Location': extra_data[1]})
+                              'Location': extra_data[1]})
+
 
 # -------------------------------------------------- CHECK HISTORY ----------------------------------------------------#
 
@@ -686,17 +719,16 @@ def checkHistory(clientID):
 
 
 # --------------------------------------------------- LOGIN ---------------------------------------------------#
-@app.route('/api/login/<string:userID>/<string:password>', methods = ['GET'])
+@app.route('/api/login/<string:userID>/<string:password>', methods=['GET'])
 def login(userID, password):
-
     """ Returns userID if <userID, password> is a valid combination. """
-    
+
     query = \
-            """
-            SELECT *
-            FROM public.{}
-            WHERE {} = {} AND {} = '{}'
-            """.format(user_table_name, user_user_id_col, str(userID), user_password_col, str(password))
+        """
+        SELECT *
+        FROM public.{}
+        WHERE {} = {} AND {} = '{}'
+        """.format(user_table_name, user_user_id_col, str(userID), user_password_col, str(password))
 
     cur = conn.cursor()
 
@@ -717,16 +749,15 @@ def login(userID, password):
 
 # --------------------------------------------------- ADD COOK REVIEW ---------------------------------------------------#
 
-@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods = ['GET'])
+@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods=['GET'])
 def addReview(cookID, reviewerID, comments, rating):
-
     """ Adds a review to the cook rating table """
-    
+
     query = \
-            """
-            INSERT INTO public.{}
-            VALUES ({}, {}, {}, {});
-            """.format(cook_ratings_table_name, int(cookID), int(reviewerID), str(comments), int(rating))
+        """
+        INSERT INTO public.{}
+        VALUES ({}, {}, {}, {});
+        """.format(cook_ratings_table_name, int(cookID), int(reviewerID), str(comments), int(rating))
 
     cur = conn.cursor()
 
@@ -739,6 +770,7 @@ def addReview(cookID, reviewerID, comments, rating):
         rollback = conn.cursor()
         rollback.execute("ROLLBACK")
         rollback.commit()
+
 
 def convert_to_json(rows):
     """
@@ -754,6 +786,7 @@ def convert_to_json(rows):
     TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE
     CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
     """
+
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
