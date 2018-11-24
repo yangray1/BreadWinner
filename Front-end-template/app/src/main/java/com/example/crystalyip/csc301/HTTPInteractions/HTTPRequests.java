@@ -1,18 +1,34 @@
 package com.example.crystalyip.csc301.HTTPInteractions;
 
 import android.content.res.Resources;
+import android.util.Log;
 
+import com.android.internal.http.multipart.MultipartEntity;
+
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
+import org.apache.http.entity.mime.HttpMultipartMode;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.ByteArrayBody;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
@@ -63,6 +79,30 @@ public class HTTPRequests {
         } else {
             throw new Resources.NotFoundException();
         }
+    }
+
+    public static String postHTTPImage(String urlToRead, byte[] data, int listId){
+        String result="";
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost(urlToRead);
+        try {
+            ByteArrayBody bab = new ByteArrayBody(data, "testing.jpg");
+            MultipartEntityBuilder builder = MultipartEntityBuilder.create();
+
+            /* example for setting a HttpMultipartMode */
+            builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
+            builder.addPart("uploaded", bab);
+            httpPost.setEntity(builder.build());
+            HttpResponse response = httpClient.execute(httpPost);
+            if (response.getStatusLine().getStatusCode() == 200) {
+                return EntityUtils.toString(response.getEntity());
+            } else {
+                throw new Resources.NotFoundException();
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
     }
 
     /**

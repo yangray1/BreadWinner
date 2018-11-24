@@ -54,5 +54,8 @@ dependencies {
     // Required for geotagging
     implementation 'com.google.android.gms:play-services-location:16.0.0'
     implementation 'com.google.firebase:firebase-auth:16.0.5'
+
+    implementation "org.apache.httpcomponents:httpcore:4.4.5"
+    implementation "org.apache.httpcomponents:httpmime:4.5.2"
 }
 apply plugin: 'com.google.gms.google-services'
