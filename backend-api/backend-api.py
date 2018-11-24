@@ -74,7 +74,7 @@ def removeQuotes(stringy):
 # --------------------------------------------------- UPLOAD IMAGES ---------------------------------------------------#
 
 
-@app.route("/api/test", methods=['GET', 'POST'])
+@app.route("/api/uploadImage", methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
         file = request.files['file']
@@ -89,6 +89,17 @@ def index():
 def check_extension(extension):
     return extension in ALLOWED_EXTENSIONS
 
+# --------------------------------------------------- GET IMAGES ---------------------------------------------------#
+
+
+@app.route("/api/getImage", methods=['GET'])
+def index():
+    with open("img.png", "rb") as imageFile:
+        f = imageFile.read()
+        b = bytearray(f)
+        return b
+    return "failed"
+       
 
 # --------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
 @app.route('/api/getAllListings', methods=['GET'])
