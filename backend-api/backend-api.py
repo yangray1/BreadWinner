@@ -551,9 +551,10 @@ def rows_to_json(rows):
 # --------------------------------------------------- MAKE ORDER ---------------------------------------------------#
 @app.route('/api/addOrder/', methods=['POST'])
 def add_order_req():
-    add_new_order(request.get_json())
     conn.commit()
-    return "Success"
+    if (add_new_order(request.get_json()) == "success"):
+        return "Success"
+    return "Failed"
 
 def getQuantity(list_id):
     """ Returns an unused listing_id """
@@ -570,6 +571,32 @@ def getQuantity(list_id):
         rollback.commit()
     return curr_quantity
 
+
+def getClientTotalOrders(client_id):
+    """ Returns an unused listing_id """
+    cur = conn.cursor()
+    sql = "SELECT {} FROM {} WHERE {} = {}".format("quantity",
+                                                   order_table_name, order_client_id_col, client_id)
+    try:
+        total_num_orders=0
+        cur.execute(sql)
+        all_quantities=[]
+        single_row = cur.fetchone()
+        while single_row is not None:
+            all_quantities.append(single_row)
+            single_row = cur.fetchone()
+
+        for i in range(len(all_quantities)):
+            print(all_quantities[i])
+            total_num_orders+=all_quantities[i][0]
+
+        print(total_num_orders)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+    return total_num_orders
+
 def add_new_order(json_data):
     """
     Return a string representation of a list of JSON objects. This list contains
@@ -582,28 +609,29 @@ def add_new_order(json_data):
         list_id = json_dict[removeQuotes(order_listing_id_col)]
         client_id = json_dict[removeQuotes(order_client_id_col)]
         time = json_dict[removeQuotes(order_time_of_order_col)]
-        print(list_id)
-        sql = "SELECT * FROM {} WHERE {} = {}".format(order_table_name,
-                                                       order_listing_id_col, list_id)
-        cur.execute(sql)
-        fetched=cur.fetchone()
-        print(fetched)
-        if (fetched is None):
-            status = "Pending"
-
-            sql = "INSERT INTO " + order_table_name + " VALUES (%s, %s, %s, %s, %s)"
-            cur.execute(sql, (client_id, list_id, status, time, "1"))
-        else:
-            num = int(getQuantity(list_id))+1
-            if (num > 3):
-                return "You have exceeded max orders"
-            sql = \
-                """
-                    UPDATE public.{}
-                    SET {} = {}
-                    WHERE {} = {} 
-                """.format(order_table_name, "quantity", num.__str__(), order_listing_id_col, str(list_id))
+        client_total_orders=getClientTotalOrders(client_id)
+        if (client_total_orders < 3):
+            sql = "SELECT * FROM {} WHERE {} = {}".format(order_table_name,
+                                                           order_listing_id_col, list_id)
             cur.execute(sql)
+            fetched=cur.fetchone()
+            print(fetched)
+            if (fetched is None):
+                status = "Pending"
+
+                sql = "INSERT INTO " + order_table_name + " VALUES (%s, %s, %s, %s, %s)"
+                cur.execute(sql, (client_id, list_id, status, time, "1"))
+            else:
+                num = int(getQuantity(list_id))+1
+                sql = \
+                    """
+                        UPDATE public.{}
+                        SET {} = {}
+                        WHERE {} = {} 
+                    """.format(order_table_name, "quantity", num.__str__(), order_listing_id_col, str(list_id))
+                cur.execute(sql)
+            return "success"
+        return "failed"
 
     except:
         rollback = conn.cursor()
