@@ -1,9 +1,4 @@
-import time
-from _md5 import md5
-from os import abort
 import os
-from flask import Flask
-from flask import request
 from flask import Flask, render_template, request
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 import simplejson as json
@@ -67,7 +62,7 @@ app = Flask(__name__)
 
 photos = UploadSet('photos', IMAGES)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-UPLOAD_DIR         = '/project-team-07/backend-api/images'
+UPLOAD_DIR         = '/home/ubuntu/project-team-07/backend-api/images'
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
 ##################################################
@@ -172,7 +167,8 @@ def addToDB(json_data):
     image = json_dict[removeQuotes(listing_image_col)]
     tags = json_dict["tags"]
     print(tags)
-    sql = "INSERT INTO " + listing_table_name + " VALUES (%s, %s, %s, %s, %s, %s)"
+    
+    sql = "INSERT INTO " + listing_table_name + " VALUES (%s, %s, %s, %s, %s, %s, TRUE)"
     try:
         cur.execute(sql, (list_id, cook_id, food_name, price, loc, image))
         addTags(tags, list_id)
