@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
 
         mAuth = FirebaseAuth.getInstance();
         userId="12";
-        OneSignal.sendTag("User_ID", "12");
+        OneSignal.sendTag("User_ID", "11");
 
         /*****************************************************************************************
          * TODO: YOU NEED TO ADD CODE WHEN BACKEND IMPLEMENTED THAT COUNTS NUMBER OF ACTIVE ORDERS.

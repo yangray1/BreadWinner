@@ -55,11 +55,12 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
             String foodDescription = bundle.getString("Description");
             String foodName = bundle.getString("foodName");
             String foodLocation = bundle.getString("foodLocation");
+            int listindID=bundle.getInt("listingID");
             SpannableString descriptions = new SpannableString(foodDescription);
             descriptions.setSpan(new RelativeSizeSpan(1.3f), 0, foodDescription.indexOf("\n"), 0);
             tv.setText(descriptions);
             cookID=bundle.getInt("cookID");
-            orderToPlace = new Order("Pending", 40, 11, foodName, foodLocation);
+            orderToPlace = new Order("Pending", listindID, 11, foodName, foodLocation);
 
         }
 
@@ -86,9 +87,11 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
     }
 
     private void sendOrderNotification(){
+        System.out.println("running1");
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
+                System.out.println("running2");
                 int SDK_INT = android.os.Build.VERSION.SDK_INT;
                 if (SDK_INT > 8) {
                     StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder()
