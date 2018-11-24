@@ -848,5 +848,5 @@ def convert_to_json(rows):
 
 
 if __name__ == '__main__':
-    app.run(host="localhost", port=7006)
+    app.run(host="0.0.0.0", port=80)
     # host="0.0.0.0", port=80
