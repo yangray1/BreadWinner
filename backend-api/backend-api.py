@@ -1,7 +1,14 @@
+import time
+from _md5 import md5
+from os import abort
+import os
 from flask import Flask
 from flask import request
+from flask import Flask, render_template, request
+from flask_uploads import UploadSet, configure_uploads, IMAGES
 import simplejson as json
 import psycopg2
+from werkzeug.utils import secure_filename
 
 """ Macros for relation and column names """
 client_table_name = "\"Client\""
@@ -58,11 +65,32 @@ conn = psycopg2.connect(host=db_host, database=db_name, user=db_user, password=d
 app = Flask(__name__)
 
 
+photos = UploadSet('photos', IMAGES)
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
+UPLOAD_DIR         = '/project-team-07/backend-api/images'
+app.config['UPLOAD_DIR'] = UPLOAD_DIR
+
 ##################################################
 def removeQuotes(stringy):
     """ Removes the first and last characters (double quotes) from a string, and then return it """
     return stringy.replace("\"", "")
 
+# --------------------------------------------------- UPLOAD IMAGES ---------------------------------------------------#
+
+
+@app.route("/api/test", methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        file = request.files['file']
+        if file:
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_DIR'], filename))
+    return "success"
+
+
+# Make sure extension is in the ALLOWD_EXTENSIONS set
+def check_extension(extension):
+    return extension in ALLOWED_EXTENSIONS
 
 # --------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
 @app.route('/api/getAllListings', methods=['GET'])
