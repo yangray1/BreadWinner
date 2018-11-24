@@ -1,9 +1,4 @@
-import time
-from _md5 import md5
-from os import abort
 import os
-from flask import Flask
-from flask import request
 from flask import Flask, render_template, request
 from flask_uploads import UploadSet, configure_uploads, IMAGES
 import simplejson as json
