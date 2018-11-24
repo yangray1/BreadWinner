@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -52,10 +53,8 @@ import org.json.JSONObject;
 import static android.app.Activity.RESULT_OK;
 
 public class AddListing extends Fragment implements View.OnClickListener{
-    private static final String UPLOAD_URL = "http://192.168.1.2:8080/android_upload/insert_image.php";
     private static final int IMAGE_REQUEST_CODE = 3;
     private static final int STORAGE_PERMISSION_CODE = 123;
-    private Button btnUpload;
     private Bitmap bitmap;
     private Uri filePath;
     @Override
@@ -83,14 +82,17 @@ public class AddListing extends Fragment implements View.OnClickListener{
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == IMAGE_REQUEST_CODE && resultCode == RESULT_OK && data != null && data.getData() != null) {
-            filePath = data.getData();
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap( this.getActivity().getContentResolver(), filePath);
-                HTTPRequests.postHTTPImage("http://18.234.123.109/api/test", toByteArray(bitmap), 38);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        filePath = data.getData();
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap( this.getActivity().getContentResolver(), filePath);
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    HTTPRequests.postHTTPImage("http://18.234.123.109/api/test", toByteArray(bitmap), 38);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -107,28 +109,6 @@ public class AddListing extends Fragment implements View.OnClickListener{
         }
 
         return byteArray;
-    }
-
-    public String getPath(Uri uri) {
-        Cursor cursor = this.getActivity().getContentResolver().query(uri, null, null, null, null);
-        cursor.moveToFirst();
-        String document_id = cursor.getString(0);
-        document_id = document_id.substring(document_id.lastIndexOf(":") + 1);
-        cursor.close();
-
-        cursor = this.getActivity().getContentResolver().query(
-                android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                null, MediaStore.Images.Media._ID + " = ? ", new String[]{document_id}, null);
-        cursor.moveToFirst();
-        String path = cursor.getString(cursor.getColumnIndex(MediaStore.Images.Media.DATA));
-        cursor.close();
-
-        return path;
-    }
-
-    private void requestStoragePermission() {
-        //And finally ask for the permission
-        ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.READ_EXTERNAL_STORAGE}, STORAGE_PERMISSION_CODE);
     }
 
     //This method will be called when the user will tap on allow or deny

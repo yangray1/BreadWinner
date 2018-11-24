@@ -91,7 +91,7 @@ public class HTTPRequests {
 
             /* example for setting a HttpMultipartMode */
             builder.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-            builder.addPart("uploaded", bab);
+            builder.addPart("file", bab);
             httpPost.setEntity(builder.build());
             HttpResponse response = httpClient.execute(httpPost);
             if (response.getStatusLine().getStatusCode() == 200) {
