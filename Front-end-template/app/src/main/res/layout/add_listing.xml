@@ -9,12 +9,11 @@
     <!--food name-->
     <EditText
         android:id="@+id/get_food_name"
-        android:textSize="13sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="72dp"
+        android:layout_marginTop="48dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:background="@drawable/search_layout"
@@ -24,8 +23,9 @@
         android:paddingLeft="20dp"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
+        android:textSize="13sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintHorizontal_bias="0.504"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/add_listing_header" />
 
@@ -123,6 +123,45 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/get_price" />
 
+    <!--tags-->
+
+    <TextView
+        android:id="@+id/tags_header"
+        android:layout_width="101dp"
+        android:layout_height="27dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginLeft="44dp"
+        android:layout_marginBottom="12dp"
+        android:drawableLeft="@drawable/icon_tag"
+        android:fontFamily="@font/nunito_bold"
+        android:text="TAGS"
+        android:textColor="#555555"
+        android:textSize="16sp"
+        app:fontFamily="@font/nunito_semibold"
+        app:layout_constraintBottom_toTopOf="@+id/get_tags"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <EditText
+        android:id="@+id/get_tags"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
+        android:background="@drawable/search_layout"
+        android:ems="10"
+        android:hint="Sepated by spaces"
+        android:inputType="textPersonName"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="13sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_location" />
+
     <!--add listing heading at the top-->
     <TextView
         android:id="@+id/add_listing_header"
@@ -149,7 +188,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginTop="52dp"
+        android:layout_marginTop="28dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:fontFamily="@font/nunito_semibold"
@@ -158,6 +197,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_location" />
+        app:layout_constraintTop_toBottomOf="@+id/get_tags" />
 
 </android.support.constraint.ConstraintLayout>

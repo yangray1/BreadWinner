@@ -167,7 +167,8 @@ def addToDB(json_data):
     image = json_dict[removeQuotes(listing_image_col)]
     tags = json_dict["tags"]
     print(tags)
-    sql = "INSERT INTO " + listing_table_name + " VALUES (%s, %s, %s, %s, %s, %s)"
+    
+    sql = "INSERT INTO " + listing_table_name + " VALUES (%s, %s, %s, %s, %s, %s, TRUE)"
     try:
         cur.execute(sql, (list_id, cook_id, food_name, price, loc, image))
         addTags(tags, list_id)
