@@ -62,7 +62,7 @@ app = Flask(__name__)
 
 photos = UploadSet('photos', IMAGES)
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
-UPLOAD_DIR         = '~/project-team-07/backend-api/images'
+UPLOAD_DIR         = '/home/project-team-07/backend-api/images'
 app.config['UPLOAD_DIR'] = UPLOAD_DIR
 
 ##################################################
