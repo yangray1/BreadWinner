@@ -50,6 +50,8 @@ user_password_col = "\"Password\""
 user_fname_col = "\"FName\""
 user_lname_col = "\"LName\""
 
+max_listing_id=0
+
 """ Database login details """
 db_host = "mydbinstance.cqzm55sjgiup.us-east-1.rds.amazonaws.com"
 db_name = "csc301breadwiener"
@@ -78,7 +80,7 @@ def index():
     if request.method == 'POST':
         file = request.files['file']
         if file:
-            filename = secure_filename(file.filename)
+            filename = str(max_listing_id)+".jpg"
             file.save(os.path.join(app.config['UPLOAD_DIR'], filename))
     return "success"
 
@@ -160,6 +162,7 @@ def addToDB(json_data):
     json_dict = json_data
 
     list_id = getListId()
+    max_listing_id=list_id
     cook_id = json_dict[removeQuotes(listing_cook_id_col)]
     food_name = json_dict[removeQuotes(listing_food_name_col)]
     price = json_dict[removeQuotes(listing_price_col)]
