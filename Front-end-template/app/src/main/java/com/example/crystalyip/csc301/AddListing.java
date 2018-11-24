@@ -72,7 +72,7 @@ public class AddListing extends Fragment implements View.OnClickListener{
 
 
 
-        View view = inflater.inflate(R.layout.add_listing, container, false);
+        final View view = inflater.inflate(R.layout.add_listing, container, false);
         Button button = view.findViewById(R.id.upload_image);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,62 +84,11 @@ public class AddListing extends Fragment implements View.OnClickListener{
 
             }
         });
-        return view;
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        filePath = data.getData();
-        try {
-            bitmap = MediaStore.Images.Media.getBitmap( this.getActivity().getContentResolver(), filePath);
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    HTTPRequests.postHTTPImage("http://18.234.123.109/api/test", toByteArray(bitmap), 38);
-                }
-            });
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static byte[] toByteArray(Bitmap raw){
-        byte[] byteArray = null;
-
-        try {
-            ByteArrayOutputStream stream = new ByteArrayOutputStream ();
-            raw.compress (Bitmap.CompressFormat.JPEG, 100, stream);
-            byteArray = stream.toByteArray ();
-        }
-        catch (Exception e) {
-            e.printStackTrace ();
-        }
-
-        return byteArray;
-    }
-
-    //This method will be called when the user will tap on allow or deny
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-
-        //Checking the request code of our request
-        if (requestCode == STORAGE_PERMISSION_CODE) {
-
-            //If permission is granted
-            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                //Displaying a toast
-                Toast.makeText(this.getActivity(), "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
-            } else {
-                //Displaying another toast if permission is not granted
-                Toast.makeText(this.getActivity(), "Oops you just denied the permission", Toast.LENGTH_LONG).show();
-            }
-        }
 
         // reference: https://www.viralandroid.com/2016/02/android-listview-with-image-and-text.html
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        final View view = inflater.inflate(R.layout.add_listing, container, false);
 
         Button submitButton = view.findViewById(R.id.add_listing_button);
 
@@ -192,6 +141,56 @@ public class AddListing extends Fragment implements View.OnClickListener{
 
 
         return view;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        filePath = data.getData();
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap( this.getActivity().getContentResolver(), filePath);
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    HTTPRequests.postHTTPImage("http://18.234.123.109/api/test", toByteArray(bitmap), 38);
+                }
+            });
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static byte[] toByteArray(Bitmap raw){
+        byte[] byteArray = null;
+
+        try {
+            ByteArrayOutputStream stream = new ByteArrayOutputStream ();
+            raw.compress (Bitmap.CompressFormat.JPEG, 100, stream);
+            byteArray = stream.toByteArray ();
+        }
+        catch (Exception e) {
+            e.printStackTrace ();
+        }
+
+        return byteArray;
+    }
+
+    //This method will be called when the user will tap on allow or deny
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+
+        //Checking the request code of our request
+        if (requestCode == STORAGE_PERMISSION_CODE) {
+
+            //If permission is granted
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                //Displaying a toast
+                Toast.makeText(this.getActivity(), "Permission granted now you can read the storage", Toast.LENGTH_LONG).show();
+            } else {
+                //Displaying another toast if permission is not granted
+                Toast.makeText(this.getActivity(), "Oops you just denied the permission", Toast.LENGTH_LONG).show();
+            }
+        }
+
     }
 
     public /*List<String>*/JSONArray getTags(View view) {
