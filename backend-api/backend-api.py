@@ -551,16 +551,19 @@ def rows_to_json(rows):
 # --------------------------------------------------- MAKE ORDER ---------------------------------------------------#
 @app.route('/api/addOrder/', methods=['POST'])
 def add_order_req():
-    conn.commit()
-    if (add_new_order(request.get_json()) == "success"):
+    if add_new_order(request.get_json()) == "Success":
+        conn.commit()
         return "Success"
+    conn.commit()
     return "Failed"
 
-def getQuantity(list_id):
+    return "Success"
+
+def getQuantity(list_id, client_id):
     """ Returns an unused listing_id """
     cur = conn.cursor()
-    sql = "SELECT {} FROM {} WHERE {} = {}".format("quantity",
-                                                   order_table_name, order_listing_id_col, list_id)
+    sql = "SELECT {} FROM {} WHERE ({} = {}) AND ({} = {})".format("quantity",
+                                                   order_table_name, order_listing_id_col, list_id, order_client_id_col, client_id)
     try:
         cur.execute(sql)
         curr_quantity = cur.fetchone()[0]
@@ -570,7 +573,6 @@ def getQuantity(list_id):
         rollback.execute("ROLLBACK")
         rollback.commit()
     return curr_quantity
-
 
 def getClientTotalOrders(client_id):
     """ Returns an unused listing_id """
@@ -587,15 +589,15 @@ def getClientTotalOrders(client_id):
             single_row = cur.fetchone()
 
         for i in range(len(all_quantities)):
-            print(all_quantities[i])
+            print("adding quantity "+str(all_quantities[i][0]))
             total_num_orders+=all_quantities[i][0]
 
-        print(total_num_orders)
     except:
         rollback = conn.cursor()
         rollback.execute("ROLLBACK")
         rollback.commit()
     return total_num_orders
+
 
 def add_new_order(json_data):
     """
@@ -609,34 +611,35 @@ def add_new_order(json_data):
         list_id = json_dict[removeQuotes(order_listing_id_col)]
         client_id = json_dict[removeQuotes(order_client_id_col)]
         time = json_dict[removeQuotes(order_time_of_order_col)]
-        client_total_orders=getClientTotalOrders(client_id)
-        if (client_total_orders < 3):
-            sql = "SELECT * FROM {} WHERE {} = {}".format(order_table_name,
-                                                           order_listing_id_col, list_id)
+        total_num_orders=getClientTotalOrders(client_id)
+        if total_num_orders < 3:
+            sql = "SELECT * FROM {} WHERE ({} = {}) AND ({} = {})".format(order_table_name,
+                                                           order_listing_id_col, list_id, order_client_id_col, client_id)
             cur.execute(sql)
             fetched=cur.fetchone()
             print(fetched)
             if (fetched is None):
                 status = "Pending"
-
+                print("add new")
                 sql = "INSERT INTO " + order_table_name + " VALUES (%s, %s, %s, %s, %s)"
                 cur.execute(sql, (client_id, list_id, status, time, "1"))
+
             else:
-                num = int(getQuantity(list_id))+1
+                print("update existing")
+                num = int(getQuantity(list_id, client_id))+1
                 sql = \
                     """
                         UPDATE public.{}
                         SET {} = {}
                         WHERE {} = {} 
-                    """.format(order_table_name, "quantity", num.__str__(), order_listing_id_col, str(list_id))
+                    """.format(order_table_name, "quantity", str(num), order_client_id_col, str(client_id))
                 cur.execute(sql)
-            return "success"
-        return "failed"
-
+            return "Success"
     except:
         rollback = conn.cursor()
         rollback.execute("ROLLBACK")
         rollback.commit()
+    return "Failed"
 
 
 def update_num_orders():
