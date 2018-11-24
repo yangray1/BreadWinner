@@ -75,7 +75,7 @@ def removeQuotes(stringy):
 
 
 @app.route("/api/uploadImage", methods=['GET', 'POST'])
-def index():
+def getImages():
     if request.method == 'POST':
         file = request.files['file']
         if file:
