@@ -72,6 +72,10 @@ public class ShowListings extends Fragment implements View.OnClickListener {
             spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, foodDetail.indexOf("\n"), 0);
             titleImagePair.put("Description", spannable);
             titleImagePair.put("stringDescription", foodDetail);
+            titleImagePair.put("foodName", populatedListings.get(i).getFoodName());
+            titleImagePair.put("foodLocation", populatedListings.get(i).getLocation());
+            titleImagePair.put("cookID", populatedListings.get(i).getCookID());
+            titleImagePair.put("listingID", populatedListings.get(i).getListingID());
             aList.add(titleImagePair);
         }
 
@@ -92,9 +96,12 @@ public class ShowListings extends Fragment implements View.OnClickListener {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
                 HashMap<String, Object> obj = (HashMap<String, Object>) listingsList.getAdapter().getItem(position);
-
+                bundle.putString("foodName", (String) obj.get("foodName"));
+                bundle.putString("foodLocation", (String) obj.get("foodLocation"));
                 bundle.putInt("imageURL", (Integer) obj.get("Image Drawable"));
                 bundle.putString("Description", (String) obj.get("stringDescription"));
+                bundle.putInt("cookID", (Integer) obj.get("cookID"));
+                bundle.putInt("listingID", (Integer) obj.get("listingID"));
                 FragmentFoodDetail foodDetail = new FragmentFoodDetail();
                 foodDetail.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();

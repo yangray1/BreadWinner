@@ -65,8 +65,8 @@ public class OrderPlacer {
      * @throws IOException
      * @throws Resources.NotFoundException
      */
-    public void makeOrder() throws IOException, Resources.NotFoundException {
-        postHTTPJson(makeOrderURL, makeJSON());
+    public String makeOrder() throws IOException, Resources.NotFoundException {
+        return postHTTPJson(makeOrderURL, makeJSON());
 
     }
 

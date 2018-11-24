@@ -17,7 +17,6 @@ public class UserOrdersDAO {
     public UserOrdersDAO(){
         this.apiURL="http://18.234.123.109/api/getAllOrders/11";
         String orders = "";
-        StaticStorage.clearStorage();
         try {
             orders = HTTPRequests.getHTTP(this.apiURL);
             String allOrdersFormatted=HTTPRequests.formatJSONStringFromResponse(orders);
@@ -35,8 +34,9 @@ public class UserOrdersDAO {
                         order.getString("Location"));
 
                 allOrders.add(orderToAdd);
-                StaticStorage.addPersonalOrders(orderToAdd);
+
             }
+            StaticStorage.refreshAllPersonalOrders(allOrders);
         }
         catch (Exception e){ // return what we have so far, even if it's just an empty list
             e.printStackTrace();
@@ -46,4 +46,5 @@ public class UserOrdersDAO {
     public final List<Order> getPopulatedOrders(){
         return this.allOrders;
     }
+
 }

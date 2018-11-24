@@ -30,45 +30,57 @@
 
                 <TextView
                     android:id="@+id/location"
-                    android:layout_width="111dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/num_orders"
-                    android:layout_alignStart="@+id/num_orders"
                     android:layout_below="@+id/price_label"
+                    android:layout_alignStart="@+id/num_orders"
+                    android:layout_alignLeft="@+id/num_orders"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="-1dp"
                     android:text="Toronto"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/price_per_order"
-                    android:layout_width="85dp"
+                    android:layout_width="80dp"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/num_orders"
-                    android:layout_alignStart="@+id/num_orders"
                     android:layout_below="@+id/num_orders_label"
+                    android:layout_alignStart="@+id/num_orders"
+                    android:layout_alignLeft="@+id/num_orders"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
                     android:text="$5.00"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/location_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/num_orders_label"
-                    android:layout_alignStart="@+id/num_orders_label"
                     android:layout_below="@+id/price_per_order"
+                    android:layout_alignStart="@+id/num_orders_label"
+                    android:layout_alignLeft="@+id/num_orders_label"
                     android:layout_gravity="center"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="-1dp"
                     android:text="Location:"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/price_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/num_orders_label"
-                    android:layout_alignStart="@+id/num_orders_label"
                     android:layout_below="@+id/num_orders_label"
+                    android:layout_alignStart="@+id/num_orders_label"
+                    android:layout_alignLeft="@+id/num_orders_label"
                     android:layout_gravity="center"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="0dp"
                     android:text="Price Per Order:"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <android.support.v7.widget.Toolbar
                     android:id="@+id/toolbar"
@@ -127,26 +139,28 @@
                     android:id="@+id/num_orders_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true"
                     android:layout_below="@+id/progressBar"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="60dp"
                     android:layout_marginStart="60dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="7dp"
                     android:text="Number of Orders:"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/num_orders"
                     android:layout_width="80dp"
                     android:layout_height="wrap_content"
+                    android:layout_below="@+id/progressBar"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
-                    android:layout_below="@+id/progressBar"
+                    android:layout_marginTop="7dp"
                     android:layout_marginEnd="49dp"
                     android:layout_marginRight="49dp"
                     android:text="6"
-                    android:textSize="18sp" />
+                    android:textSize="16sp" />
 
 
             </RelativeLayout>
@@ -181,9 +195,9 @@
 
 
                     <Button
-                        android:id="@+id/search_button"
-                        android:layout_width="137dp"
-                        android:layout_height="36dp"
+                        android:id="@+id/close_button"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
                         android:background="@drawable/buttonshape"
                         android:fontFamily="@font/nunito_semibold"
@@ -191,6 +205,7 @@
                         android:textAllCaps="false"
                         android:textColor="#ffffff"
                         android:textSize="13sp" />
+
 
                 </RelativeLayout>
 

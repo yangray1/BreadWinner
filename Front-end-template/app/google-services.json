@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "462369280176",
+    "firebase_url": "https://my-project-1540346179827.firebaseio.com",
+    "project_id": "my-project-1540346179827",
+    "storage_bucket": "my-project-1540346179827.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462369280176:android:b0d94056c35396ee",
+        "android_client_info": {
+          "package_name": "com.example.crystalyip.csc301"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462369280176-npisjbopuf5mq09vvdb65mv69425esv4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8GyMYhrVRlXFrj2rYY-PZMG4WKt-AtHA"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
