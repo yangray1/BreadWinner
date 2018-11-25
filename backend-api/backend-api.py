@@ -323,7 +323,7 @@ def get_in_progress_order(clientId, listingId):
         order.execute(
             "SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
             " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId) +
-            " AND t1.\"Status\" = \'In progress\'")
+            " AND t1.\"Status\" = \'Pending\'")
 
         order_row = order.fetchone()
 
