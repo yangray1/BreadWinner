@@ -92,9 +92,9 @@ def check_extension(extension):
 # --------------------------------------------------- GET IMAGES ---------------------------------------------------#
 
 
-@app.route("/api/getImage", methods=['GET'])
+@app.route("/api/getImage/<int:listId>", methods=['GET'])
 def index():
-    with open("/home/ubuntu/project-team-07/backend-api/images/guatema.jpg", "rb") as imageFile:
+    with open("/home/ubuntu/project-team-07/backend-api/images/"+str(listId)+".jpg", "rb") as imageFile:
         f = imageFile.read()
         b = bytearray(f)
         return b
