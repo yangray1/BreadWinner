@@ -75,7 +75,7 @@ def removeQuotes(stringy):
 
 
 @app.route("/api/uploadImage", methods=['GET', 'POST'])
-def getImages():
+def uploadImages():
     if request.method == 'POST':
         file = request.files['file']
         if file:
@@ -93,7 +93,7 @@ def check_extension(extension):
 
 
 @app.route("/api/getImage/<int:listId>", methods=['GET'])
-def index():
+def getImages(listId):
     with open("/home/ubuntu/project-team-07/backend-api/images/"+str(listId)+".jpg", "rb") as imageFile:
         f = imageFile.read()
         b = bytearray(f)
