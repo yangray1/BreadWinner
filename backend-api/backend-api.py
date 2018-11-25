@@ -99,6 +99,36 @@ def getImages(listId):
         b = bytearray(f)
         return b
     return "failed"
+
+
+# --------------------------------------------------- GET COOK LISTING ---------------------------------------------------#
+
+
+@app.route("/api/getImage/<int:userId>", methods=['GET'])
+def get_cook_id(userId):
+    try:
+        all_orders = []
+
+        search_all = conn.cursor()
+
+        search_all.execute(
+            "SELECT * FROM {} WHERE ({} = {})".format(listing_table_name, listing_cook_id_col, str(userId)))
+
+        single_row = search_all.fetchone()
+
+        while single_row is not None:
+            all_orders.append(single_row)
+            single_row = search_all.fetchone()
+
+        search_all.close()
+
+        rows_to_json(all_orders)  # want to convert each row into a JSON string
+
+        return json.dumps({'data': all_orders})  # convert to string before returning
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
        
 
 # --------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
