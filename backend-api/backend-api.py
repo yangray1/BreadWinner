@@ -33,6 +33,8 @@ listing_food_name_col = "\"Food Name\""
 listing_price_col = "\"Price\""
 listing_location_col = "\"Location\""
 listing_image_col = "\"Image\""
+listing_active_col = "\"active\""
+
 
 listing_tags_table_name = "\"Listing Tags\""
 listing_tags_listing_id_col = "\"ListingID\""
@@ -855,8 +857,38 @@ def convert_to_json(rows):
     TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE
     CHEF IS NO LONGER TAKING NEW ORDER REQUESTS FOR HIS/HER DISH. CHANGE DB ENTRIES IN BACKEND, REMOVE THE LISTING IN UI
     """
+    false = "\'false\'"
+    
+    @app.route('/api/closeListing/<int: cookID>',methods=['PUT'])
+    def closeListing(cookID):
+         """ A function that closes a cook's listing.
 
+            Returns "Success" on a sucessful change of the listing id's order to complete.
+            @param cookID: close this cookID's listing.
+            @rtype: str
+        """
+        
+        query = \
+            """
+            UPDATE public.{}
+            SET {} = {}
+            WHERE {} = {} AND {} = {}
+            """.format(listing_table_name, listing_active_col, false, listing_cook_id_col, str(cookID))
 
+        cur = conn.cursor()
+
+        try:
+            cur.execute(query)
+            conn.commit()
+            if cur.rowcount == 0:  # do we put this here?
+                raise Exception(
+                    "The status of listing id's order was not changed. ClientID or ListingID may be out of range.")
+            return "Success"
+        except:
+            rollback = conn.cursor()
+            rollback.execute("ROLLBACK")
+            rollback.commit()
+            
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # host="0.0.0.0", port=80
