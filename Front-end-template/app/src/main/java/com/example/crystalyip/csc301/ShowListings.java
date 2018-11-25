@@ -89,9 +89,6 @@ public class ShowListings extends Fragment implements View.OnClickListener {
             aList.add(titleImagePair);
         }
 
-        String[] from = {"Description"};
-        int[] to = {R.id.food_description};
-
         CustomAdapter simpleAdapter = new CustomAdapter(getActivity(), (ArrayList<Listing>) populatedListings);
 
 

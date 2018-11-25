@@ -63,6 +63,7 @@ public class AddListing extends Fragment implements View.OnClickListener{
     private static final int STORAGE_PERMISSION_CODE = 123;
     private Bitmap bitmap;
     private Uri filePath;
+    private View dynamicView;
     @Override
     public void onClick(View v) {
  
@@ -73,7 +74,8 @@ public class AddListing extends Fragment implements View.OnClickListener{
 
 
         final View view = inflater.inflate(R.layout.add_listing, container, false);
-        Button button = view.findViewById(R.id.upload_image);
+        View button = view.findViewById(R.id.upload_image);
+        dynamicView=view;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -153,6 +155,10 @@ public class AddListing extends Fragment implements View.OnClickListener{
         filePath = data.getData();
         try {
             bitmap = MediaStore.Images.Media.getBitmap( this.getActivity().getContentResolver(), filePath);
+            ImageView uploaded = dynamicView.findViewById(R.id.upload_image);
+            TextView uploadPrompt=dynamicView.findViewById(R.id.upload_message);
+            uploadPrompt.setText("");
+            uploaded.setImageBitmap(bitmap);
 
         } catch (IOException e) {
             e.printStackTrace();
