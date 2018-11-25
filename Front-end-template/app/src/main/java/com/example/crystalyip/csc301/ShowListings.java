@@ -6,17 +6,21 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 
 
 import com.example.crystalyip.csc301.DAOs.ListingsDAO;
+import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
+import com.example.crystalyip.csc301.Model.CustomAdapter;
 import com.example.crystalyip.csc301.Model.Listing;
 
 import java.util.ArrayList;
@@ -29,7 +33,7 @@ import org.json.JSONObject;
 public class ShowListings extends Fragment implements View.OnClickListener {
 
     public static String searchURL;/* = "http://18.234.123.109/api/getAllListings";*/
-
+    private View view;
     /**
      * This "constructor" sets the searchURL to display every listing.
      */
@@ -57,35 +61,39 @@ public class ShowListings extends Fragment implements View.OnClickListener {
         StrictMode.setThreadPolicy(policy);
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_show_listings, container, false);
+        view = inflater.inflate(R.layout.fragment_show_listings, container, false);
+        refreshListings();
+        final SwipeRefreshLayout pullToRefresh = view.findViewById(R.id.swipe_layout);
+        pullToRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshListings();
+                pullToRefresh.setRefreshing(false);
+            }
+        });
+        return view;
+    }
+
+    public void refreshListings(){
         ListingsDAO listingsDAO = new ListingsDAO(searchURL);
         final List<Listing> populatedListings = listingsDAO.getAllListings();
-
 
         List<HashMap<String, Object>> aList = new ArrayList<>();
 
         for (int i = 0; i < populatedListings.size(); i++) {
+
             HashMap<String, Object> titleImagePair = new HashMap<>();
-            titleImagePair.put("Image Drawable", populatedListings.get(i).getImageID());
             String foodDetail = populatedListings.get(i).getFoodName() + "\n  " + populatedListings.get(i).getLocation();
             SpannableString spannable = new SpannableString("  $" + populatedListings.get(i).getPrice() + " " + foodDetail);
             spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, foodDetail.indexOf("\n"), 0);
-            titleImagePair.put("Description", spannable);
-            titleImagePair.put("stringDescription", foodDetail);
-            titleImagePair.put("foodName", populatedListings.get(i).getFoodName());
-            titleImagePair.put("foodLocation", populatedListings.get(i).getLocation());
-            titleImagePair.put("cookID", populatedListings.get(i).getCookID());
-            titleImagePair.put("listingID", populatedListings.get(i).getListingID());
             aList.add(titleImagePair);
         }
 
-        String[] from = {"Description", "Image Drawable"};
-        int[] to = {R.id.food_description, R.id.food_image};
+        String[] from = {"Description"};
+        int[] to = {R.id.food_description};
 
-        SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(),
-                aList,
-                R.layout.menu_item,
-                from, to);
+        CustomAdapter simpleAdapter = new CustomAdapter(getActivity(), (ArrayList<Listing>) populatedListings);
+
 
         final ListView listingsList = view.findViewById(R.id.lstFoodList);
         listingsList.setClickable(true);
@@ -95,13 +103,8 @@ public class ShowListings extends Fragment implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Bundle bundle = new Bundle();
-                HashMap<String, Object> obj = (HashMap<String, Object>) listingsList.getAdapter().getItem(position);
-                bundle.putString("foodName", (String) obj.get("foodName"));
-                bundle.putString("foodLocation", (String) obj.get("foodLocation"));
-                bundle.putInt("imageURL", (Integer) obj.get("Image Drawable"));
-                bundle.putString("Description", (String) obj.get("stringDescription"));
-                bundle.putInt("cookID", (Integer) obj.get("cookID"));
-                bundle.putInt("listingID", (Integer) obj.get("listingID"));
+
+                bundle.putParcelable("Listing", populatedListings.get(position));
                 FragmentFoodDetail foodDetail = new FragmentFoodDetail();
                 foodDetail.setArguments(bundle);
                 FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -114,15 +117,10 @@ public class ShowListings extends Fragment implements View.OnClickListener {
                 System.out.println("Clicked the item at position " + position + ". ID is " + id);
             }
         });
-
-        return view;
     }
-
 
     @Override
     public void onClick(View v) {
 
     }
-
-
 }

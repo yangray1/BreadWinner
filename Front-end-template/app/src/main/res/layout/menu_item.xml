@@ -13,7 +13,7 @@
 
         <!--android:src="@drawable/rice"-->
         <ImageView
-            android:id="@+id/food_image"
+            android:id="@+id/food_image_display"
             android:scaleType="centerCrop"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -31,11 +31,11 @@
             android:id="@+id/food_description"
             android:textColor="@android:color/white"
             android:fontFamily="@font/nunito_semibold"
-            android:textSize="18sp"
-            android:layout_alignBottom="@id/food_image"
+            android:textSize="16sp"
+            android:layout_alignBottom="@id/food_image_display"
             android:layout_width="match_parent"
             android:layout_alignParentBottom="false"
-            android:layout_height="50dp" />
+            android:layout_height="60dp" />
 
 
     </RelativeLayout>

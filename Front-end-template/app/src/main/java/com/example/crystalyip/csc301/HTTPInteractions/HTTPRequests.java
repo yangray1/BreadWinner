@@ -1,13 +1,10 @@
 package com.example.crystalyip.csc301.HTTPInteractions;
 
 import android.content.res.Resources;
-import android.util.Log;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 
-import com.android.internal.http.multipart.MultipartEntity;
-
-import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
@@ -15,20 +12,13 @@ import org.apache.http.entity.StringEntity;
 import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
-import org.apache.http.entity.mime.content.ContentBody;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Scanner;
@@ -86,7 +76,7 @@ public class HTTPRequests {
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(urlToRead);
         try {
-            ByteArrayBody bab = new ByteArrayBody(data, "testing.jpg");
+            ByteArrayBody bab = new ByteArrayBody(data, "temp.jpg"); // filename will be changed in backend
             MultipartEntityBuilder builder = MultipartEntityBuilder.create();
 
             /* example for setting a HttpMultipartMode */
@@ -103,6 +93,27 @@ public class HTTPRequests {
             e.printStackTrace();
         }
         return "";
+    }
+
+    public static Bitmap getHTTPImage(String urlToRead){
+        HttpClient httpclient = new DefaultHttpClient();
+        HttpGet httpget = new HttpGet(urlToRead);
+
+        try {
+            HttpResponse response = httpclient.execute(httpget);
+
+            if (response.getStatusLine().getStatusCode() == 200) {
+                InputStream in = response.getEntity().getContent();
+                Bitmap bmp = BitmapFactory.decodeStream(in);
+                in.close();
+                return bmp;
+            } else {
+                System.out.println("no response from server");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

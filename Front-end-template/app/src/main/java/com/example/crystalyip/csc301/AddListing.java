@@ -116,7 +116,12 @@ public class AddListing extends Fragment implements View.OnClickListener{
                         listing.put("tags", tags);
 
                         postHTTPJson("http://18.234.123.109/api/add", listing);
-
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                HTTPRequests.postHTTPImage("http://18.234.123.109/api/uploadImage", toByteArray(bitmap), 38);
+                            }
+                        });
                         builder.setTitle("Successfully added listing.");
                         builder.show();
                     }
@@ -148,12 +153,7 @@ public class AddListing extends Fragment implements View.OnClickListener{
         filePath = data.getData();
         try {
             bitmap = MediaStore.Images.Media.getBitmap( this.getActivity().getContentResolver(), filePath);
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    HTTPRequests.postHTTPImage("http://18.234.123.109/api/test", toByteArray(bitmap), 38);
-                }
-            });
+
         } catch (IOException e) {
             e.printStackTrace();
         }
