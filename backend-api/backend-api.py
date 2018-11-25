@@ -104,7 +104,7 @@ def getImages(listId):
 # --------------------------------------------------- GET COOK LISTING ---------------------------------------------------#
 
 
-@app.route("/api/getImage/<int:userId>", methods=['GET'])
+@app.route("/api/getCookListing/<int:userId>", methods=['GET'])
 def get_cook_id(userId):
     try:
         all_orders = []
