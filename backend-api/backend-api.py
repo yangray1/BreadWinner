@@ -307,9 +307,9 @@ def cancel(clientId, listingId):
         cancel_order(clientId, listingId)
         output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
-        return output  # convert to string before returning
+        return "Success"  # convert to string before returning
     else:
-        return 'order not found'
+        return 'Failed'
 
 
 def get_in_progress_order(clientId, listingId):
