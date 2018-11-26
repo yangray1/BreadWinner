@@ -120,6 +120,15 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
                 "You may have too many pending orders or the listing has been closed.";
     }
 
+    public void openProfile(View view) {
+        ProfileFragment pf =new ProfileFragment();
+        Bundle bundy = new Bundle();
+        bundy.putInt("CookID", cookID);
+        pf.setArguments(bundy);
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                new ProfileFragment()).commit();
+
+    }
 
     @Override
     public void onClick(View v) {
