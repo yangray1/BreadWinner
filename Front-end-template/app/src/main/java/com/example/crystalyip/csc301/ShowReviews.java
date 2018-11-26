@@ -32,19 +32,13 @@ public class ShowReviews extends Fragment implements View.OnClickListener {
 
     public static String searchURL;/* = "http://18.234.123.109/api/cookReviews/";*/
 
-    /**
-     * This "constructor" sets the searchURL to display every review for a cook.
-     */
-    public ShowReviews() {
-        searchURL = "http://18.234.123.109/api/getAllListings";
-    }
 
     /**
      * This "constructor" sets the searchURL to search for listings matching the query.
      */
     @SuppressLint("ValidFragment")
-    public ShowReviews(int cookId) {
-        searchURL ="http://18.234.123.109/api/cookReviews/" + Integer.toString(cookId);
+    public ShowReviews() {
+        searchURL ="http://18.234.123.109/api/cookReviews/";
     }
 
 
@@ -61,7 +55,8 @@ public class ShowReviews extends Fragment implements View.OnClickListener {
 
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_show_reviews, container, false);
-        ReviewsDAO reviewsDAO = new ReviewsDAO(searchURL);
+        int cookId = this.getArguments().getInt("cookID");
+        ReviewsDAO reviewsDAO = new ReviewsDAO(searchURL+Integer.toString(cookId));
         final List<Review> populatedReviews = reviewsDAO.getAllReviews();
 
 
@@ -87,7 +82,7 @@ public class ShowReviews extends Fragment implements View.OnClickListener {
                 aList,
                 R.layout.review_item,
                 from, to);
-
+        simpleAdapter.setViewBinder(new MyBinder());
         final ListView reviewsList = view.findViewById(R.id.reviewList);
         reviewsList.setClickable(false);
         reviewsList.setAdapter(simpleAdapter);
@@ -129,7 +124,8 @@ public class ShowReviews extends Fragment implements View.OnClickListener {
                 Integer intval = (Integer) data;
                 float ratingValue = intval;
                 RatingBar ratingBar = (RatingBar) view;
-                ratingBar.setRating(ratingValue);
+                ratingBar.setRating(ratingValue/2);
+
                 return true;
             }
             return false;

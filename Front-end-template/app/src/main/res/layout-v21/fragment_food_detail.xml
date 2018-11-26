@@ -164,4 +164,12 @@
 
     </android.support.v4.widget.NestedScrollView>
 
+    <Button
+        android:id="@+id/btnViewProfileFromFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Profile"
+        app:layout_anchor="@+id/app_bar_layout"
+        app:layout_anchorGravity="bottom|center" />
+
 </android.support.design.widget.CoordinatorLayout>

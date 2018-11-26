@@ -93,6 +93,7 @@
         android:numStars="5"
         android:rating="2.25"
         android:stepSize="0.1"
+        android:theme="@style/RatingBar"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
