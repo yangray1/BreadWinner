@@ -117,7 +117,7 @@
 
     <!--this used to say angry_btn-->
     <Button
-        android:id="@+id/close_button"
+        android:id="@+id/close_listing_button"
         android:layout_width="219dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="134dp"
@@ -164,7 +164,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/close_button"
+        app:layout_constraintTop_toBottomOf="@+id/close_listing_button"
         app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

@@ -39,9 +39,11 @@ public class CookListingTracker extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_cook_listing_tracker, container, false);
         Button closeListing = view.findViewById(R.id.close_listing_button);
+
+        // Initialize the values so compiler don't complain.
         String food_name ="";
         float price = -1;
-        String location = "";// = getLocation(view);
+        String location = "";
 
         /*
          * Have this so HTTPRequests.getHTTP() doesnt fail for some reason.
@@ -54,7 +56,7 @@ public class CookListingTracker extends Fragment {
         final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setCancelable(true);
 
-        // Get stuff from database..
+        // Get stuff from database
         try {
 
             // returns one JSON listing. Convert that json listing into listing object(that we coded for)
@@ -116,7 +118,7 @@ public class CookListingTracker extends Fragment {
     }
     private void displayPrice(View view, float price){
         TextView priceTextBox = view.findViewById(R.id.price_per_order);
-        priceTextBox.setText(String.valueOf(price));
+        priceTextBox.setText("$" + String.format("%.2f", price));
     }
 
     private void displayLocation(View view, String location){
