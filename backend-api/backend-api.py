@@ -33,8 +33,6 @@ listing_food_name_col = "\"Food Name\""
 listing_price_col = "\"Price\""
 listing_location_col = "\"Location\""
 listing_image_col = "\"Image\""
-listing_active_col = "\"active\""
-
 
 listing_tags_table_name = "\"Listing Tags\""
 listing_tags_listing_id_col = "\"ListingID\""
@@ -101,6 +99,36 @@ def getImages(listId):
         b = bytearray(f)
         return b
     return "failed"
+
+
+# --------------------------------------------------- GET COOK LISTING ---------------------------------------------------#
+
+
+@app.route("/api/getCookListing/<int:userId>", methods=['GET'])
+def get_cook_id(userId):
+    try:
+        all_orders = []
+
+        search_all = conn.cursor()
+
+        search_all.execute(
+            "SELECT * FROM {} WHERE ({} = {})".format(listing_table_name, listing_cook_id_col, str(userId)))
+
+        single_row = search_all.fetchone()
+
+        while single_row is not None:
+            all_orders.append(single_row)
+            single_row = search_all.fetchone()
+
+        search_all.close()
+
+        rows_to_json(all_orders)  # want to convert each row into a JSON string
+
+        return json.dumps({'data': all_orders})  # convert to string before returning
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
        
 
 # --------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
@@ -295,7 +323,7 @@ def get_in_progress_order(clientId, listingId):
         order.execute(
             "SELECT t1.\"ClientID\", t1.\"ListingID\", t1.\"Status\", t1.\"Time of Order\" from public.\"Order\""
             " as t1 WHERE t1.\"ClientID\" = " + str(clientId) + " AND \"ListingID\" = " + str(listingId) +
-            " AND t1.\"Status\" = \'In progress\'")
+            " AND t1.\"Status\" = \'Pending\'")
 
         order_row = order.fetchone()
 
@@ -617,8 +645,8 @@ def getQuantity(list_id, client_id):
 def getClientTotalOrders(client_id):
     """ Returns an unused listing_id """
     cur = conn.cursor()
-    sql = "SELECT {} FROM {} WHERE {} = {}".format("quantity",
-                                                   order_table_name, order_client_id_col, client_id)
+    sql = "SELECT {} FROM {} WHERE ({} = {}) AND ({} != '{}') AND ({} != '{}')".format("quantity",
+                                                   order_table_name, order_client_id_col, client_id, order_status_col, "Canceled", order_status_col, "Completed")
     try:
         total_num_orders=0
         cur.execute(sql)
@@ -702,8 +730,8 @@ def getAllOrders(clientID):
         search_all = conn.cursor()
 
         search_all.execute(
-            "SELECT * FROM {} WHERE ({} = {}) AND ({} != '{}')".format(order_table_name, order_client_id_col,
-                                                                       str(clientID), order_status_col, "Completed"))
+            "SELECT * FROM {} WHERE ({} = {}) AND ({} != '{}') AND ({} != '{}')".format(order_table_name, order_client_id_col,
+                                                                       str(clientID), order_status_col, "Completed",order_status_col,"Canceled"))
 
         single_row = search_all.fetchone()
 
@@ -820,7 +848,7 @@ def login(userID, password):
 
 # --------------------------------------------------- ADD COOK REVIEW ---------------------------------------------------#
 
-@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods=['PUT'])
+@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods=['GET'])
 def addReview(cookID, reviewerID, comments, rating):
     """ Adds a review to the cook rating table """
 
@@ -862,7 +890,6 @@ def convert_to_json(rows):
     @app.route('/api/closeListing/<int:cookID>',methods=['GET'])
     def closeListing(cookID):
         """ A function that closes a cook's listing.
-
             Returns "Success" on a sucessful change of the listing id's order to complete.
             @param cookID: close this cookID's listing.
             @rtype: str
@@ -888,7 +915,8 @@ def convert_to_json(rows):
             rollback = conn.cursor()
             rollback.execute("ROLLBACK")
             rollback.commit()
-            
+    
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=80)
     # host="0.0.0.0", port=80
