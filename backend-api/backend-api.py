@@ -348,7 +348,7 @@ def cancel_order(clientId, listingId):
         order = conn.cursor()
         order.execute(
             "UPDATE public.\"Order\" SET \"Status\" = 'Canceled' WHERE \"ClientID\" = " + str(clientId) +
-            " AND \"ListingID\" = " + str(listingId) + " AND \"Status\" = \'In progress\'")
+            " AND \"ListingID\" = " + str(listingId) + " AND \"Status\" = \'Pending\'")
         conn.commit()
 
         order.close()
