@@ -820,7 +820,7 @@ def login(userID, password):
 
 # --------------------------------------------------- ADD COOK REVIEW ---------------------------------------------------#
 
-@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods=['GET'])
+@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods=['PUT'])
 def addReview(cookID, reviewerID, comments, rating):
     """ Adds a review to the cook rating table """
 
@@ -859,15 +859,15 @@ def convert_to_json(rows):
     """
     false = "\'false\'"
     
-    @app.route('/api/closeListing/<int: cookID>',methods=['PUT'])
+    @app.route('/api/closeListing/<int:cookID>',methods=['GET'])
     def closeListing(cookID):
-         """ A function that closes a cook's listing.
+        """ A function that closes a cook's listing.
 
             Returns "Success" on a sucessful change of the listing id's order to complete.
             @param cookID: close this cookID's listing.
             @rtype: str
         """
-        
+        return "s"
         query = \
             """
             UPDATE public.{}
@@ -876,7 +876,7 @@ def convert_to_json(rows):
             """.format(listing_table_name, listing_active_col, false, listing_cook_id_col, str(cookID))
 
         cur = conn.cursor()
-
+        return "s"
         try:
             cur.execute(query)
             conn.commit()
@@ -890,5 +890,5 @@ def convert_to_json(rows):
             rollback.commit()
             
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=80)
+    app.run(host="localhost", port=5000, debug=True)
     # host="0.0.0.0", port=80
