@@ -645,8 +645,8 @@ def getQuantity(list_id, client_id):
 def getClientTotalOrders(client_id):
     """ Returns an unused listing_id """
     cur = conn.cursor()
-    sql = "SELECT {} FROM {} WHERE {} = {}".format("quantity",
-                                                   order_table_name, order_client_id_col, client_id)
+    sql = "SELECT {} FROM {} WHERE ({} = {}) AND ({} != {}) AND ({} != {})".format("quantity",
+                                                   order_table_name, order_client_id_col, client_id, order_status_col, "Canceled", order_status_col, "Completed")
     try:
         total_num_orders=0
         cur.execute(sql)
