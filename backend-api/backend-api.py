@@ -308,9 +308,9 @@ def cancel(clientId, listingId):
         cancel_order(clientId, listingId)
         output = order_to_json(in_progress)  # want to convert each row into a JSON string
 
-        return output  # convert to string before returning
+        return "Success"  # convert to string before returning
     else:
-        return 'order not found'
+        return 'Failed'
 
 
 def get_in_progress_order(clientId, listingId):
@@ -349,7 +349,7 @@ def cancel_order(clientId, listingId):
         order = conn.cursor()
         order.execute(
             "UPDATE public.\"Order\" SET \"Status\" = 'Canceled' WHERE \"ClientID\" = " + str(clientId) +
-            " AND \"ListingID\" = " + str(listingId) + " AND \"Status\" = \'In progress\'")
+            " AND \"ListingID\" = " + str(listingId) + " AND \"Status\" = \'Pending\'")
         conn.commit()
 
         order.close()
