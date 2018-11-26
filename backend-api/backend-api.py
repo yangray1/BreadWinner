@@ -682,8 +682,8 @@ def add_new_order(json_data):
         time = json_dict[removeQuotes(order_time_of_order_col)]
         total_num_orders=getClientTotalOrders(client_id)
         if total_num_orders < 3:
-            sql = "SELECT * FROM {} WHERE ({} = {}) AND ({} = {})".format(order_table_name,
-                                                           order_listing_id_col, list_id, order_client_id_col, client_id)
+            sql = "SELECT * FROM {} WHERE ({} = {}) AND ({} = {}) AND ({} != '{}') AND ({} != '{}')".format(order_table_name,
+                                                           order_listing_id_col, list_id, order_client_id_col, client_id, order_status_col, "Canceled", order_status_col, "Completed")
             cur.execute(sql)
             fetched=cur.fetchone()
             print(fetched)
