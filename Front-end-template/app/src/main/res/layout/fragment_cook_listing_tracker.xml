@@ -30,56 +30,29 @@
 
                 <TextView
                     android:id="@+id/location"
-                    android:layout_width="80dp"
+                    android:layout_width="132dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/price_label"
-                    android:layout_alignStart="@+id/num_orders"
-                    android:layout_alignLeft="@+id/num_orders"
-                    android:layout_marginStart="0dp"
+                    android:layout_alignLeft="@+id/price_per_order"
+                    android:layout_alignStart="@+id/price_per_order"
+                    android:layout_below="@+id/price_per_order"
                     android:layout_marginLeft="0dp"
+                    android:layout_marginStart="0dp"
                     android:layout_marginTop="-1dp"
                     android:text="Toronto"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/price_per_order"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/num_orders_label"
-                    android:layout_alignStart="@+id/num_orders"
-                    android:layout_alignLeft="@+id/num_orders"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="0dp"
-                    android:text="$5.00"
                     android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/location_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/price_per_order"
-                    android:layout_alignStart="@+id/num_orders_label"
-                    android:layout_alignLeft="@+id/num_orders_label"
+                    android:layout_below="@+id/price_label"
+                    android:layout_alignStart="@+id/price_label"
+                    android:layout_alignLeft="@+id/price_label"
                     android:layout_gravity="center"
                     android:layout_marginStart="0dp"
                     android:layout_marginLeft="0dp"
                     android:layout_marginTop="-1dp"
                     android:text="Location:"
-                    android:textSize="16sp" />
-
-                <TextView
-                    android:id="@+id/price_label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/num_orders_label"
-                    android:layout_alignStart="@+id/num_orders_label"
-                    android:layout_alignLeft="@+id/num_orders_label"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginLeft="0dp"
-                    android:layout_marginTop="0dp"
-                    android:text="Price Per Order:"
                     android:textSize="16sp" />
 
                 <android.support.v7.widget.Toolbar
@@ -90,7 +63,7 @@
                     app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
                     <TextView
-                        android:id="@+id/toolbar_title"
+                        android:id="@+id/food_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -136,31 +109,29 @@
                     android:textSize="13sp" />
 
                 <TextView
-                    android:id="@+id/num_orders_label"
+                    android:id="@+id/price_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/progressBar"
-                    android:layout_alignParentStart="true"
                     android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/progressBar"
                     android:layout_gravity="center"
-                    android:layout_marginStart="60dp"
                     android:layout_marginLeft="60dp"
+                    android:layout_marginStart="60dp"
                     android:layout_marginTop="7dp"
-                    android:text="Number of Orders:"
+                    android:text="Price Per Order:"
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/num_orders"
-                    android:layout_width="80dp"
+                    android:id="@+id/price_per_order"
+                    android:layout_width="136dp"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/progressBar"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="49dp"
-                    android:layout_marginRight="49dp"
-                    android:text="6"
-                    android:textSize="16sp" />
+                    android:layout_above="@+id/location_label"
+                    android:layout_marginBottom="-1dp"
+                    android:layout_toEndOf="@+id/delivery_time"
+                    android:text="$6.00"
+                    android:textSize="16sp"
+                    android:layout_toRightOf="@+id/delivery_time" />
 
 
             </RelativeLayout>
@@ -195,7 +166,7 @@
 
 
                     <Button
-                        android:id="@+id/close_button"
+                        android:id="@+id/close_listing_button"
                         android:layout_width="150dp"
                         android:layout_height="50dp"
                         android:layout_centerHorizontal="true"
