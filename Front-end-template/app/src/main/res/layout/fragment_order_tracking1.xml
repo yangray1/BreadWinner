@@ -98,6 +98,19 @@
         app:layout_constraintStart_toEndOf="@+id/order_placed_icon"
         app:layout_constraintTop_toBottomOf="@+id/order_placed" />
 
+    <TextView
+        android:id="@+id/cancel_order"
+        android:layout_width="wrap_content"
+        android:layout_height="25dp"
+        android:layout_marginLeft="100dp"
+        android:layout_marginTop="8dp"
+        android:fontFamily="@font/nunito_bold"
+        android:textColor="@color/colorAccent"
+        android:textSize="13sp"
+        app:layout_constraintLeft_toLeftOf="@id/placed_time"
+        app:layout_constraintTop_toBottomOf="@id/order_place_message" />
+
+
     <View
         android:id="@+id/order_placed_icon"
         android:layout_width="30dp"

@@ -95,6 +95,7 @@ public class ActiveFragment extends Fragment implements View.OnClickListener{
                     OrderTracking trackOrder = new OrderTracking();
                     bundle.putInt("layoutId", (Integer) layoutId);
                     bundle.putInt("index", position);
+                    bundle.putInt("listId", populatedOrders.get(position).getListingID());
                     trackOrder.setArguments(bundle);
                     FragmentTransaction ft = getFragmentManager().beginTransaction();
                     ft.replace(R.id.fragment_container,

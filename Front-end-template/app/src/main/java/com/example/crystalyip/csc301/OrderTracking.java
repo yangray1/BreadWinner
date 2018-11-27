@@ -1,5 +1,6 @@
 package com.example.crystalyip.csc301;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.support.annotation.NonNull;
@@ -10,8 +11,10 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Order;
 import com.example.crystalyip.csc301.Model.StaticStorage;
 
@@ -23,6 +26,7 @@ import org.apache.http.util.EntityUtils;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +38,7 @@ public class OrderTracking extends Fragment implements View.OnClickListener{
     public boolean accepted=false;
     public boolean delivered=false;
     public String status;
-
+    private Bundle bundle;
     public OrderTracking(){
         this.apiURL="http://18.234.123.109/api/getOrderStatus/11/";
     }
@@ -45,7 +49,7 @@ public class OrderTracking extends Fragment implements View.OnClickListener{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        Bundle bundle = this.getArguments();
+        bundle = this.getArguments();
 
         rootView = inflater.inflate((Integer) bundle.getInt("layoutId"), container, false);
 
@@ -107,6 +111,18 @@ public class OrderTracking extends Fragment implements View.OnClickListener{
         return "";
     }
 
+    public String orderCanclled(){
+        try {//TODO:FIX HARDCODEDVALUE
+            System.out.println("thelistingid"+bundle.getInt("listId"));
+            String cancelled = HTTPRequests.getHTTP("http://18.234.123.109/api/cancel/11/"+bundle.getInt("listId"));
+            if (cancelled!="Failed")
+                return "ORDER CANCELLED";
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "CANCEL FAILED";
+    }
+
     public void addOrderPlaced(){
 
 
@@ -120,6 +136,22 @@ public class OrderTracking extends Fragment implements View.OnClickListener{
             tvMessage.setText("Your request has been sent.");
             View icon = (View) rootView.findViewById(R.id.order_placed_icon);
             icon.setBackground(getResources().getDrawable(R.drawable.circle_bg));
+            if (!accepted){
+                TextView cancel = rootView.findViewById(R.id.cancel_order);
+                cancel.setText("CANCEL ORDER");
+                cancel.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                        builder.setCancelable(true);
+                        builder.setMessage(orderCanclled());
+                        AlertDialog alertDialog = builder.create();
+                        alertDialog.show();
+                        alertDialog.getWindow().setLayout(200, 100);
+                        alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.panels);
+                    }
+                });
+            }
 
         }
 
