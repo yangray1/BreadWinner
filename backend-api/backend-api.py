@@ -836,9 +836,9 @@ def login(userID, password):
         cur.execute(query)
         result = cur.fetchall()
         if len(result) != 1:
-            return "Error, user ID and password failed."
+            return "FAILED"
         else:
-            return userID
+            return "SUCCESS"
     # except Exception as e:
     #     raise Exception(e)
     except:
