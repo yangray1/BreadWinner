@@ -45,8 +45,6 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
         rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
         Bundle bundle = this.getArguments();
 
-<<<<<<< HEAD
-=======
         Button button = (Button) rootView.findViewById(R.id.btnViewProfileFromFood);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -55,7 +53,6 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
         });
 
 
->>>>>>> 0db5453baaad6129559782460519dfd542a38c19
         if (bundle != null) {
             Listing listing = bundle.getParcelable("Listing");
             ImageView imageView=rootView.findViewById(R.id.image_food);
