@@ -24,6 +24,7 @@ import android.widget.TextView;
 
 import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
 import com.example.crystalyip.csc301.HTTPInteractions.OrderPlacer;
+import com.example.crystalyip.csc301.Model.Listing;
 import com.example.crystalyip.csc301.Model.Order;
 import com.example.crystalyip.csc301.Model.StaticStorage;
 
@@ -44,22 +45,21 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
         rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
         Bundle bundle = this.getArguments();
 
-
-
         if (bundle != null) {
-            int imageID = bundle.getInt("imageURL");
+            Listing listing = bundle.getParcelable("Listing");
             ImageView imageView=rootView.findViewById(R.id.image_food);
-            imageView.setImageResource(imageID);
+            imageView.setImageBitmap(listing.getImageBytes());
 
             TextView tv = rootView.findViewById(R.id.food_description);
-            String foodDescription = bundle.getString("Description");
-            String foodName = bundle.getString("foodName");
-            String foodLocation = bundle.getString("foodLocation");
-            int listindID=bundle.getInt("listingID");
+            String foodName = listing.getFoodName();
+            String foodLocation = listing.getLocation();
+            double foodPrice=listing.getPrice();
+            int listindID=listing.getListingID();
+            String foodDescription="$"+foodPrice+" "+foodName+"\n"+foodLocation;
             SpannableString descriptions = new SpannableString(foodDescription);
             descriptions.setSpan(new RelativeSizeSpan(1.3f), 0, foodDescription.indexOf("\n"), 0);
             tv.setText(descriptions);
-            cookID=bundle.getInt("cookID");
+            cookID=listing.getCookID();
             orderToPlace = new Order("Pending", listindID, 11, foodName, foodLocation);
 
         }

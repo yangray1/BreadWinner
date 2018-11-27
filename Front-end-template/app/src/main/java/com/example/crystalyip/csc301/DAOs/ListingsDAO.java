@@ -41,6 +41,8 @@ public class ListingsDAO {
                         listing.getString("Location"),
                         R.drawable.rice);
 
+
+                listingToAdd.setImageBytes(HTTPRequests.getHTTPImage("http://18.234.123.109/api/getImage/"+listing.getInt("ListingID")));
                 allListings.add(listingToAdd);
             }
         } catch (Exception e) { // return what we have so far, even if it's just an empty list

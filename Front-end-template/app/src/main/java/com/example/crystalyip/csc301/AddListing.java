@@ -63,6 +63,7 @@ public class AddListing extends Fragment implements View.OnClickListener{
     private static final int STORAGE_PERMISSION_CODE = 123;
     private Bitmap bitmap;
     private Uri filePath;
+    private View dynamicView;
     @Override
     public void onClick(View v) {
  
@@ -73,7 +74,8 @@ public class AddListing extends Fragment implements View.OnClickListener{
 
 
         final View view = inflater.inflate(R.layout.add_listing, container, false);
-        Button button = view.findViewById(R.id.upload_image);
+        View button = view.findViewById(R.id.upload_image);
+        dynamicView=view;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -116,7 +118,12 @@ public class AddListing extends Fragment implements View.OnClickListener{
                         listing.put("tags", tags);
 
                         postHTTPJson("http://18.234.123.109/api/add", listing);
-
+                        AsyncTask.execute(new Runnable() {
+                            @Override
+                            public void run() {
+                                HTTPRequests.postHTTPImage("http://18.234.123.109/api/uploadImage", toByteArray(bitmap), 38);
+                            }
+                        });
                         builder.setTitle("Successfully added listing.");
                         builder.show();
                     }
@@ -148,12 +155,11 @@ public class AddListing extends Fragment implements View.OnClickListener{
         filePath = data.getData();
         try {
             bitmap = MediaStore.Images.Media.getBitmap( this.getActivity().getContentResolver(), filePath);
-            AsyncTask.execute(new Runnable() {
-                @Override
-                public void run() {
-                    HTTPRequests.postHTTPImage("http://18.234.123.109/api/test", toByteArray(bitmap), 38);
-                }
-            });
+            ImageView uploaded = dynamicView.findViewById(R.id.upload_image);
+            TextView uploadPrompt=dynamicView.findViewById(R.id.upload_message);
+            uploadPrompt.setText("");
+            uploaded.setImageBitmap(bitmap);
+
         } catch (IOException e) {
             e.printStackTrace();
         }

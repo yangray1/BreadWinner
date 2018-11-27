@@ -1,33 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@android:color/background_light"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@android:color/background_light">
 
     <!--food name-->
     <EditText
         android:id="@+id/get_food_name"
-        android:layout_width="246dp"
+        android:layout_width="369dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="@drawable/search_layout"
         android:ems="10"
         android:hint="Enter food name here"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColorHint="#DDE3E7"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-            
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="102dp" />
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="@id/upload_image"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/food_name_header" />
 
     <TextView
         android:id="@+id/food_name_header"
@@ -35,50 +31,46 @@
         android:layout_height="20dp"
         android:drawableLeft="@drawable/icon_food"
         android:fontFamily="@font/nunito_bold"
-        android:text="FOOD NAME"
+        android:text="DISH"
         android:textColor="#555555"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:fontFamily="@font/nunito_semibold"
-        tools:layout_editor_absoluteX="69dp"
-        tools:layout_editor_absoluteY="74dp" />
+        app:layout_constraintTop_toBottomOf="@id/upload_image"
+        app:layout_constraintLeft_toLeftOf="@id/upload_image"
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="283dp" />
 
     <!--price-->
     <EditText
         android:id="@+id/get_price"
-        android:layout_width="246dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="4dp"
         android:background="@drawable/search_layout"
         android:ems="10"
-        android:hint="Enter price here"
+        android:hint="CAD"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColorHint="#DDE3E7"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_food_name" />
+        app:layout_constraintTop_toBottomOf="@id/price_header"
+        app:layout_constraintRight_toRightOf="@id/upload_image"/>
 
     <TextView
         android:id="@+id/price_header"
         android:layout_width="101dp"
         android:layout_height="20dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="96dp"
         android:drawableLeft="@drawable/icon_price"
         android:fontFamily="@font/nunito_bold"
         android:text="PRICE"
         android:textColor="#555555"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:fontFamily="@font/nunito_semibold"
-        app:layout_constraintBottom_toTopOf="@+id/get_price"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintRight_toRightOf="@id/upload_image"
+        app:layout_constraintTop_toBottomOf="@id/upload_image" />
 
     <!--location-->
 
@@ -86,112 +78,105 @@
         android:id="@+id/location_header"
         android:layout_width="101dp"
         android:layout_height="20dp"
-        android:layout_marginStart="68dp"
-        android:layout_marginLeft="68dp"
-        android:layout_marginBottom="8dp"
         android:drawableLeft="@drawable/icon_map"
         android:fontFamily="@font/nunito_bold"
         android:text="LOCATION"
         android:textColor="#555555"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:fontFamily="@font/nunito_semibold"
-        app:layout_constraintBottom_toTopOf="@+id/get_location"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintLeft_toLeftOf="@id/upload_image"
+        app:layout_constraintTop_toBottomOf="@id/get_food_name"
+        tools:layout_editor_absoluteX="39dp"
+        tools:layout_editor_absoluteY="333dp" />
 
     <EditText
         android:id="@+id/get_location"
-        android:layout_width="246dp"
+        android:layout_width="369dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="@drawable/search_layout"
         android:ems="10"
         android:hint="Enter location here"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColorHint="#DDE3E7"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_price" />
+        app:layout_constraintLeft_toLeftOf="@id/upload_image"
+        app:layout_constraintTop_toBottomOf="@id/location_header" />
 
     <!--tags-->
 
     <TextView
         android:id="@+id/tags_header"
         android:layout_width="101dp"
-        android:layout_height="27dp"
-        android:layout_marginStart="44dp"
-        android:layout_marginLeft="44dp"
-        android:layout_marginBottom="12dp"
+        android:layout_height="wrap_content"
         android:drawableLeft="@drawable/icon_tag"
         android:fontFamily="@font/nunito_bold"
         android:text="TAGS"
         android:textColor="#555555"
-        android:textSize="16sp"
+        android:textSize="14sp"
         app:fontFamily="@font/nunito_semibold"
-        app:layout_constraintBottom_toTopOf="@+id/get_tags"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/get_location"
+        app:layout_constraintLeft_toLeftOf="@id/upload_image"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="381dp" />
 
     <EditText
         android:id="@+id/get_tags"
-        android:layout_width="wrap_content"
+        android:layout_width="219dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         android:background="@drawable/search_layout"
         android:ems="10"
-        android:hint="Sepated by spaces"
+        android:hint="Space Separated"
         android:inputType="textPersonName"
         android:paddingLeft="20dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:textColorHint="#DDE3E7"
         android:textSize="13sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_location" />
+        app:layout_constraintTop_toBottomOf="@id/tags_header"
+        app:layout_constraintLeft_toLeftOf="@id/upload_image"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="403dp" />
 
     <!--add listing heading at the top-->
 
     <!--button that gets pressed to submit the listing-->
     <Button
         android:id="@+id/add_listing_button"
-        android:layout_width="wrap_content"
+        android:layout_width="158dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
+        android:layout_marginLeft="104dp"
+        android:layout_marginTop="168dp"
+        android:background="@drawable/search_layout"
         android:fontFamily="@font/nunito_semibold"
         android:text="POST LISTING"
         android:textColor="#000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_location" />
+        app:layout_constraintLeft_toLeftOf="@id/get_tags"
+        app:layout_constraintTop_toBottomOf="@id/upload_image" />
 
-    <Button
+    <ImageView
         android:id="@+id/upload_image"
+        android:layout_width="370dp"
+        android:layout_height="340dp"
+        android:layout_marginBottom="236dp"
+        android:background="@drawable/search_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.487"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
+
+    <TextView
+        android:id="@+id/upload_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:fontFamily="@font/nunito_semibold"
-        android:text="UPLOAD IMAGE"
-        android:textColor="#000"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/get_tags" />
+        android:layout_marginLeft="132dp"
+        android:text="UPLOAD PHOTO"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="@id/upload_image"
+        app:layout_constraintLeft_toLeftOf="@id/upload_image"
+        app:layout_constraintTop_toTopOf="@id/upload_image"
+        app:layout_constraintVertical_bias="0.51" />
 
 </android.support.constraint.ConstraintLayout>
