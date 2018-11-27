@@ -50,6 +50,7 @@ user_user_id_col = "\"UserID\""
 user_password_col = "\"Password\""
 user_fname_col = "\"FName\""
 user_lname_col = "\"LName\""
+user_about_col = "\"About\""
 
 
 """ Database login details """
@@ -881,6 +882,83 @@ def convert_to_json(rows):
                               'CookID': rows[i][1],
                               'Price': rows[i][2],
                               'Location': rows[i][3]})
+                              
+                              
+# --------------------------------------------------- GET COOK REVIEWS ---------------------------------------------------#
+
+"""
+Gets cook review data like average rating
+"""
+@app.route('/api/cookAvgRating/<int:cookID>', methods=["GET"])
+def cookAvgRating(cookID):
+    info = {}
+    cur = conn.cursor();
+    sql = "SELECT {}, AVG({})  FROM public.{} WHERE {} = (%s) GROUP BY {}".format(cook_ratings_cook_id_col, 
+    cook_ratings_rating_col, cook_ratings_table_name, 
+    cook_ratings_cook_id_col, cook_ratings_cook_id_col )
+    try:
+        poyo = str(cookID)
+        cur.execute(sql, (poyo,))
+        avgtuple = cur.fetchone();
+        if avgtuple != None:
+            return str(avgtuple[1])
+        else:
+            return str(0)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+    return "failure"
+
+"""
+  Gets all reviews along with names and user ids of reviewers
+"""  
+@app.route('/api/cookReviews/<int:cookID>', methods=["GET"])
+def cookGetReviews(cookID):
+    info = {}
+    cur = conn.cursor();
+    sql = ("SELECT {},{}, {}, {}, {}, {} "
+    "FROM public.{}, public.{} WHERE {} = {} AND {} = (%s)").format(cook_ratings_cook_id_col,
+                                                                   cook_ratings_reviewer_id_col,
+                                                                   cook_ratings_rating_col,
+                                                                   cook_ratings_comments_col,
+                                                                   user_fname_col,
+                                                                   user_lname_col,
+                                                                   cook_ratings_table_name,
+                                                                   user_table_name,
+                                                                   user_user_id_col,
+                                                                   cook_ratings_reviewer_id_col,
+                                                                   cook_ratings_cook_id_col)
+    
+    try:
+        poyo = str(cookID)
+        cur.execute(sql, (poyo,))
+        
+        jsonlst = []
+        if cur.rowcount > 0:
+            avgtuple = cur.fetchone();
+            while avgtuple != None:
+                jsonlst.append({
+                "CookID": avgtuple[0],
+                "ReviewerID": avgtuple[1],
+                "Rating": avgtuple[2],
+                "Comments": avgtuple[3],
+                "FName": avgtuple[4],
+                "LName": avgtuple[5]
+                })
+                avgtuple = cur.fetchone()
+            return json.dumps(jsonlst)
+        else:
+            return str("none available")
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+    return "failure"
+
+    
+      
+
 # --------------------------------------------------- CLOSE LISTING ---------------------------------------------------#
 """
 TODO: NEED API FOR FOLLOWING CONDITION - CUSTOMER CANNOT MAKE ORDER IF STATUS IN LISTING TABLE IS INACTIVE (i.e. THE

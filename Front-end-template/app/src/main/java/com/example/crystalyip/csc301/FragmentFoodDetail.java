@@ -45,6 +45,17 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
         rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
         Bundle bundle = this.getArguments();
 
+<<<<<<< HEAD
+=======
+        Button button = (Button) rootView.findViewById(R.id.btnViewProfileFromFood);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                openProfile(v);
+            }
+        });
+
+
+>>>>>>> 0db5453baaad6129559782460519dfd542a38c19
         if (bundle != null) {
             Listing listing = bundle.getParcelable("Listing");
             ImageView imageView=rootView.findViewById(R.id.image_food);
@@ -120,6 +131,15 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
                 "You may have too many pending orders or the listing has been closed.";
     }
 
+    public void openProfile(View view) {
+        ProfileFragment pf =new ProfileFragment();
+        Bundle bundy = new Bundle();
+        bundy.putInt("CookID", cookID);
+        pf.setArguments(bundy);
+        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                pf).commit();
+
+    }
 
     @Override
     public void onClick(View v) {

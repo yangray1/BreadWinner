@@ -25,6 +25,7 @@
 
             <ImageView
                 android:id="@+id/image_food"
+                android:src="@drawable/rice"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:contentDescription="@null"
@@ -136,13 +137,6 @@
 
                     </com.cepheuen.elegantnumberbutton.view.ElegantNumberButton>
 
-                    <Button
-                        android:id="@+id/btnViewProfileFromFood"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="View Cooks Profile"
-                        android:onClick="openProfile" />
-
                 </LinearLayout>
 
             </android.support.v7.widget.CardView>
@@ -169,5 +163,13 @@
         </LinearLayout>
 
     </android.support.v4.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnViewProfileFromFood"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="View Profile"
+        app:layout_anchor="@+id/app_bar_layout"
+        app:layout_anchorGravity="bottom|center" />
 
 </android.support.design.widget.CoordinatorLayout>
