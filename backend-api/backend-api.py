@@ -839,7 +839,7 @@ def login(userID, password):
         if len(result) != 1:
             return "FAILED"
         else:
-            return "SUCCESS"
+            return result[0][2].rstrip() + "," + result[0][3]
     # except Exception as e:
     #     raise Exception(e)
     except:
