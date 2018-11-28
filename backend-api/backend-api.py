@@ -858,6 +858,7 @@ def addReview():
     try:
         addToDBReview(request.get_json())
         conn.commit()
+        return "Success"
     # except Exception as e:
     #     raise Exception(e)
     except:
