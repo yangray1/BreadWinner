@@ -850,8 +850,8 @@ def login(userID, password):
 
 # --------------------------------------------------- ADD COOK REVIEW ---------------------------------------------------#
 
-@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods=['POST'])
-def addReview(cookID, reviewerID, comments, rating):
+@app.route('/api/addReview', methods=['POST'])
+def addReview():
     """ Adds a review to the cook rating table """
 
     query = \
