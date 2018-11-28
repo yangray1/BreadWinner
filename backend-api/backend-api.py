@@ -850,7 +850,7 @@ def login(userID, password):
 
 # --------------------------------------------------- ADD COOK REVIEW ---------------------------------------------------#
 
-@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods=['GET'])
+@app.route('/api/addReview/<int:cookID>/<int:reviewerID>/<string:comments>/<int:rating>', methods=['POST'])
 def addReview(cookID, reviewerID, comments, rating):
     """ Adds a review to the cook rating table """
 
@@ -867,6 +867,23 @@ def addReview(cookID, reviewerID, comments, rating):
         conn.commit()
     # except Exception as e:
     #     raise Exception(e)
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+ 
+def addToDB(json_data):
+    cur = conn.cursor()
+    json_dict = json_data
+
+    cook_id = json_dict[removeQuotes(cook_ratings_cook_id_col)]
+    reviewer_id = json_dict[removeQuotes(cook_ratings_reviewer_id_col)]
+    comments = json_dict[removeQuotes(cook_ratings_comments_col)]
+    rating = json_dict[removeQuotes(cook_ratings_rating_col)]
+    
+    sql = "INSERT INTO " + listing_table_name + " VALUES (%s, %s, %s, %s, TRUE)"
+    try:
+        cur.execute(sql, (cook_id, reviewer_id, comments, rating))
     except:
         rollback = conn.cursor()
         rollback.execute("ROLLBACK")
