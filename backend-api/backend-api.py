@@ -853,17 +853,10 @@ def login(userID, password):
 @app.route('/api/addReview', methods=['POST'])
 def addReview():
     """ Adds a review to the cook rating table """
-
-    query = \
-        """
-        INSERT INTO public.{}
-        VALUES ({}, {}, {}, {});
-        """.format(cook_ratings_table_name, int(cookID), int(reviewerID), str(comments), int(rating))
-
-    cur = conn.cursor()
+    
 
     try:
-        cur.execute(query)
+        addToDBReview(request.get_json())
         conn.commit()
     # except Exception as e:
     #     raise Exception(e)
@@ -872,7 +865,7 @@ def addReview():
         rollback.execute("ROLLBACK")
         rollback.commit()
  
-def addToDB(json_data):
+def addToDBReview(json_data):
     cur = conn.cursor()
     json_dict = json_data
 
