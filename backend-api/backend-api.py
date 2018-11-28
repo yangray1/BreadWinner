@@ -875,7 +875,7 @@ def addToDBReview(json_data):
     comments = json_dict[removeQuotes(cook_ratings_comments_col)]
     rating = json_dict[removeQuotes(cook_ratings_rating_col)]
     
-    sql = "INSERT INTO " + listing_table_name + " VALUES (%s, %s, %s, %s, TRUE)"
+    sql = "INSERT INTO " + cook_ratings_table_name + " VALUES (%s, %s, %s, %s, TRUE)"
     try:
         cur.execute(sql, (cook_id, reviewer_id, comments, rating))
     except:
