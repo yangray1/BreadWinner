@@ -56,6 +56,18 @@ public class ProfileFragment extends Fragment {
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,showReviews).commit();
             }
         });
+
+        Button addReview = rootView.findViewById(R.id.addReviewButton);
+        addReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Bundle bundle = new Bundle();
+                bundle.putInt("CookID", cookID);
+                AddReview addReviews = new AddReview();
+                addReviews.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,addReviews).commit();
+            }
+        });
         return rootView;
     }
 

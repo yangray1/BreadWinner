@@ -17,6 +17,7 @@ import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Listing;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import static com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests.postHTTPJson;
@@ -66,12 +67,15 @@ public class CookListingTracker extends Fragment {
             JSONObject listingsJSON = new JSONObject(allListingsFormatted);
             JSONArray listings = listingsJSON.getJSONArray("data");
 
-            // Extract listing items. ** ASSUMES THERES ONLY 1 LISTING PER COOK. **
+
             JSONObject listing = listings.getJSONObject(0);
             food_name = listing.getString("Food Name");
             price = Integer.parseInt(listing.getString("Price"));
             location = listing.getString("Location");
 
+        } catch (JSONException e) {
+            getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new AddListing()).commit();
         } catch (Exception e) {
             e.printStackTrace();
             builder.setTitle("FAILED");

@@ -37,6 +37,7 @@ import android.widget.Toast;
 
 import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Listing;
+import com.example.crystalyip.csc301.Model.StaticStorage;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -110,7 +111,7 @@ public class AddListing extends Fragment implements View.OnClickListener{
                     // send a post request
                     try {
                         JSONObject listing = new JSONObject();
-                        listing.put("CookID", 1); // TODO: change the hardcoded UserID value after login is implemented
+                        listing.put("CookID", StaticStorage.getUserId()); // TODO: change the hardcoded UserID value after login is implemented
                         listing.put("Food Name", foodName);
                         listing.put("Price", Float.parseFloat(price));
                         listing.put("Location", location);
@@ -121,11 +122,13 @@ public class AddListing extends Fragment implements View.OnClickListener{
                         AsyncTask.execute(new Runnable() {
                             @Override
                             public void run() {
-                                HTTPRequests.postHTTPImage("http://18.234.123.109/api/uploadImage", toByteArray(bitmap), 38);
+                                HTTPRequests.postHTTPImage("http://18.234.123.109/api/uploadImage", toByteArray(bitmap));
                             }
                         });
                         builder.setTitle("Successfully added listing.");
                         builder.show();
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                new ShowListings()).commit();
                     }
                     catch(Exception e){
                         e.printStackTrace();

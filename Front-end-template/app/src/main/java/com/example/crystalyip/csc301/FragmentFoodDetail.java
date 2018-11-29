@@ -45,7 +45,7 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
         rootView =inflater.inflate(R.layout.fragment_food_detail, container, false);
         Bundle bundle = this.getArguments();
 
-        Button button = (Button) rootView.findViewById(R.id.btnViewProfileFromFood);
+        Button button = rootView.findViewById(R.id.btnViewProfileFromFood);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 openProfile(v);
@@ -68,7 +68,7 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
             descriptions.setSpan(new RelativeSizeSpan(1.3f), 0, foodDescription.indexOf("\n"), 0);
             tv.setText(descriptions);
             cookID=listing.getCookID();
-            orderToPlace = new Order("Pending", listindID, 11, foodName, foodLocation);
+            orderToPlace = new Order("Pending", listindID, StaticStorage.getUserId(), foodName, foodLocation);
 
         }
 
@@ -108,10 +108,11 @@ public class FragmentFoodDetail extends Fragment  implements View.OnClickListene
                     String notificationRecipient = "";
 
                     //This is a Simple Logic to Send Notification different Device Programmatically....
-                    //notificationRecipient=cookID.toString()
+                    notificationRecipient=Integer.toString(cookID);
+                    /*
                     if (MainActivity.userId.equals("12")) { //TODO: Use the order's notification ID
                         notificationRecipient = "12";
-                    }
+                    }*/
                     HTTPRequests.sendOneSignalMessage(notificationRecipient);
 
                 }
