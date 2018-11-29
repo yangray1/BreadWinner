@@ -793,14 +793,8 @@ def checkHistory(clientID):
     """
 
     cur = conn.cursor()
-    query = \
-        """
-            SELECT t2.{}, t2.{}, t2.{}, t2.{}
-            FROM public.{} as t1 FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{}
-            WHERE t1.{} LIKE {} AND t1.{} = {}
-        """.format(listing_food_name_col, listing_cook_id_col, listing_price_col, listing_location_col,
-                   order_table_name, listing_table_name, order_listing_id_col, listing_listing_id_col,
-                   order_status_col, completed, order_client_id_col, str(clientID))
+    query = "SELECT * FROM {} WHERE ({} = {}) AND ({} = '{}')".format(order_table_name, order_client_id_col,
+                                                                       str(clientID), order_status_col, "Completed")
 
     try:
         cur.execute(query)
