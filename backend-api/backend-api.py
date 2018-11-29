@@ -131,6 +131,48 @@ def get_cook_id(userId):
         rollback = conn.cursor()
         rollback.execute("ROLLBACK")
         rollback.commit()
+        
+  
+# --------------------------------------------------- GET USER DETAIL ---------------------------------------------------#
+
+
+@app.route("/api/getUserDetails/<int:userId>", methods=['GET'])
+def get_user_detail(userId):
+    try:
+        all_details = []
+
+        search_all = conn.cursor()
+
+        search_all.execute(
+            "SELECT * FROM {} WHERE ({} = {})".format(user_table_name, user_user_id_col, str(userId)))
+
+        single_row = search_all.fetchone()
+
+        while single_row is not None:
+            all_details.append(single_row)
+            single_row = search_all.fetchone()
+
+        search_all.close()
+
+        user_detail_rows_to_json(all_details)  # want to convert each row into a JSON string
+
+        return json.dumps({'data': all_details})  # convert to string before returning
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+ 
+
+def user_detail_rows_to_json(rows):
+    """
+    Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
+    """
+    for i in range(len(rows)):
+        rows[i] = json.dumps({'UserID': rows[i][0],
+                              'Password': rows[i][1],
+                              'FName': rows[i][2],
+                              'LName': rows[i][3],
+                              'About': rows[i][4]})
        
 
 # --------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
