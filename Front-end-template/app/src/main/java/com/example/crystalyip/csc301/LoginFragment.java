@@ -1,7 +1,10 @@
 package com.example.crystalyip.csc301;
 
 import android.app.AlertDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,20 +29,32 @@ public class LoginFragment extends Fragment {
                 // Login function uses returns a error message when userId and password not in the database
                 // returns the userId other wise.
 
-                String userid = getUserID(view);
-                String password = getPassword(view);
-                try {
-                    String res=HTTPRequests.getHTTP("http://18.234.123.109/api/login/"+userid+"/"+password);
-                    if (res == "SUCCESS") {
-                        StaticStorage.setUserId(Integer.parseInt(userid));
+                final String userid = getUserID(view);
+                final String password = getPassword(view);
+                AsyncTask.execute(new Runnable() {
+                    @Override
+                    public void run() {
+                        String res= null;
+                        try {
+                            res = HTTPRequests.getHTTP("http://18.234.123.109/api/login/"+userid+"/"+password);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        System.out.println("responsemsg"+res);
+                        if (res.equals("FAILED")) {
+                            // DO SOMETHING
+                        } else {
+                            System.out.println("responsemsg2"+res);
+                            StaticStorage.setUserId(Integer.parseInt(userid));
+                            String[] nameDetail=res.split(",");
+                            StaticStorage.setFirstName(nameDetail[0]);
+                            StaticStorage.setLastName(nameDetail[1]);
+                            getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                    new SearchFragment()).commit();
+                        }
+
                     }
-                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                    builder.setCancelable(true);
-                    builder.setTitle("Incorrect password");
-                    builder.show();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                });
 
             }
         });

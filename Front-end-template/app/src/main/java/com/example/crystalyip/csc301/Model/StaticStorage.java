@@ -16,8 +16,8 @@ import java.util.Map;
 public class StaticStorage {
     private static int userId;
     private static ArrayList<Order> personalOrders=new ArrayList<>();
-    private static ArrayList<String> personalListings=new ArrayList<>();
-    private static Map<String, String> mapOrderToRecentStatus=new HashMap<>();
+    private static String firstName;
+    private static String lastName;
 
     public static void setUserId(int id){
         userId=id;
@@ -32,24 +32,24 @@ public class StaticStorage {
         personalOrders.addAll(orders);
     }
 
-
-    public static void mapOrderToStatus(String orderNumber, String status){
-        mapOrderToRecentStatus.put(orderNumber, status);
-    }
-
-    public static String getMappedStatus(String orderNumber){
-        return mapOrderToRecentStatus.get(orderNumber);
-    }
-
     public static ArrayList<Order> getPersonalOrders(){
         return personalOrders;
     }
 
-    public static void addPersonalListings(String order){
-        personalListings.add(order);
+    public static void setFirstName(String setName){
+        firstName=setName;
     }
 
-    public static ArrayList<String> getPersonalListings(){
-        return personalListings;
+    public static void setLastName(String setName){
+        lastName=setName;
     }
+
+    public static String getFirstName(){
+        return firstName;
+    }
+
+    public static String getLastName(){
+        return lastName;
+    }
+
 }

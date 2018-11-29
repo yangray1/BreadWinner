@@ -71,7 +71,7 @@ public class HTTPRequests {
         }
     }
 
-    public static String postHTTPImage(String urlToRead, byte[] data, int listId){
+    public static String postHTTPImage(String urlToRead, byte[] data){
         String result="";
         HttpClient httpClient = new DefaultHttpClient();
         HttpPost httpPost = new HttpPost(urlToRead);

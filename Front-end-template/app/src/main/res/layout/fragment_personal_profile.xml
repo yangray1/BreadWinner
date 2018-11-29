@@ -112,24 +112,6 @@
         app:layout_constraintTop_toBottomOf="@+id/avgRatingText"
         app:layout_constraintVertical_bias="0.476" />
 
-    <Button
-        android:id="@+id/addReviewButton"
-        android:layout_width="115dp"
-        android:layout_height="73dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
-        android:text="Add Review"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.442"
-        app:layout_constraintStart_toEndOf="@id/seeReviewsButton"
-        app:layout_constraintTop_toBottomOf="@id/avgRatingText"
-        app:layout_constraintVertical_bias="0.476" />
-
     <TextView
         android:id="@+id/avgRatingText"
         android:layout_width="239dp"
