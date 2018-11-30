@@ -183,13 +183,14 @@ def getAllListings():
     try:
         search_all = conn.cursor()
         search_all.execute("SELECT {}, {}, {}, {},"
-                           " {}, {} FROM public.{}".format(listing_listing_id_col,
+                           " {}, {}, {} FROM public.{}".format(listing_listing_id_col,
                                                            listing_cook_id_col,
                                                            listing_food_name_col,
                                                            listing_price_col,
                                                            listing_location_col,
                                                            listing_image_col,
-                                                           listing_table_name))
+                                                           listing_table_name,
+                                                              listing_active_col))
         single_row = search_all.fetchone()
 
         while single_row is not None:
@@ -657,7 +658,8 @@ def rows_to_json(rows):
                               'Food Name': rows[i][2],
                               'Price': rows[i][3],
                               'Location': rows[i][4],
-                              'Image': rows[i][5]})
+                              'Image': rows[i][5],
+                             'status':rows[i][6]})
 
 
 # --------------------------------------------------- MAKE ORDER ---------------------------------------------------#
