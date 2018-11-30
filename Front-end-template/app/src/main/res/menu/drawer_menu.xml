@@ -20,7 +20,7 @@
 
     </group>
 
-    <item android:title="Personal">
+    <group android:title="Personal">
         <menu android:checkableBehavior="single">
             <item
                 android:id="@+id/nav_account"
@@ -35,5 +35,5 @@
                 android:icon="@drawable/ic_history"
                 android:title="My Listings" />
         </menu>
-    </item>
+    </group>
 </menu>

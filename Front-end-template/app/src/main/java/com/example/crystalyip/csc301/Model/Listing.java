@@ -16,8 +16,8 @@ public class Listing implements Parcelable {
     private String location;
     private int imageID;
     private Bitmap imageBytes;
-
-    public Listing(String foodName, int listingID, String imageLink, int cookID, double price, String location, int imageID) {
+    private boolean status;
+    public Listing(String foodName, int listingID, String imageLink, int cookID, double price, String location, int imageID, boolean status) {
         this.foodName = foodName;
         this.listingID = listingID;
         this.imageLink = imageLink;
@@ -25,6 +25,7 @@ public class Listing implements Parcelable {
         this.price = price;
         this.location = location;
         this.imageID = imageID;
+        this.status=status;
     }
 
     protected Listing(Parcel in) {
@@ -101,5 +102,9 @@ public class Listing implements Parcelable {
         dest.writeString(location);
         dest.writeInt(imageID);
         dest.writeParcelable(imageBytes, flags);
+    }
+
+    public boolean isStatus() {
+        return status;
     }
 }

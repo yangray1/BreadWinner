@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Listing;
+import com.example.crystalyip.csc301.Model.StaticStorage;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,6 +45,7 @@ public class CookListingTracker extends Fragment {
         // Initialize the values so compiler don't complain.
         String food_name ="";
         float price = -1;
+        int num_orders=0;
         String location = "";
 
         /*
@@ -61,7 +63,8 @@ public class CookListingTracker extends Fragment {
         try {
 
             // returns one JSON listing. Convert that json listing into listing object(that we coded for)
-            String stringFormatListings = HTTPRequests.getHTTP("http://18.234.123.109/api/getCookListing/11");
+            String stringFormatListings = HTTPRequests.getHTTP(
+                    "http://18.234.123.109/api/getCookListing/"+StaticStorage.getUserId());
 
             String allListingsFormatted = HTTPRequests.formatJSONStringFromResponse(stringFormatListings);
             JSONObject listingsJSON = new JSONObject(allListingsFormatted);
@@ -88,13 +91,14 @@ public class CookListingTracker extends Fragment {
         displayFoodName(view, food_name);
         displayPrice(view, price);
         displayLocation(view, location);
+        displayQuantity(view,  "0");
 
         // Close the listing.
         closeListing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 try {
-                    String output = HTTPRequests.getHTTP("http://18.234.123.109/api/closeListing/11");
+                    String output = HTTPRequests.getHTTP("http://18.234.123.109/api/closeListing/"+StaticStorage.getUserId());
                     if (output.equals("Success")){
                         builder.setTitle("SUCCESS");
                         builder.setMessage("Successfully closed the listing!");
@@ -128,6 +132,11 @@ public class CookListingTracker extends Fragment {
     private void displayLocation(View view, String location){
         TextView locationTextBox = view.findViewById(R.id.location);
         locationTextBox.setText(location);
+    }
+
+    private void displayQuantity(View view, String quantity){
+        TextView quan=view.findViewById(R.id.counter);
+        quan.setText(quantity);
     }
 
 

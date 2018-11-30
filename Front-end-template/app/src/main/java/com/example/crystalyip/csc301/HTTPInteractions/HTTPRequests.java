@@ -4,6 +4,10 @@ import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 
+import com.example.crystalyip.csc301.Model.Order;
+import com.example.crystalyip.csc301.Model.Profile;
+import com.example.crystalyip.csc301.Model.StaticStorage;
+
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
@@ -14,6 +18,7 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ByteArrayBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -21,6 +26,8 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class HTTPRequests {
@@ -204,6 +211,32 @@ public class HTTPRequests {
         } catch (Throwable t) {
             t.printStackTrace();
         }
+    }
+
+    public static Profile getProfileDetails(String userId){
+        String orders = "";
+        Profile profileDetails = null;
+        try {
+            orders = HTTPRequests.getHTTP(
+                    "http://18.234.123.109/api/getUserDetails/" + userId);
+            System.out.println("THEORDERS"+orders);
+            String allOrdersFormatted=HTTPRequests.formatJSONStringFromResponse(orders);
+            JSONObject profileJSON = new JSONObject(allOrdersFormatted);
+            JSONArray listings = profileJSON.getJSONArray("data");
+            JSONObject profile = listings.getJSONObject(0);
+            System.out.println("THEPROFILE"+profile);
+            profileDetails= new Profile(
+                    profile.getInt("UserID"),
+                    profile.getString("Password"),
+                    profile.getString("FName"),
+                    profile.getString("LName"),
+                    profile.getString("About"));
+
+        } catch (Exception e){ // return what we have so far, even if it's just an empty list
+            e.printStackTrace();
+            return null;
+        }
+        return profileDetails;
     }
 
 }

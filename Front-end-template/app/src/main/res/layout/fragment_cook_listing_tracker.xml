@@ -42,6 +42,19 @@
                     android:textSize="16sp" />
 
                 <TextView
+                    android:id="@+id/counter"
+                    android:layout_width="132dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/price_per_order"
+                    android:layout_alignStart="@+id/price_per_order"
+                    android:layout_alignLeft="@+id/price_per_order"
+                    android:layout_marginStart="0dp"
+                    android:layout_marginLeft="0dp"
+                    android:layout_marginTop="22dp"
+                    android:text="0"
+                    android:textSize="16sp" />
+
+                <TextView
                     android:id="@+id/location_label"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -107,6 +120,20 @@
                     android:layout_marginTop="152dp"
                     android:text="until delivery"
                     android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/num_orders"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/progressBar"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginStart="60dp"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="49dp"
+                    android:text="Number of Orders:"
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/price_label"

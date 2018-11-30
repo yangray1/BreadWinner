@@ -114,7 +114,8 @@ public class OrderTracking extends Fragment implements View.OnClickListener{
     public String orderCanclled(){
         try {//TODO:FIX HARDCODEDVALUE
             System.out.println("thelistingid"+bundle.getInt("listId"));
-            String cancelled = HTTPRequests.getHTTP("http://18.234.123.109/api/cancel/11/"+bundle.getInt("listId"));
+            String cancelled = HTTPRequests.getHTTP("http://18.234.123.109/api/cancel/"+
+                    StaticStorage.getUserId()+"/"+bundle.getInt("listId"));
             if (cancelled!="Failed")
                 return "ORDER CANCELLED";
         } catch (Exception e) {
@@ -147,11 +148,12 @@ public class OrderTracking extends Fragment implements View.OnClickListener{
                         builder.setMessage(orderCanclled());
                         AlertDialog alertDialog = builder.create();
                         alertDialog.show();
-                        alertDialog.getWindow().setLayout(200, 100);
+                        alertDialog.getWindow().setLayout(600, 100);
                         alertDialog.getWindow().setBackgroundDrawableResource(R.drawable.panels);
                     }
                 });
             }
+
 
         }
 

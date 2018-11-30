@@ -56,7 +56,7 @@ public class ActiveFragment extends Fragment implements View.OnClickListener{
     }
 
     private void getOrdersFromDB(){
-        UserOrdersDAO userOrdersDAO = new UserOrdersDAO();
+        UserOrdersDAO userOrdersDAO = new UserOrdersDAO(String.valueOf(StaticStorage.getUserId()));
         try {
 
             final List<Order> populatedOrders = userOrdersDAO.getPopulatedOrders();

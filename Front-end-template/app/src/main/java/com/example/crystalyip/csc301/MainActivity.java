@@ -81,7 +81,6 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             drawer.closeDrawer(GravityCompat.START);
         } else {
             if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
-                System.out.println("henlobirb");
                 getSupportFragmentManager().popBackStack();
             } else {
                 super.onBackPressed();

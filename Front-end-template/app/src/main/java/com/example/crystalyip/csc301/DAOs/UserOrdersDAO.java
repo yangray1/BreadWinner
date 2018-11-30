@@ -14,11 +14,11 @@ public class UserOrdersDAO {
     private List<Order> allOrders = new ArrayList<>();
     public String apiURL;/* = "http://18.234.123.109/api/...";*/
 
-    public UserOrdersDAO(){
-        this.apiURL="http://18.234.123.109/api/getAllOrders/11";
+    public UserOrdersDAO(String userID){
+        this.apiURL="http://18.234.123.109/api/getAllOrders/";
         String orders = "";
         try {
-            orders = HTTPRequests.getHTTP(this.apiURL);
+            orders = HTTPRequests.getHTTP(this.apiURL+userID);
             String allOrdersFormatted=HTTPRequests.formatJSONStringFromResponse(orders);
             JSONObject ordersJSON = new JSONObject(allOrdersFormatted);
             JSONArray ordersArray = ordersJSON.getJSONArray("data");

@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
+import com.example.crystalyip.csc301.Model.Profile;
 import com.example.crystalyip.csc301.Model.StaticStorage;
 
 public class LoginFragment extends Fragment {
@@ -36,6 +37,7 @@ public class LoginFragment extends Fragment {
                     public void run() {
                         String res= null;
                         try {
+
                             res = HTTPRequests.getHTTP("http://18.234.123.109/api/login/"+userid+"/"+password);
                         } catch (Exception e) {
                             e.printStackTrace();
@@ -44,6 +46,8 @@ public class LoginFragment extends Fragment {
                         if (res.equals("FAILED")) {
                             // DO SOMETHING
                         } else {
+                            Profile profile = HTTPRequests.getProfileDetails(String.valueOf(userid));
+                            StaticStorage.setAbout(profile.getAbout());
                             System.out.println("responsemsg2"+res);
                             StaticStorage.setUserId(Integer.parseInt(userid));
                             String[] nameDetail=res.split(",");

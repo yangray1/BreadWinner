@@ -103,22 +103,6 @@
                         android:layout_height="wrap_content"
                         >
 
-                        <ImageView
-                            android:src="@drawable/ic_attach_money_black_24dp"
-                            android:layout_weight="1"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content" />
-
-                        <TextView
-                            android:id="@+id/food_price"
-                            android:text="10.00"
-                            android:textColor="@color/colorPrimaryDark"
-                            android:textSize="17sp"
-                            android:textStyle="bold"
-                            android:layout_width="0dp"
-                            android:layout_weight="9"
-                            android:layout_height="wrap_content" />
-
                     </LinearLayout>
 
                     <com.cepheuen.elegantnumberbutton.view.ElegantNumberButton

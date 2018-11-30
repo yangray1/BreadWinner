@@ -18,7 +18,15 @@ public class StaticStorage {
     private static ArrayList<Order> personalOrders=new ArrayList<>();
     private static String firstName;
     private static String lastName;
+    private static String about;
 
+    public static void setAbout(String description){
+        about=description;
+    }
+
+    public static String getAbout(){
+        return about;
+    }
     public static void setUserId(int id){
         userId=id;
     }

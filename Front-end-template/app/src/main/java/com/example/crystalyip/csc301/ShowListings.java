@@ -79,17 +79,20 @@ public class ShowListings extends Fragment implements View.OnClickListener {
         final List<Listing> populatedListings = listingsDAO.getAllListings();
 
         List<HashMap<String, Object>> aList = new ArrayList<>();
-
+        List<Listing> finalListings=new ArrayList<>();
         for (int i = 0; i < populatedListings.size(); i++) {
+            if (populatedListings.get(i).isStatus()){
+                HashMap<String, Object> titleImagePair = new HashMap<>();
+                String foodDetail = populatedListings.get(i).getFoodName() + "\n  " + populatedListings.get(i).getLocation();
+                SpannableString spannable = new SpannableString("  $" + populatedListings.get(i).getPrice() + " " + foodDetail);
+                spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, foodDetail.indexOf("\n"), 0);
+                aList.add(titleImagePair);
+                finalListings.add(populatedListings.get(i));
+            }
 
-            HashMap<String, Object> titleImagePair = new HashMap<>();
-            String foodDetail = populatedListings.get(i).getFoodName() + "\n  " + populatedListings.get(i).getLocation();
-            SpannableString spannable = new SpannableString("  $" + populatedListings.get(i).getPrice() + " " + foodDetail);
-            spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, foodDetail.indexOf("\n"), 0);
-            aList.add(titleImagePair);
         }
 
-        CustomAdapter simpleAdapter = new CustomAdapter(getActivity(), (ArrayList<Listing>) populatedListings);
+        CustomAdapter simpleAdapter = new CustomAdapter(getActivity(), (ArrayList<Listing>) finalListings);
 
 
         final ListView listingsList = view.findViewById(R.id.lstFoodList);

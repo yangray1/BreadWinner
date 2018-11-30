@@ -60,13 +60,14 @@
         android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
         android:fontFamily="@font/nunito_bold"
-        android:text="I like to cook chinese food and desserts"
         android:textColor="#ffffff"
         android:textSize="13sp"
+        android:singleLine="true"
         app:layout_constraintBottom_toBottomOf="@+id/myRectangleView"
         app:layout_constraintEnd_toEndOf="@+id/order_completed_icon2"
         app:layout_constraintStart_toStartOf="@+id/order_completed_icon2"
-        app:layout_constraintTop_toBottomOf="@+id/chef_name" />
+        app:layout_constraintTop_toBottomOf="@+id/chef_name"
+        />
 
     <View
         android:id="@+id/star"

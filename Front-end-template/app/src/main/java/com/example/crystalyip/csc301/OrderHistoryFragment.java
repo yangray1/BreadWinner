@@ -14,8 +14,13 @@ import android.widget.SimpleAdapter;
 
 import com.example.crystalyip.csc301.DAOs.ListingsDAO;
 import com.example.crystalyip.csc301.DAOs.UserOrdersDAO;
+import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Listing;
 import com.example.crystalyip.csc301.Model.Order;
+import com.example.crystalyip.csc301.Model.StaticStorage;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -47,25 +52,53 @@ public class OrderHistoryFragment extends Fragment {
         SimpleDateFormat dateFormat = new SimpleDateFormat ("MMM dd yyyy 'at' hh:mm:ss a");
 
         searchURL = "http://18.234.123.109/api/getAllListings";
-        userOrdersDAO = new UserOrdersDAO();
+        userOrdersDAO = new UserOrdersDAO(String.valueOf(StaticStorage.getUserId()));
         //listings are required to pick out a specific picture
         listingsDAO = new ListingsDAO(searchURL);
         //Get orders
-        final List<Order> populatedOrders = userOrdersDAO.getPopulatedOrders();
+        String orders = "";
+        List<Order> orderHistory=new ArrayList<>();
+        try {
+            orders = HTTPRequests.getHTTP(
+                    "http://18.234.123.109/api/getAllOrders/api/checkHistory/"
+                            +StaticStorage.getUserId());
+            System.out.println("THEORDERS"+orders);
+            String allOrdersFormatted=HTTPRequests.formatJSONStringFromResponse(orders);
+            JSONObject ordersJSON = new JSONObject(allOrdersFormatted);
+            JSONArray ordersArray = ordersJSON.getJSONArray("data");
+
+            for (int i = 0 ; i < ordersArray.length() ; i++){
+                JSONObject order = ordersArray.getJSONObject(i);
+
+                Order orderToAdd = new Order(
+                        order.getString("Status"),
+                        order.getInt("ListingID"),
+                        order.getInt("ClientID"),
+                        order.getString("Food Name"),
+                        order.getString("Location"));
+
+                orderHistory.add(orderToAdd);
+
+            }
+            StaticStorage.refreshAllPersonalOrders(orderHistory);
+        }
+        catch (Exception e){ // return what we have so far, even if it's just an empty list
+            e.printStackTrace();
+        }
 
         List<HashMap<String, Object>> aList = new ArrayList<>();
         Listing currentListing;
 
 
-        for (int i = 0; i < populatedOrders.size(); i++) {
+        for (int i = 0; i < orderHistory.size(); i++) {
             HashMap<String, Object> order = new HashMap<>();
 
-            Date time = populatedOrders.get(i).getTimeOfOrder();
+            Date time = orderHistory.get(i).getTimeOfOrder();
 
-            currentListing = findListingByID(populatedOrders.get(i).getListingID());
+            currentListing = findListingByID(orderHistory.get(i).getListingID());
 
             order.put("Image Drawable", currentListing.getImageID());
-            String orderDetail = currentListing.getFoodName() + "\n  " + dateFormat.format(time);
+            String orderDetail = "  "+currentListing.getFoodName().toUpperCase() + "\n  " + dateFormat.format(time);
             SpannableString spannable = new SpannableString(orderDetail);
             spannable.setSpan(new ForegroundColorSpan(Color.RED), 0, orderDetail.indexOf("\n"), 0);
 
@@ -74,12 +107,12 @@ public class OrderHistoryFragment extends Fragment {
             aList.add(order);
         }
 
-        String[] from = {"Description", "Image Drawable"};
-        int[] to = {R.id.food_description, R.id.food_image};
+        String[] from = {"Description"};
+        int[] to = {R.id.order_description};
 
         SimpleAdapter simpleAdapter = new SimpleAdapter(getActivity(),
                 aList,
-                R.layout.menu_item,
+                R.layout.active_order_item,
                 from, to);
 
         final ListView orderHistoryList = view.findViewById(R.id.ordersListView);

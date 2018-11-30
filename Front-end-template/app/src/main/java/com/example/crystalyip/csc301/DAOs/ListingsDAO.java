@@ -31,7 +31,7 @@ public class ListingsDAO {
 
             for (int i = 0; i < listings.length(); i++) {
                 JSONObject listing = listings.getJSONObject(i);
-
+                System.out.println("booty"+listing);
                 Listing listingToAdd = new Listing(
                         listing.getString("Food Name"),
                         listing.getInt("ListingID"),
@@ -39,7 +39,8 @@ public class ListingsDAO {
                         listing.getInt("CookID"),
                         listing.getDouble("Price"),
                         listing.getString("Location"),
-                        R.drawable.rice);
+                        R.drawable.rice,
+                        listing.getBoolean("status"));
 
 
                 listingToAdd.setImageBytes(HTTPRequests.getHTTPImage("http://18.234.123.109/api/getImage/"+listing.getInt("ListingID")));

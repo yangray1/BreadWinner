@@ -18,10 +18,13 @@ import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.SimpleAdapter;
 import android.support.annotation.NonNull;
+import android.widget.TextView;
 
 import com.example.crystalyip.csc301.DAOs.ListingsDAO;
 import com.example.crystalyip.csc301.DAOs.ReviewsDAO;
+import com.example.crystalyip.csc301.HTTPInteractions.HTTPRequests;
 import com.example.crystalyip.csc301.Model.Listing;
+import com.example.crystalyip.csc301.Model.Profile;
 import com.example.crystalyip.csc301.Model.Review;
 
 import java.util.ArrayList;
@@ -58,7 +61,6 @@ public class ShowReviews extends Fragment implements View.OnClickListener {
         int cookId = this.getArguments().getInt("cookID");
         ReviewsDAO reviewsDAO = new ReviewsDAO(searchURL+Integer.toString(cookId));
         final List<Review> populatedReviews = reviewsDAO.getAllReviews();
-
 
         List<HashMap<String, Object>> aList = new ArrayList<>();
 
