@@ -578,7 +578,7 @@ def get_rows_from_name(search_terms):
         for search_term in search_terms:
             search_names = conn.cursor()
             search_names.execute("SELECT t1.{}, t1.{}, t1.{}, t1.{},"
-                                 " t1.{}, t1.{} FROM public.{} as t1"
+                                 " t1.{}, t1.{}, t1.{} FROM public.{} as t1"
                                  " FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{} "
                                  "WHERE UPPER(t1.{}) LIKE UPPER(\'%{}%\')".format(listing_listing_id_col,
                                                                                   listing_cook_id_col,
@@ -586,6 +586,7 @@ def get_rows_from_name(search_terms):
                                                                                   listing_price_col,
                                                                                   listing_location_col,
                                                                                   listing_image_col,
+                                                                                  listing_active_col,
                                                                                   listing_table_name,
                                                                                   listing_tags_table_name,
                                                                                   listing_listing_id_col,
