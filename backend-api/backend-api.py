@@ -131,6 +131,48 @@ def get_cook_id(userId):
         rollback = conn.cursor()
         rollback.execute("ROLLBACK")
         rollback.commit()
+        
+  
+# --------------------------------------------------- GET USER DETAIL ---------------------------------------------------#
+
+
+@app.route("/api/getUserDetails/<int:userId>", methods=['GET'])
+def get_user_detail(userId):
+    try:
+        all_details = []
+
+        search_all = conn.cursor()
+
+        search_all.execute(
+            "SELECT * FROM {} WHERE ({} = {})".format(user_table_name, user_user_id_col, str(userId)))
+
+        single_row = search_all.fetchone()
+
+        while single_row is not None:
+            all_details.append(single_row)
+            single_row = search_all.fetchone()
+
+        search_all.close()
+
+        user_detail_rows_to_json(all_details)  # want to convert each row into a JSON string
+
+        return json.dumps({'data': all_details})  # convert to string before returning
+    except:
+        rollback = conn.cursor()
+        rollback.execute("ROLLBACK")
+        rollback.commit()
+ 
+
+def user_detail_rows_to_json(rows):
+    """
+    Mutate rows such that each tuple in rows is converted to a JSON string representing the same information.
+    """
+    for i in range(len(rows)):
+        rows[i] = json.dumps({'UserID': rows[i][0],
+                              'Password': rows[i][1],
+                              'FName': rows[i][2],
+                              'LName': rows[i][3],
+                              'About': rows[i][4]})
        
 
 # --------------------------------------------------- GET ALL LISTINGS ---------------------------------------------------#
@@ -141,12 +183,13 @@ def getAllListings():
     try:
         search_all = conn.cursor()
         search_all.execute("SELECT {}, {}, {}, {},"
-                           " {}, {} FROM public.{}".format(listing_listing_id_col,
+                           " {}, {}, {} FROM public.{}".format(listing_listing_id_col,
                                                            listing_cook_id_col,
                                                            listing_food_name_col,
                                                            listing_price_col,
                                                            listing_location_col,
                                                            listing_image_col,
+                                                               listing_active_col,
                                                            listing_table_name))
         single_row = search_all.fetchone()
 
@@ -535,7 +578,7 @@ def get_rows_from_name(search_terms):
         for search_term in search_terms:
             search_names = conn.cursor()
             search_names.execute("SELECT t1.{}, t1.{}, t1.{}, t1.{},"
-                                 " t1.{}, t1.{} FROM public.{} as t1"
+                                 " t1.{}, t1.{}, t1.{} FROM public.{} as t1"
                                  " FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{} "
                                  "WHERE UPPER(t1.{}) LIKE UPPER(\'%{}%\')".format(listing_listing_id_col,
                                                                                   listing_cook_id_col,
@@ -543,6 +586,7 @@ def get_rows_from_name(search_terms):
                                                                                   listing_price_col,
                                                                                   listing_location_col,
                                                                                   listing_image_col,
+                                                                                  listing_active_col,
                                                                                   listing_table_name,
                                                                                   listing_tags_table_name,
                                                                                   listing_listing_id_col,
@@ -615,7 +659,8 @@ def rows_to_json(rows):
                               'Food Name': rows[i][2],
                               'Price': rows[i][3],
                               'Location': rows[i][4],
-                              'Image': rows[i][5]})
+                              'Image': rows[i][5],
+                             'status':rows[i][6]})
 
 
 # --------------------------------------------------- MAKE ORDER ---------------------------------------------------#
@@ -793,14 +838,8 @@ def checkHistory(clientID):
     """
 
     cur = conn.cursor()
-    query = \
-        """
-            SELECT t2.{}, t2.{}, t2.{}, t2.{}
-            FROM public.{} as t1 FULL OUTER JOIN public.{} as t2 ON t1.{} = t2.{}
-            WHERE t1.{} LIKE {} AND t1.{} = {}
-        """.format(listing_food_name_col, listing_cook_id_col, listing_price_col, listing_location_col,
-                   order_table_name, listing_table_name, order_listing_id_col, listing_listing_id_col,
-                   order_status_col, completed, order_client_id_col, str(clientID))
+    query = "SELECT * FROM {} WHERE ({} = {}) AND ({} = '{}')".format(order_table_name, order_client_id_col,
+                                                                       str(clientID), order_status_col, "Completed")
 
     try:
         cur.execute(query)
