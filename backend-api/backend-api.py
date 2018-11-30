@@ -189,8 +189,8 @@ def getAllListings():
                                                            listing_price_col,
                                                            listing_location_col,
                                                            listing_image_col,
-                                                           listing_table_name,
-                                                              listing_active_col))
+                                                               listing_active_col,
+                                                           listing_table_name))
         single_row = search_all.fetchone()
 
         while single_row is not None:
